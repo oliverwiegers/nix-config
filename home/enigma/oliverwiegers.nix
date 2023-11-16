@@ -13,8 +13,7 @@
     ./features/tmux
     ./features/nvim
     ./features/firefox
-    # TODO: Use flake or home-manager module when ready.
-    #./features/hyprland
+    ./features/hyprland
 
     ./features/fzf.nix
     ./features/gtk.nix
