@@ -67,7 +67,7 @@
         l = "exa -lah --icons";
         ll = "exa -lh --icons";
         lt = "exa -T --icons";
-        cat = ''bat -pp --theme = "base16"'';
+        cat = "bat -pp";
         serv = "python3 -m http.server";
         wanip = "curl -s4 https://ip.syseleven.de";
         dev = "ls /dev/";
@@ -81,12 +81,6 @@
         kcon = "kubectl ctx";
         kns = "kubectl ns";
         kk = "kubectl krew";
-      };
-
-      localVariables = {
-        KUBECONFIG = "$(find ~/.kube/configs/ -type f -exec printf '%s:' '{}' +)";
-        POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD = true;
-        TERM = "screen-256color";
       };
 
       oh-my-zsh = {

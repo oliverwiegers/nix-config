@@ -34,6 +34,10 @@ appendpath "$HOME/.local/bin/scripts"
 unset appendpath
 # END Set PATH
 
+export KUBECONFIG="$(find ~/.kube/configs/ -type f -exec printf '%s:' '{}' +)"
+export TERM="xterm-256color"
+export BAT_THEME="gruvbox-dark"
+
 #                  __
 #  _      ______ _/ /
 # | | /| / / __ `/ /

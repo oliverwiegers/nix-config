@@ -6,7 +6,7 @@
       enable = true;
       settings = {
         env = {
-          TERM = "screen-256color";
+          TERM = "xterm";
         };
         scrolling = {
           history = 10000;
