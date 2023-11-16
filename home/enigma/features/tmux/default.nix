@@ -27,12 +27,17 @@ in
         source = "${source}/tmux/.tmux.conf";
       };
 
+      # TODO: Set vi mode-keys in tmux.conf again.
+      # Currently broken. This is just a workaround.
       ".tmux.conf.local" = {
         target = ".tmux.conf.local";
         text = ''
+          # : <<EOF
           unbind-key C-b
           set -g prefix C-k
           bind-key C-k send-prefix
+          set-window-option -g mode-keys vi
+          # EOF
         '';
       };
 
