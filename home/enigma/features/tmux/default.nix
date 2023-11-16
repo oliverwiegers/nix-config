@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   # TODO: Yeah software to never update again.
   # This is a quick workaround to use pre nix config files.
   # This is ugly as hell. Need to fix this.
@@ -13,8 +11,7 @@ let
     rev = "947b14d9ced2598107d379c3db9041f7acb91f10";
     sha256 = "Uf5QnrgQRVXTTJVk7JSBtZcY929aBQ2d2O27rc55ocA=";
   };
-in
-{
+in {
   home = {
     file = {
       ".tmuxist" = {
@@ -45,7 +42,6 @@ in
         target = ".tmux.conf.remote";
         source = "${source}/tmux/.tmux.conf.remote";
       };
-
     };
   };
 

@@ -1,12 +1,11 @@
-{ inputs
-, lib
-, outputs
-, config
-, pkgs
-, ...
-}:
-
 {
+  inputs,
+  lib,
+  outputs,
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./features/zsh
     ./features/rofi
@@ -28,14 +27,14 @@
     config = {
       allowUnfree = true;
       # Workaround for https://github.com/nix-community/home-manager/issues/2942
-      allowUnfreePredicate = (_: true);
+      allowUnfreePredicate = _: true;
     };
   };
 
   nix = {
     package = lib.mkDefault pkgs.nix;
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = ["nix-command" "flakes"];
       warn-dirty = false;
     };
   };

@@ -1,12 +1,11 @@
-{ inputs
-, lib
-, outputs
-, config
-, pkgs
-, ...
-}:
-
 {
+  inputs,
+  lib,
+  outputs,
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -21,7 +20,7 @@
   nix = {
     # This will add each flake input as a registry
     # To make nix3 commands consistent with your flake
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+    registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
 
     # This will additionally add your inputs to the system's legacy channels
     # Making legacy nix commands consistent as well, awesome!
@@ -45,7 +44,7 @@
 
     wireless = {
       enable = true;
-      interfaces = [ "wlp3s0" ];
+      interfaces = ["wlp3s0"];
 
       networks = {
         Follow-The-Wires = {
@@ -90,7 +89,7 @@
   users.users = {
     oliverwiegers = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = ["wheel"];
       description = "Oliver Wiegers";
       shell = pkgs.zsh;
     };
@@ -161,7 +160,7 @@
   xdg = {
     portal = {
       enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
+      extraPortals = [pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk];
     };
   };
 
@@ -187,11 +186,11 @@
       enable = true;
       extraRules = [
         {
-          users = [ "oliverwiegers" ];
+          users = ["oliverwiegers"];
           commands = [
             {
               command = "ALL";
-              options = [ "NOPASSWD" "SETENV" ];
+              options = ["NOPASSWD" "SETENV"];
             }
           ];
         }

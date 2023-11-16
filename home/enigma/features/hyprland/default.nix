@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   home = {
     file = {
       "hyprland.conf" = {

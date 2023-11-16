@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs.firefox = {
     enable = true;
     profiles = {
@@ -32,6 +34,6 @@
 
   programs.browserpass = {
     enable = config.programs.firefox.enable;
-    browsers = [ "firefox" ];
+    browsers = ["firefox"];
   };
 }
