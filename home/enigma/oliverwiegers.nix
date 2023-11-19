@@ -1,8 +1,6 @@
 {
-  inputs,
   lib,
   outputs,
-  config,
   pkgs,
   ...
 }: {
@@ -18,6 +16,7 @@
     ./features/gtk.nix
     ./features/git.nix
     ./features/mako.nix
+    ./features/btop.nix
     ./features/alacritty.nix
     ./features/home-manager.nix
   ];
@@ -50,10 +49,10 @@
     packages = with pkgs.unstable; [
       qt5.qtwayland
       qt6.qtwayland
+      findutils
       libnotify
       bat
       neofetch
-      htop
       nyxt
       ranger
       jq
