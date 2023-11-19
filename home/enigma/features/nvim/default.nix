@@ -21,9 +21,14 @@
         fzf-vim
         nvim-cmp
         lualine-nvim
-        dashboard-nvim
+        autoclose-nvim
+        vim-commentary
         bufferline-nvim
         nvim-web-devicons
+
+        # Nvim treesitter
+        nvim-treesitter
+        nvim-treesitter.withAllGrammars
 
         # Nvim cmp
         nvim-cmp
@@ -50,8 +55,9 @@
         (builtins.readFile ./lua/init.lua)
         (builtins.readFile ./lua/nvim-cmp.lua)
         (builtins.readFile ./lua/lualine.lua)
-        (builtins.readFile ./lua/dashboard.lua)
+        (builtins.readFile ./lua/autoclose.lua)
         (builtins.readFile ./lua/bufferline.lua)
+        (builtins.readFile ./lua/treesitter.lua)
       ];
 
       # Quick porting for pre nix vim config.
