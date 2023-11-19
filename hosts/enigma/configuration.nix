@@ -155,6 +155,24 @@
     pcscd = {
       enable = true;
     };
+
+    logind = {
+      lidSwitchDocked = "suspend";
+    };
+
+    auto-cpufreq = {
+      enable =  true;
+      settings = {
+        battery = {
+           governor = "powersave";
+           turbo = "never";
+        };
+        charger = {
+           governor = "performance";
+           turbo = "auto";
+        };
+      };
+    };
   };
 
   xdg = {
@@ -212,4 +230,7 @@
       enable = true;
     };
   };
+
+  # Laptop power managent.
+  powerManagement.enable = true;
 }
