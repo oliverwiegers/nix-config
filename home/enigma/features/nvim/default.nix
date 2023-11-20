@@ -25,9 +25,12 @@
         vim-commentary
         bufferline-nvim
         nvim-web-devicons
+        git-worktree-nvim
+        indent-blankline-nvim-lua
 
         # Nvim treesitter
         nvim-treesitter
+        nvim-treesitter-context
         nvim-treesitter.withAllGrammars
 
         # Nvim cmp
@@ -58,6 +61,7 @@
         (builtins.readFile ./lua/autoclose.lua)
         (builtins.readFile ./lua/bufferline.lua)
         (builtins.readFile ./lua/treesitter.lua)
+        (builtins.readFile ./lua/indent-blankline.lua)
       ];
 
       # Quick porting for pre nix vim config.
