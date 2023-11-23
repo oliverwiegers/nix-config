@@ -1,8 +1,11 @@
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
-    indent = {
+  },
+  indent = {
       enable = true,
-    }
+  },
+  incremental_selection = {
+      enable = true,
   },
 }
