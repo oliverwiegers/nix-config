@@ -17,6 +17,7 @@
     ./features/git.nix
     ./features/mako.nix
     ./features/btop.nix
+    ./features/direnv.nix
     ./features/alacritty.nix
     ./features/home-manager.nix
   ];
@@ -41,6 +42,8 @@
   # Reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
+  fonts.fontconfig.enable = true;
+
   home = {
     username = "oliverwiegers";
     homeDirectory = "/home/oliverwiegers";
@@ -62,6 +65,7 @@
       ripgrep
       eza
       pywal
+      nerdfonts
     ];
   };
 }

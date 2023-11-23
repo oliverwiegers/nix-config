@@ -57,7 +57,7 @@ set nrformats-=octal
 " Spellchecking.
 set complete+=d,kspell
 
-" Enable persistent undo. Or in other words: Beeing able to undo changes even if
+" Enable persistent undo. Or in other words: Being able to undo changes even if
 " the file was closed.
 set undodir=~/.vim/undodir
 set undofile

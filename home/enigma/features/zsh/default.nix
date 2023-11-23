@@ -97,6 +97,7 @@
           "pass"
           "sudo"
           "helm"
+          "direnv"
           "kubectl"
           "jsontools"
           "terraform"

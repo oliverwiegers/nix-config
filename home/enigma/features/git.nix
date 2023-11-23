@@ -17,10 +17,10 @@
         init = {
           defaultBranch = "main";
         };
-        "protocoll \"http\"" = {
+        "protocol \"http\"" = {
           allow = "never";
         };
-        "protocoll \"git\"" = {
+        "protocol \"git\"" = {
           allow = "never";
         };
       };
