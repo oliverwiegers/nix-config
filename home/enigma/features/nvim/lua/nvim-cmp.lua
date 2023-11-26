@@ -78,3 +78,8 @@ require('lspconfig').nil_ls.setup {
   autostart = true,
   capabilities = capabilities,
 }
+
+-- Markdown
+require("lspconfig").marksman.setup{
+  capabilities = capabilities,
+}

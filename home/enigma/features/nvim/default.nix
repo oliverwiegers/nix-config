@@ -48,6 +48,7 @@
         nil
         pyright
         lua-language-server
+        marksman
       ];
 
       coc = {
@@ -70,6 +71,16 @@
         (builtins.readFile ./vimscript/ale.vim)
         (builtins.readFile ./vimscript/keybindings.vim)
       ];
+    };
+  };
+
+  xdg = {
+    enable = true;
+    configFile = {
+      "nvim/plugin" = {
+        source = ./plugin;
+        recursive = true;
+      };
     };
   };
 }

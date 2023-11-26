@@ -40,12 +40,3 @@ nnoremap <tab><tab> :Rg<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader><space> :Files<CR>
 nnoremap <leader>gc :Commits<CR>
-
-" Open terminal in vsplit.
-nnoremap <silent> <leader>t :term ++rows=20<CR>
-
-" Open ranger in vsplit.
-nnoremap <silent> <Leader>r :term ++rows=20 ++close ranger<CR>
-
-"Open file under cursor even if not exists.
-:noremap <leader>gf :tabnew <cfile><cr>
