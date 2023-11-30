@@ -66,6 +66,7 @@
       eza
       pywal
       nerdfonts
+      signal-desktop
     ];
   };
 }
