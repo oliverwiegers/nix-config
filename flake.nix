@@ -23,6 +23,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+    };
+
     # TODO: Checkout nix-colors
     # nix-colors.url = "github:misterio77/nix-colors";
   };
@@ -31,6 +35,7 @@
     self,
     nixpkgs,
     home-manager,
+    nixos-hardware,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -58,7 +63,12 @@
     nixosConfigurations = {
       enigma = lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
-        modules = [./hosts/enigma/configuration.nix];
+        modules = [
+          ./hosts/enigma/configuration.nix
+
+          nixos-hardware.nixosModules.common-cpu-amd
+          nixos-hardware.nixosModules.common-gpu-amd
+        ];
       };
     };
 

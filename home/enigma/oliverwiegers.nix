@@ -18,6 +18,7 @@
     ./features/mako.nix
     ./features/btop.nix
     ./features/direnv.nix
+    ./features/nix-index.nix
     ./features/alacritty.nix
     ./features/home-manager.nix
   ];
@@ -67,6 +68,7 @@
       pywal
       nerdfonts
       signal-desktop
+      imv
     ];
   };
 }
