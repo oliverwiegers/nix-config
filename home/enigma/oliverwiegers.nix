@@ -70,6 +70,7 @@
       nerdfonts
       signal-desktop
       imv
+      gnumake
     ];
   };
 }
