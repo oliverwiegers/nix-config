@@ -71,6 +71,7 @@
       signal-desktop
       imv
       gnumake
+      brightnessctl
     ];
   };
 }
