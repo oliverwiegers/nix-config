@@ -77,8 +77,8 @@
   xdg = {
     enable = true;
     configFile = {
-      "nvim/plugin" = {
-        source = ./plugin;
+      "nvim/after/ftplugin" = {
+        source = ./after/ftplugin;
         recursive = true;
       };
     };

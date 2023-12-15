@@ -8,8 +8,8 @@
     fetchSubmodules = true;
     owner = "oliverwiegers";
     repo = ".tmuxist";
-    rev = "947b14d9ced2598107d379c3db9041f7acb91f10";
-    sha256 = "Uf5QnrgQRVXTTJVk7JSBtZcY929aBQ2d2O27rc55ocA=";
+    rev = "1dc3f2baa1e141403dbbe884ffd9876cfa39ca0e";
+    sha256 = "dqUx9SMlcCDoiogNY4Q1uO2nwBjb14Ddo393D9a/rNY=";
   };
 in {
   home = {
@@ -24,8 +24,6 @@ in {
         source = "${source}/tmux/.tmux.conf";
       };
 
-      # TODO: Set vi mode-keys in tmux.conf again.
-      # Currently broken. This is just a workaround.
       ".tmux.conf.local" = {
         target = ".tmux.conf.local";
         text = ''
@@ -33,7 +31,6 @@ in {
           unbind-key C-b
           set -g prefix C-k
           bind-key C-k send-prefix
-          set-window-option -g mode-keys vi
           # EOF
         '';
       };

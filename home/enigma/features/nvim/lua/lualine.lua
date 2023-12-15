@@ -116,14 +116,13 @@ ins_left {
       ['!'] = colors.red,
       t = colors.red,
     }
-    return { fg = mode_color[vim.fn.mode()] }
+    return { fg = mode_color[vim.fn.mode()], gui = "bold"}
   end,
   padding = { right = 1 },
 }
 
 ins_left {
-  -- filesize component
-  'filesize',
+  'filetype',
   cond = conditions.buffer_not_empty,
 }
 
@@ -137,6 +136,8 @@ ins_left { 'location' }
 
 ins_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
 
+ins_left { 'lines' }
+
 ins_left {
   'diagnostics',
   sources = { 'nvim_diagnostic' },
@@ -146,6 +147,18 @@ ins_left {
     color_warn = { fg = colors.yellow },
     color_info = { fg = colors.cyan },
   },
+}
+
+ins_left {
+  function()
+    local space_pat = [[\v^ +]]
+    local tab_pat = [[\v^\t+]]
+    local space_indent = vim.fn.search(space_pat, 'nwc')
+    local tab_indent = vim.fn.search(tab_pat, 'nwc')
+    local mixed = (space_indent > 0 and tab_indent > 0)
+    return mixed and '  Mixed Indent' or ''
+  end,
+  color = { fg = colors.orange, gui = 'bold' },
 }
 
 -- Insert mid section. You can make any number of sections in neovim :)
@@ -177,10 +190,17 @@ ins_left {
   color = { fg = '#ffffff', gui = 'bold' },
 }
 
--- Add components to right sections
+ins_right{
+  function()
+    local space = vim.fn.search([[\s\+$]], 'nwc')
+    return space ~= 0 and '  Trailing Whitespace' or ''
+  end,
+  color = { fg = colors.orange, gui = 'bold' },
+}
+
 ins_right {
-  'o:encoding', -- option component same as &encoding in viml
-  fmt = string.upper, -- I'm not sure why it's upper case either ;)
+  'o:encoding',
+  fmt = string.upper,
   cond = conditions.hide_in_width,
   color = { fg = colors.green, gui = 'bold' },
 }
