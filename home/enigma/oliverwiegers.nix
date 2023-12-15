@@ -13,11 +13,13 @@
     ./features/hyprland
 
     ./features/fzf.nix
+    ./features/bat.nix
     ./features/gtk.nix
     ./features/git.nix
     ./features/mako.nix
     ./features/btop.nix
     ./features/direnv.nix
+    ./features/urlview.nix
     ./features/nix-index.nix
     ./features/alacritty.nix
     ./features/home-manager.nix
@@ -55,7 +57,6 @@
       qt6.qtwayland
       findutils
       libnotify
-      bat
       neofetch
       nyxt
       ranger

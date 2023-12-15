@@ -37,8 +37,7 @@ unset appendpath
 # END Set PATH
 
 export KUBECONFIG="$(find ~/.kube/configs/ -type f -exec printf '%s:' '{}' +)"
-export TERM="screen-256color"
-export BAT_THEME="gruvbox-dark"
+export TERM="xterm-256color"
 
 #                  __
 #  _      ______ _/ /
@@ -66,8 +65,6 @@ fi
 # | | / / / ___/ / / / __ `/ / ___/
 # | |/ / (__  ) /_/ / /_/ / (__  )
 # |___/_/____/\__,_/\__,_/_/____/
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 #     __              __    _           ___
