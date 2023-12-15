@@ -8,7 +8,7 @@
       ".urlview" = {
         target = ".urlview";
         text = ''
-          COMMAND firefox --new-tab %s
+          COMMAND firefox --new-tab %s && pkill urlview
         '';
       };
     };
