@@ -20,6 +20,8 @@
     ./features/btop.nix
     ./features/direnv.nix
     ./features/urlview.nix
+    ./features/zathura.nix
+    ./features/newsboat.nix
     ./features/nix-index.nix
     ./features/alacritty.nix
     ./features/home-manager.nix
