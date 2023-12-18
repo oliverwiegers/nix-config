@@ -38,7 +38,6 @@ cmp.setup({
   mapping = {
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
 
     ["<Tab>"] = cmp.mapping(function(fallback)
@@ -61,7 +60,7 @@ cmp.setup({
       end
     end, { "i", "s" }),
 
-    ["<CR>"] = cmp.mapping.confirm({
+    ["<C-Space>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     }),
