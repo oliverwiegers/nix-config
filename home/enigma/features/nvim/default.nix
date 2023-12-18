@@ -21,26 +21,32 @@
         fzf-vim
         nvim-cmp
         lualine-nvim
-        autoclose-nvim
+        plenary-nvim # Needed for git-worktree-nvim
         vim-commentary
         bufferline-nvim
         nvim-web-devicons
         git-worktree-nvim
         indent-blankline-nvim-lua
 
-        # Nvim treesitter
+        # Nvim treesitter.
         nvim-treesitter
         nvim-treesitter-context
         nvim-treesitter.withAllGrammars
 
-        # Nvim cmp
+        # Completion.
         nvim-cmp
+        cmp-git
+        cmp-spell
+        cmp-vsnip
         cmp-path
-        cmp-nvim-lsp
         cmp-buffer
         cmp-cmdline
-        vim-vsnip
+        cmp-nvim-lsp
+        cmp-dictionary
+        lspkind-nvim
         nvim-lspconfig
+        friendly-snippets
+        vim-vsnip
       ];
 
       extraPackages = with pkgs; [
@@ -51,25 +57,15 @@
         marksman
       ];
 
-      coc = {
-        enable = true;
-      };
-
       extraLuaConfig = lib.strings.concatStrings [
+        (builtins.readFile ./lua/ale.lua)
         (builtins.readFile ./lua/init.lua)
         (builtins.readFile ./lua/nvim-cmp.lua)
         (builtins.readFile ./lua/lualine.lua)
-        (builtins.readFile ./lua/autoclose.lua)
         (builtins.readFile ./lua/bufferline.lua)
         (builtins.readFile ./lua/treesitter.lua)
+        (builtins.readFile ./lua/git-worktree.lua)
         (builtins.readFile ./lua/indent-blankline.lua)
-      ];
-
-      # Quick porting for pre nix vim config.
-      extraConfig = lib.strings.concatStrings [
-        (builtins.readFile ./vimscript/init.vim)
-        (builtins.readFile ./vimscript/ale.vim)
-        (builtins.readFile ./vimscript/keybindings.vim)
       ];
     };
   };

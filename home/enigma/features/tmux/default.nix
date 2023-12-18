@@ -8,8 +8,8 @@
     fetchSubmodules = true;
     owner = "oliverwiegers";
     repo = ".tmuxist";
-    rev = "1dc3f2baa1e141403dbbe884ffd9876cfa39ca0e";
-    sha256 = "dqUx9SMlcCDoiogNY4Q1uO2nwBjb14Ddo393D9a/rNY=";
+    rev = "f14d49290eb023d81bde40c4602dcbd7d8bd85ea";
+    sha256 = "tK5F+Y5uSzRgeSkwWzvyFoS8X3eO5CUZEld/LctNH98=";
   };
 in {
   home = {
