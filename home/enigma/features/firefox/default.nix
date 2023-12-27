@@ -102,6 +102,17 @@ in {
               ];
             };
 
+            "Nix Manual" = {
+              definedAliases = ["@nw"];
+              icon = "${nixIcon}";
+
+              urls = [
+                {
+                  template = "https://nixos.org/manual/nix/stable/introduction?search={searchTerms}";
+                }
+              ];
+            };
+
             "NixOS Options" = {
               icon = "${nixIcon}";
               definedAliases = ["@no"];

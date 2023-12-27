@@ -3,12 +3,39 @@
   outputs,
   pkgs,
   ...
-}: {
+}: let
+  unstablePackages = with pkgs.unstable; [
+    qt5.qtwayland
+    qt6.qtwayland
+    findutils
+    libnotify
+    neofetch
+    nyxt
+    ranger
+    jq
+    pass
+    wl-clipboard
+    pavucontrol
+    ripgrep
+    eza
+    pywal
+    nerdfonts
+    signal-desktop
+    imv
+    gnumake
+    brightnessctl
+    ncdu
+  ];
+
+  neovimPackage = with pkgs.inputs.flim; [
+    flim
+  ];
+in {
   imports = [
     ./features/zsh
     ./features/rofi
     ./features/tmux
-    ./features/nvim
+    #./features/nvim
     ./features/firefox
     ./features/hyprland
 
@@ -17,6 +44,7 @@
     ./features/gtk.nix
     ./features/git.nix
     ./features/mako.nix
+    #./features/nvim.nix
     ./features/btop.nix
     ./features/direnv.nix
     ./features/urlview.nix
@@ -54,26 +82,6 @@
     homeDirectory = "/home/oliverwiegers";
     stateVersion = "23.05";
 
-    packages = with pkgs.unstable; [
-      qt5.qtwayland
-      qt6.qtwayland
-      findutils
-      libnotify
-      neofetch
-      nyxt
-      ranger
-      jq
-      pass
-      wl-clipboard
-      pavucontrol
-      ripgrep
-      eza
-      pywal
-      nerdfonts
-      signal-desktop
-      imv
-      gnumake
-      brightnessctl
-    ];
+    packages = unstablePackages ++ neovimPackage;
   };
 }

@@ -47,8 +47,8 @@
       interfaces = ["wlp3s0"];
 
       networks = {
-        Follow-The-Wires = {
-          pskRaw = "e08ac9e6c4f27cd9e09a0833130e60baf86e5c984443041aec3d24158896afc5";
+        Follow-The-Wires-5ghz = {
+          pskRaw = "21e2dd18b60e3b63ab9d0eaa30f6e1e54f88df7b52785bfa9aadb0c720e9c224";
         };
       };
     };
@@ -65,6 +65,12 @@
     loader = {
       efi.canTouchEfiVariables = true;
       systemd-boot.enable = true;
+    };
+
+    kernel = {
+      sysctl = {
+        "net.ipv4.ip_forward" = true;
+      };
     };
   };
 
@@ -184,16 +190,16 @@
 
   system.stateVersion = "23.11";
 
-  fileSystems = {
-    "/media/nas" = {
-      device = "daedalus.oliverwiegers.com:/mnt/carter/olli";
-      fsType = "nfs";
-    };
-    "/media/nas_vanessa" = {
-      device = "daedalus.oliverwiegers.com:/mnt/carter/vanessa";
-      fsType = "nfs";
-    };
-  };
+  #fileSystems = {
+  #  "/media/nas" = {
+  #    device = "daedalus.oliverwiegers.com:/mnt/carter/olli";
+  #    fsType = "nfs";
+  #  };
+  #  "/media/nas_vanessa" = {
+  #    device = "daedalus.oliverwiegers.com:/mnt/carter/vanessa";
+  #    fsType = "nfs";
+  #  };
+  #};
 
   security = {
     # Enable realtime processing for hq sound.

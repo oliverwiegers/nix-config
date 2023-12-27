@@ -17,18 +17,20 @@
       url = "github:nix-community/NUR";
     };
 
-    # Nix User Repository.
+    # Firefox addons.
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # My own Neovim flake.
+    flim = {
+      url = "github:oliverwiegers/flim";
+    };
+
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
-
-    # TODO: Checkout nix-colors
-    # nix-colors.url = "github:misterio77/nix-colors";
   };
 
   outputs = {
