@@ -83,6 +83,8 @@
         kcon = "kubectl ctx";
         kns = "kubectl ns";
         kk = "kubectl krew";
+        vim = "TERM=screen-256color vim";
+        nvim = "TERM=screen-256color nvim";
       };
 
       oh-my-zsh = {
