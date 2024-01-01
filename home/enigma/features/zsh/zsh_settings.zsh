@@ -39,6 +39,7 @@ unset appendpath
 export KUBECONFIG="$(find ~/.kube/configs/ -type f -exec printf '%s:' '{}' +)"
 export TERM="xterm-256color"
 export EDITOR="vim"
+export BROWSER="firefox"
 
 #                  __
 #  _      ______ _/ /
