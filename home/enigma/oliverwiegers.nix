@@ -25,6 +25,7 @@
     gnumake
     brightnessctl
     ncdu
+    urlscan
   ];
 
   neovimPackage = with pkgs.inputs.flim; [
@@ -47,7 +48,6 @@ in {
     #./features/nvim.nix
     ./features/btop.nix
     ./features/direnv.nix
-    ./features/urlview.nix
     ./features/zathura.nix
     ./features/newsboat.nix
     ./features/nix-index.nix

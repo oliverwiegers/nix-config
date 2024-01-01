@@ -35,13 +35,15 @@ header() {
 
 # Get latest commit hash.
 glc() {
-    git log \
-        --author "$USER" \
-        --oneline \
-        --decorate \
-        --graph \
-        --all \
-        | awk 'NR==1 {print $2}'
+    git log --format='%H' | sed 1q
+}
+
+# Get revision hash for external resource in home manager.
+hgh() {
+    home-manager switch --flake .#oliverwiegers@enigma \
+        | grep 'got:' \
+        | cut -d ' ' -f 2 \
+        | cut -d '-' -f 2
 }
 
 _zsh_greeting() {
