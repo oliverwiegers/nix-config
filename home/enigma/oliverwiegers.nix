@@ -44,6 +44,7 @@ in {
     ./features/bat.nix
     ./features/gtk.nix
     ./features/git.nix
+    ./features/ssh.nix
     ./features/mako.nix
     #./features/nvim.nix
     ./features/btop.nix
