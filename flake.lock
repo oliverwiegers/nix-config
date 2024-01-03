@@ -257,11 +257,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1704290378,
-        "narHash": "sha256-BInpHg5fB7aJMCRQH1rSwfSvYItVWB3xiwY5E8TIcmc=",
+        "lastModified": 1704291520,
+        "narHash": "sha256-0sRr/eyggeC0tfFsDEX10K+9w3FQvgNtGcYH8bKKOeY=",
         "owner": "oliverwiegers",
         "repo": "tmuxist",
-        "rev": "94b585549f114bb5a18ef18d16d5643be1019879",
+        "rev": "6ae8d05e04c96926b81616faa31c7df164a4a97c",
         "type": "github"
       },
       "original": {
