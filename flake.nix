@@ -28,6 +28,11 @@
       url = "github:oliverwiegers/flim";
     };
 
+    # My own Tmux flake.
+    tmuxist = {
+      url = "github:oliverwiegers/tmuxist";
+    };
+
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };

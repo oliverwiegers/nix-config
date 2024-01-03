@@ -35,8 +35,6 @@ in {
   imports = [
     ./features/zsh
     ./features/rofi
-    ./features/tmux
-    #./features/nvim
     ./features/firefox
     ./features/hyprland
 
@@ -46,7 +44,7 @@ in {
     ./features/git.nix
     ./features/ssh.nix
     ./features/mako.nix
-    #./features/nvim.nix
+    ./features/tmux.nix
     ./features/btop.nix
     ./features/direnv.nix
     ./features/zathura.nix
