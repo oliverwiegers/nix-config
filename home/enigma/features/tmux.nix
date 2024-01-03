@@ -18,11 +18,6 @@
           # EOF
         '';
       };
-
-      ".tmux.conf.remote" = {
-        target = ".tmux.conf.remote";
-        source = "${pkgs.inputs.tmuxist.tmux}/tmux/.tmux.conf.remote";
-      };
     };
   };
 }
