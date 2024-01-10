@@ -5,10 +5,10 @@
 - Boot Live disk.
 - Format disk.
   - Eventually tweak `hosts/<hostname>/configuration.nix`.
-- Run `nixos-install --flake github.com:oliverwiegers/nix-config#<hostname>`.
+- Run `nixos-rebuild switch --flake "github:oliverwiegers/nix-config#<host>`.
 - Reboot host.
 - Run `nix run home-manager/master -- init --switch`
-- Run `home-manager switch --flake "github.com:oliverwiegers/nix-config#<username>@<hostname>"`.
+- Run `home-manager switch --flake "github:oliverwiegers/nix-config#<username>@<host>`.
 
 ## Update System
 

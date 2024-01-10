@@ -65,13 +65,11 @@
 
     overlays = import ./overlays {inherit inputs outputs;};
 
-    # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
       enigma = lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-          ./hosts/enigma/configuration.nix
+          ./nixos/enigma.nix
 
           nixos-hardware.nixosModules.common-cpu-amd
           nixos-hardware.nixosModules.common-gpu-amd
@@ -79,13 +77,11 @@
       };
     };
 
-    # Standalone home-manager configuration entrypoint
-    # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
       "oliverwiegers@enigma" = home-manager.lib.homeManagerConfiguration {
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./home/enigma/oliverwiegers.nix];
+        modules = [./home-manager/enigma/oliverwiegers.nix];
       };
     };
   };

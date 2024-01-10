@@ -199,6 +199,10 @@
           url = "https://primamateria.github.io/blog/atom.xml";
           tags = ["blog" "nix"];
         }
+        {
+          url = "https://stephank.nl/index.rss";
+          tags = ["blog" "nix"];
+        }
 
         # Corporate Blogs
         {url = ''"query:Corporate Blogs:tags # \"corporate_blog\""'';}
