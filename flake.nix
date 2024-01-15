@@ -2,15 +2,18 @@
   description = "Nix configuration.";
 
   inputs = {
-    # Nixpkgs
+    # Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Home manager
+    # Home manager.
     home-manager = {
       url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Nix Darwin.
+    nix-darwin.url = "github:LnL7/nix-darwin";
 
     # Nix User Repository.
     nur = {
@@ -42,6 +45,7 @@
     self,
     nixpkgs,
     home-manager,
+    nix-darwin,
     nixos-hardware,
     ...
   } @ inputs: let
@@ -76,6 +80,13 @@
           nixos-hardware.nixosModules.common-cpu-amd
           nixos-hardware.nixosModules.common-gpu-amd
         ];
+      };
+    };
+
+    darwinConfigurations = {
+      "host" = nix-darwin.lib.darwinSystem {
+        secialArgs = {inherit inputs outputs myLib;};
+        modules = [./darwin/host.nix];
       };
     };
 

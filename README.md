@@ -21,6 +21,9 @@ sh <(curl -L https://nixos.org/nix/install) --daemon
 mkdir ~/Documents/projects && cd ~/Documents/projects
 nix run nixpkgs#git.out -- clone git@github.com:oliverwiegers/nix-config
 
+# Setup nix-darwin.
+nix run nix-darwin -- switch --flake .#host
+
 # Setup home-manager.
 nix run nixpkgs#home-manager.out -- switch --flake .#oliverwiegers@enigma
 ```
