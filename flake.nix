@@ -51,7 +51,7 @@
 
     systems = [
       "x86_64-linux"
-      "darwin_aarch64"
+      "aarch64-darwin"
     ];
 
     forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
