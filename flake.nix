@@ -47,10 +47,11 @@
   } @ inputs: let
     inherit (self) outputs;
     lib = nixpkgs.lib // home-manager.lib;
-    utils = import ./lib {inherit lib;};
+    myLib = import ./lib {inherit lib;};
 
     systems = [
       "x86_64-linux"
+      "darwin_aarch64"
     ];
 
     forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
@@ -68,7 +69,7 @@
 
     nixosConfigurations = {
       enigma = lib.nixosSystem {
-        specialArgs = {inherit inputs outputs utils;};
+        specialArgs = {inherit inputs outputs;};
         modules = [
           ./nixos/enigma.nix
 
@@ -81,7 +82,7 @@
     homeConfigurations = {
       "oliverwiegers@enigma" = home-manager.lib.homeManagerConfiguration {
         pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = {inherit inputs outputs utils;};
+        extraSpecialArgs = {inherit inputs outputs myLib;};
         modules = [./home-manager/enigma/oliverwiegers.nix];
       };
     };
