@@ -2,21 +2,36 @@
 
 ## Setup
 
+### NixOS
+
 - Boot Live disk.
 - Format disk.
   - Eventually tweak `hosts/<hostname>/configuration.nix`.
 - Run `nixos-rebuild switch --flake "github:oliverwiegers/nix-config#<host>`.
 - Reboot host.
-- Run `nix run home-manager/master -- init --switch`
-- Run `home-manager switch --flake "github:oliverwiegers/nix-config#<username>@<host>`.
+- Run `nix run nixpkgs#home-manager.out -- switch --flake .#<username>@<host>`
+
+### MacOS
+
+```bash
+# Install Nix
+sh <(curl -L https://nixos.org/nix/install) --daemon
+
+# Create project home and clone repository.
+mkdir ~/Documents/projects && cd ~/Documents/projects
+nix run nixpkgs#git.out -- clone git@github.com:oliverwiegers/nix-config
+
+# Setup home-manager.
+nix run nixpkgs#home-manager.out -- switch --flake .#oliverwiegers@enigma
+```
 
 ## Update System
 
 ```bash
 cd <repo-folder>
 nix flake update
-sudo nixos-rebuild switch --flake .#enigma
-home-manager switch --flake .#oliverwiegers@enigma
+sudo nixos-rebuild switch --flake .#<hostname>
+home-manager switch --flake .#<hostname>@<user>
 ```
 
 ## Links

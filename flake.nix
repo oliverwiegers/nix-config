@@ -69,7 +69,7 @@
 
     nixosConfigurations = {
       enigma = lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
+        specialArgs = {inherit inputs outputs myLib;};
         modules = [
           ./nixos/enigma.nix
 
@@ -84,6 +84,12 @@
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs myLib;};
         modules = [./home-manager/enigma/oliverwiegers.nix];
+      };
+
+      "user@host" = home-manager.lib.homeManagerConfiguration {
+        pkgs = pkgsFor.darwin_aarch64;
+        extraSpecialArgs = {inherit inputs outputs myLib;};
+        modules = [./home-manager/host/user.nix];
       };
     };
   };
