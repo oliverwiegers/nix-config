@@ -54,6 +54,8 @@
     };
 
     keyboard = {
+      # Check for this issue when zsh autosuggest binding on ctrl+space is not working:
+      # https://github.com/zsh-users/zsh-autosuggestions/issues/132#issuecomment-491248596
       enableKeyMapping = true;
       remapCapsLockToControl = true;
     };
