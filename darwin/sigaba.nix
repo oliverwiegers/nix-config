@@ -87,6 +87,9 @@
     onActivation = {
       autoUpdate = true;
     };
+    brews = [
+      "blueutil"
+    ];
     casks = [
       "caffeine"
       "docker"
