@@ -1,0 +1,56 @@
+#!/usr/bin/env sh
+
+launchctl unload -F /System/Library/LaunchAgents/com.apple.WindowManager.plist > /dev/null 2>&1 &
+
+sudo yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
+# Layout.
+yabai -m config layout bsp
+yabai -m config auto_balance off
+
+# Windows.
+yabai -m config window_topmost off
+
+yabai -m config mouse_modifier alt
+# set modifier + right-click drag to resize window (default: resize)
+yabai -m config mouse_action2 resize
+# set modifier + left-click drag to resize window (default: move)
+yabai -m config mouse_action1 move
+
+# Gaps.
+yabai -m config top_padding    10
+yabai -m config bottom_padding 10
+yabai -m config left_padding   10
+yabai -m config right_padding  10
+yabai -m config window_gap     7
+
+# Rules.
+yabai -m rule --add app="^System Settings$"    manage=off
+yabai -m rule --add app="^System Information$" manage=off
+yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add title="Preferences$"       manage=off
+yabai -m rule --add title="Settings$"          manage=off
+
+# Workspace management.
+yabai -m space 1  --label shelk
+yabai -m space 2  --label browser
+yabai -m space 3  --label notes
+yabai -m space 4  --label misc
+yabai -m space 5  --label chat
+yabai -m space 6  --label mail
+
+# Assign apps to spaces.
+yabai -m rule --add app="Firefox" space=browser
+yabai -m rule --add app="Alacritty" space=shell
+yabai -m rule --add app="Slack" space=chat
+yabai -m rule --add app="Outlook" space=mail
+
+# Foxus rules.
+yabai -m config focus_follows_mouse autoraise
+yabai -m config mouse_follows_focus on
+
+echo "yabai configuration loaded"
+
+borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=10.0 2>/dev/null 1>&2 &
+echo "borders started or updated"

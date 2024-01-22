@@ -12,9 +12,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Nix Darwin.
-    nix-darwin.url = "github:LnL7/nix-darwin";
-
     # Nix User Repository.
     nur = {
       url = "github:nix-community/NUR";
@@ -39,14 +36,49 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
+
+    #
+    # MacOS related inputs.
+    #
+
+    # Nix Darwin.
+    nix-darwin.url = "github:LnL7/nix-darwin";
+
+    # Firefox overlay. Because nixpkgs package is broken on darwin.
+    nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
+
+    # Homebrew
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+
+    # Declarative tap management for homebrew
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+
+    # Declarative tap management for homebrew
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
+
+    # Declarative tap management for homebrew
+    # Needed to use nix-darwins homebrew module.
+    homebrew-bundle = {
+      url = "github:homebrew/homebrew-bundle";
+      flake = false;
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
-    nix-darwin,
     nixos-hardware,
+    nix-homebrew,
+    homebrew-core,
+    homebrew-cask,
+    nix-darwin,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -84,9 +116,14 @@
     };
 
     darwinConfigurations = {
-      "host" = nix-darwin.lib.darwinSystem {
-        secialArgs = {inherit inputs outputs myLib;};
-        modules = [./darwin/host.nix];
+      sigaba = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = {inherit inputs outputs myLib;};
+        modules = [
+          ./darwin/sigaba.nix
+
+          nix-homebrew.darwinModules.nix-homebrew
+        ];
       };
     };
 
@@ -97,10 +134,10 @@
         modules = [./home-manager/enigma/oliverwiegers.nix];
       };
 
-      "user@host" = home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgsFor.darwin_aarch64;
+      "oliver.wiegers@sigaba" = home-manager.lib.homeManagerConfiguration {
+        pkgs = pkgsFor.aarch64-darwin;
         extraSpecialArgs = {inherit inputs outputs myLib;};
-        modules = [./home-manager/host/user.nix];
+        modules = [./home-manager/sigaba/oliverwiegers.nix];
       };
     };
   };

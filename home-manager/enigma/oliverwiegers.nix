@@ -34,7 +34,10 @@
     };
 
     emulator = {
-      alacritty.enable = true;
+      alacritty = {
+        enable = true;
+        font.size = 11;
+      };
     };
 
     programs = {
@@ -42,12 +45,73 @@
       btop.enable = true;
       direnv.enable = true;
       fzf.enable = true;
-      git.enable = true;
       home-manager.enable = true;
       newsboat.enable = true;
       nix.enable = true;
-      ssh.enable = true;
       tmux.enable = true;
+
+      ssh = {
+        enable = true;
+        matchblocks = {
+          kali = {
+            user = "root";
+            hostname = "10.5.0.5";
+            extraOptions = {
+              stricthostkeychecking = "no";
+              requesttty = "yes";
+              remotecommand = "tmux -l tmux new-session -as hacktheplanet";
+              userknownhostsfile = "/dev/null";
+            };
+          };
+
+          hackthebox = {
+            user = "root";
+            hostname = "10.10.0.10";
+            extraOptions = {
+              stricthostkeychecking = "no";
+              requesttty = "yes";
+              remotecommand = "tmux -l tmux new-session -as hacktheplanet";
+              userknownhostsfile = "/dev/null";
+            };
+          };
+
+          router = {
+            user = "root";
+            hostname = "router.oliverwiegers.com";
+            identityfile = "~/.ssh/id_rsa";
+            extraOptions = {
+              requesttty = "yes";
+              hostkeyalgorithms = "+ssh-rsa";
+            };
+          };
+        };
+      };
+
+      git = {
+        enable= true;
+        extraConfig = {
+          user = {
+            email = "oliver.wiegers@gmail.com";
+            name = "oliverwiegers";
+            signingkey = "244D3FF3276A942F8666536FDE9FDB17F778EFDA";
+          };
+          commit = {
+            gpgsign = true;
+          };
+          gpg = {
+            program = "gpg2";
+          };
+          init = {
+            defaultBranch = "main";
+          };
+          "protocol \"http\"" = {
+            allow = "never";
+          };
+          "protocol \"git\"" = {
+            allow = "never";
+          };
+        };
+      };
     };
   };
 

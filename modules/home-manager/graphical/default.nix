@@ -1,10 +1,6 @@
-{lib, ...}:
+{lib, myLib, ...}:
 with lib; {
-  imports = [
-    ./browser
-    ./programs
-    ./services
-  ];
+  imports = myLib.getConfigFilePaths ./. ++ myLib.getDirectoryPaths ./.;
 
   options = {
     graphical = {

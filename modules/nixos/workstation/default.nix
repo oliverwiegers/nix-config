@@ -2,19 +2,13 @@
   pkgs,
   lib,
   config,
+  myLib,
   ...
 }:
 with lib; let
   cfg = config.workstation;
 in {
-  # Read all .nix file from local directory except "default.nix"
-  imports = map (path: ./. + "/${path}") (
-    builtins.filter (
-      file: lib.hasSuffix ".nix" file && file != "default.nix"
-    ) (
-      builtins.attrNames (builtins.readDir (builtins.toString ./.))
-    )
-  );
+  imports = myLib.getConfigFilePaths ./. ++ myLib.getDirectoryPaths ./.;
 
   options = {
     workstation = {

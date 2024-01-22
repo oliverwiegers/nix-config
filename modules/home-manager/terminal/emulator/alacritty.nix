@@ -11,6 +11,9 @@ in {
       alacritty = {
         enable = true;
         settings = {
+          window = {
+            decorations = "None";
+          };
           env = {
             #TERM = "screen-256color";
             TERM = "xterm-256color";
@@ -33,7 +36,7 @@ in {
               family = "SauceCodePro Nerd Font";
               style = "Italic";
             };
-            size = 11;
+            size = cfg.font.size;
             scale_with_dpi = true;
           };
         };

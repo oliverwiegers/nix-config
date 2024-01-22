@@ -1,16 +1,19 @@
-{lib, ...}:
+{lib, myLib, ...}:
 with lib; {
-  imports = [
-    ./emulator
-    ./shell
-    ./programs
-  ];
+  imports = myLib.getConfigFilePaths ./. ++ myLib.getDirectoryPaths ./.;
 
   options = {
     terminal = {
       emulator = {
         alacritty = {
           enable = mkEnableOption "Enable Alacritty terminal emulator.";
+          font = {
+            size = mkOption {
+              type = lib.types.int;
+              default = 11;
+              description = "Terminal font size";
+            };
+          };
         };
       };
 
@@ -39,6 +42,10 @@ with lib; {
 
         git = {
           enable = mkEnableOption "Enable git.";
+          extraConfig = mkOption {
+            type = lib.types.attrs;
+            default = {};
+          };
         };
 
         home-manager = {
@@ -55,6 +62,10 @@ with lib; {
 
         ssh = {
           enable = mkEnableOption "Enable ssh.";
+          matchBlocks = mkOption {
+            type = lib.types.attrs;
+            default = {};
+          };
         };
 
         tmux = {

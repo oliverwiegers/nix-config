@@ -19,13 +19,13 @@ sh <(curl -L https://nixos.org/nix/install) --daemon
 
 # Create project home and clone repository.
 mkdir ~/Documents/projects && cd ~/Documents/projects
-nix run nixpkgs#git.out -- clone git@github.com:oliverwiegers/nix-config
+nix run --extra-experimental-features 'nix-command flakes' nixpkgs#git.out -- clone git@github.com:oliverwiegers/nix-config
 
 # Setup nix-darwin.
-nix run nix-darwin -- switch --flake .#host
+nix run --extra-experimental-features 'nix-command flakes' nix-darwin -- switch --flake .#host
 
 # Setup home-manager.
-nix run nixpkgs#home-manager.out -- switch --flake .#oliverwiegers@enigma
+nix run --extra-experimental-features 'nix-command flakes' nixpkgs#home-manager.out -- switch --flake .#oliverwiegers@enigma
 ```
 
 ## Update System

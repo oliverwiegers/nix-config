@@ -4,12 +4,8 @@ with lib; {
 
   options = {
     wm = {
-      hyprland = {
-        enable = mkEnableOption "Enable Hyprland.";
-      };
-
       yabai = {
-        enable = mkEnableOption "Enable Yabai (MacOS).";
+        enable = mkEnableOption "Enable yabai WM.";
       };
     };
   };

@@ -15,6 +15,7 @@ in {
       wl-clipboard
       pavucontrol
       imv
+      signal-desktop
       brightnessctl
     ];
   };

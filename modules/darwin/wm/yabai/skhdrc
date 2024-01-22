@@ -1,0 +1,14 @@
+# cmd + a / u / o / s are blocked due to umlaute
+
+# Open alacritty.
+cmd - return : /Users/oliver.wiegers/Applications/Home Manager Apps/Alacritty.app
+
+# focus window
+cmd - h : /run/current-system/sw/bin/yabai -m window --focus west
+cmd - l : /run/current-system/sw/bin/yabai -m window --focus east
+
+# swap managed window
+shift + cmd - h : /run/current-system/sw/bin/yabai -m window --swap west
+shift + cmd - j : /run/current-system/sw/bin/yabai -m window --swap south
+shift + cmd - k : /run/current-system/sw/bin/yabai -m window --swap north
+shift + cmd - l : /run/current-system/sw/bin/yabai -m window --swap east

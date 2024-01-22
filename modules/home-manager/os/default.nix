@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  myLib,
   ...
 }:
 with lib; let
@@ -17,7 +18,6 @@ with lib; let
     eza
     pywal
     nerdfonts
-    signal-desktop
     gnumake
     ncdu
     urlscan
@@ -27,10 +27,7 @@ with lib; let
     flim
   ];
 in {
-  imports = [
-    ./nixos
-    ./darwin
-  ];
+  imports = myLib.getConfigFilePaths ./. ++ myLib.getDirectoryPaths ./.;
 
   options = {
     os = {

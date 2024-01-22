@@ -3,7 +3,8 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.workstation.audio;
 in {
   config = mkIf cfg.enable {
