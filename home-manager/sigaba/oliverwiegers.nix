@@ -1,4 +1,4 @@
-{lib, config, pkgs, outputs, ...}: {
+{lib, config, pkgs, inputs, outputs, ...}: {
   imports = [
     ../../modules/home-manager
   ];
@@ -31,7 +31,7 @@
   };
 
   nixpkgs = {
-    overlays = builtins.attrValues outputs.overlays;
+    overlays = builtins.attrValues outputs.overlays ++ [ inputs.nixpkgs-firefox-darwin.overlay ];
     config = {
       allowUnfree = true;
       # Workaround for https://github.com/nix-community/home-manager/issues/2942
@@ -109,7 +109,8 @@
   graphical = {
     browser = {
       firefox = {
-        enable = false;
+        enable = true;
+        package = pkgs.firefox-bin;
       };
     };
   };

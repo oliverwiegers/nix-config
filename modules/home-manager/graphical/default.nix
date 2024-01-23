@@ -7,6 +7,10 @@ with lib; {
       browser = {
         firefox = {
           enable = mkEnableOption "Enable Firefox browser.";
+          package = mkOption {
+            type = lib.types.package;
+            default = pkgs.firefox;
+          };
         };
       };
 
