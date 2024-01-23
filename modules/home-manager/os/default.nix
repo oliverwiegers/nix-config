@@ -21,6 +21,7 @@ with lib; let
     gnumake
     ncdu
     urlscan
+    terraform
   ];
 
   neovimPackage = with pkgs.inputs.flim; [

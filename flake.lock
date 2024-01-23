@@ -115,11 +115,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1705128531,
-        "narHash": "sha256-lAy2Wwo2r+cKA6aU8HPY2/GsGQgT4BwD4WsK4zI8lP0=",
+        "lastModified": 1705949020,
+        "narHash": "sha256-4nprM79+u/U+W9OeOpjSSduXlRB7KipCUsNxre9ofPk=",
         "owner": "oliverwiegers",
         "repo": "flim",
-        "rev": "3c1a9e0c42b91e730cc9f63631990d01126a63af",
+        "rev": "38a7c172a3f65d857c0fd88c92479bbe6b64b9f2",
         "type": "github"
       },
       "original": {
