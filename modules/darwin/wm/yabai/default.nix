@@ -1,7 +1,9 @@
-{lib, config, ...}:
-with lib;
-
-let
+{
+  lib,
+  config,
+  ...
+}:
+with lib; let
   cfg = config.wm.yabai;
 in {
   config = mkIf cfg.enable {

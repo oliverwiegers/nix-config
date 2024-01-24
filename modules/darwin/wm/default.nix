@@ -1,4 +1,8 @@
-{lib, myLib, ...}:
+{
+  lib,
+  myLib,
+  ...
+}:
 with lib; {
   imports = myLib.getConfigFilePaths ./. ++ myLib.getDirectoryPaths ./.;
 

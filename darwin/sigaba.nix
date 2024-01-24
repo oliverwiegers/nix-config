@@ -1,5 +1,10 @@
-{inputs, outputs, lib, config, ...}: {
-
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  ...
+}: {
   imports = [
     ../modules/darwin
   ];

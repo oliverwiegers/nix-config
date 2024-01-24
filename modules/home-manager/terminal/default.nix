@@ -1,4 +1,8 @@
-{lib, myLib, ...}:
+{
+  lib,
+  myLib,
+  ...
+}:
 with lib; {
   imports = myLib.getConfigFilePaths ./. ++ myLib.getDirectoryPaths ./.;
 
@@ -70,6 +74,11 @@ with lib; {
 
         tmux = {
           enable = mkEnableOption "Enable tmux.";
+        };
+
+        terraform = {
+          enable = mkEnableOption "Enable tmux.";
+          default = false;
         };
       };
     };

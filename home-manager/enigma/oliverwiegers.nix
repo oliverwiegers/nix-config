@@ -88,7 +88,7 @@
       };
 
       git = {
-        enable= true;
+        enable = true;
         extraConfig = {
           user = {
             email = "oliver.wiegers@gmail.com";

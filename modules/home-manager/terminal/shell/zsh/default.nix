@@ -67,7 +67,11 @@ in {
         initExtra = lib.strings.concatStrings [
           (builtins.readFile ./zsh_functions.zsh)
           (builtins.readFile ./zsh_settings.zsh)
-          (if pkgs.stdenv.hostPlatform.isAarch64 then ''eval "$(/opt/homebrew/bin/brew shellenv)"'' else "")
+          (
+            if pkgs.stdenv.hostPlatform.isAarch64
+            then ''eval "$(/opt/homebrew/bin/brew shellenv)"''
+            else ""
+          )
         ];
 
         shellAliases = {
