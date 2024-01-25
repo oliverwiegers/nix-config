@@ -88,7 +88,7 @@ in {
           reload = ''source $HOME/.zshrc && printf "Successfully reloaded zsh_config_files\n"'';
           conf = "dotedit";
           vtree = "tree -I .venv";
-          act = ". .venv/bin/activate";
+          vact = ". .venv/bin/activate";
           venv = "python3 -m virtualenv .venv";
           kcon = "kubectl ctx";
           kns = "kubectl ns";
