@@ -52,7 +52,7 @@
 
       ssh = {
         enable = true;
-        matchblocks = {
+        matchBlocks = {
           kali = {
             user = "root";
             hostname = "10.5.0.5";
@@ -78,7 +78,7 @@
           router = {
             user = "root";
             hostname = "router.oliverwiegers.com";
-            identityfile = "~/.ssh/id_rsa";
+            identityFile = "~/.ssh/id_rsa";
             extraOptions = {
               requesttty = "yes";
               hostkeyalgorithms = "+ssh-rsa";
