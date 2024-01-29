@@ -78,7 +78,7 @@ in {
     users.users = {
       oliverwiegers = {
         isNormalUser = true;
-        extraGroups = ["wheel"];
+        extraGroups = ["wheel" "docker"];
         description = "Oliver Wiegers";
         shell = pkgs.zsh;
       };
