@@ -1,10 +1,15 @@
 # cmd + a / u / o / s are blocked due to umlaute
 
 # Open alacritty.
-cmd - return : /Users/oliver.wiegers/Applications/Home Manager Apps/Alacritty.app
+cmd - return : open -na "${HOME}/Applications/Home Manager Apps/Alacritty.app/Contents/MacOS/alacritty"
+
+# Toggle fullscreen mode of current window.
+cmd - f : /run/current-system/sw/bin/yabai -m window --toggle zoom-parent
 
 # focus window
 cmd - h : /run/current-system/sw/bin/yabai -m window --focus west
+cmd - j : /run/current-system/sw/bin/yabai -m window --focus south
+cmd - k : /run/current-system/sw/bin/yabai -m window --focus north
 cmd - l : /run/current-system/sw/bin/yabai -m window --focus east
 
 # swap managed window
@@ -12,3 +17,20 @@ shift + cmd - h : /run/current-system/sw/bin/yabai -m window --swap west
 shift + cmd - j : /run/current-system/sw/bin/yabai -m window --swap south
 shift + cmd - k : /run/current-system/sw/bin/yabai -m window --swap north
 shift + cmd - l : /run/current-system/sw/bin/yabai -m window --swap east
+
+# Focus workspaces
+cmd - 1 : /run/current-system/sw/bin/yabai -m space --focus 1
+cmd - 2 : /run/current-system/sw/bin/yabai -m space --focus 2
+cmd - 3 : /run/current-system/sw/bin/yabai -m space --focus 3
+cmd - 4 : /run/current-system/sw/bin/yabai -m space --focus 4
+cmd - 5 : /run/current-system/sw/bin/yabai -m space --focus 5
+cmd - 6 : /run/current-system/sw/bin/yabai -m space --focus 6
+cmd - 7 : /run/current-system/sw/bin/yabai -m space --focus 7
+
+shift + cmd - 1 : /run/current-system/sw/bin/yabai -m window --space 1
+shift + cmd - 2 : /run/current-system/sw/bin/yabai -m window --space 2
+shift + cmd - 3 : /run/current-system/sw/bin/yabai -m window --space 3
+shift + cmd - 4 : /run/current-system/sw/bin/yabai -m window --space 4
+shift + cmd - 5 : /run/current-system/sw/bin/yabai -m window --space 5
+shift + cmd - 6 : /run/current-system/sw/bin/yabai -m window --space 6
+shift + cmd - 7 : /run/current-system/sw/bin/yabai -m window --space 7

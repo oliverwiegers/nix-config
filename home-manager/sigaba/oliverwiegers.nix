@@ -78,10 +78,10 @@
         matchBlocks = {
           jumphost = {
             user = "wiegers";
-            hostname = "aptdater03.infra.netlogix-ws.cust";
+            hostname = "aptdater03.infra.netlogix-ws.cust.nlxnet.de";
             extraOptions = {
-              requesttty = "yes";
-              remotecommand = "tmux -l tmux new-session -as hacktheplanet";
+              RequestTTY = "yes";
+              RemoteCommand = "tmux -L tmux new-session -As hacktheplanet";
             };
           };
         };

@@ -57,10 +57,10 @@
             user = "root";
             hostname = "10.5.0.5";
             extraOptions = {
-              stricthostkeychecking = "no";
-              requesttty = "yes";
-              remotecommand = "tmux -l tmux new-session -as hacktheplanet";
-              userknownhostsfile = "/dev/null";
+              StrictHostKeyChecking = "no";
+              RequestTTY = "yes";
+              RemoteCommand = "tmux -L tmux new-session -As hacktheplanet";
+              UserKnownHostsFile = "/dev/null";
             };
           };
 
@@ -68,10 +68,10 @@
             user = "root";
             hostname = "10.10.0.10";
             extraOptions = {
-              stricthostkeychecking = "no";
-              requesttty = "yes";
-              remotecommand = "tmux -l tmux new-session -as hacktheplanet";
-              userknownhostsfile = "/dev/null";
+              StrictHostKeyChecking = "no";
+              RequestTTY = "yes";
+              RemoteCommand = "tmux -L tmux new-session -As hacktheplanet";
+              UserKnownHostsFile = "/dev/null";
             };
           };
 
@@ -80,8 +80,8 @@
             hostname = "router.oliverwiegers.com";
             identityFile = "~/.ssh/id_rsa";
             extraOptions = {
-              requesttty = "yes";
-              hostkeyalgorithms = "+ssh-rsa";
+              requestTTY = "yes";
+              HostKeyAlgorithms = "+ssh-rsa";
             };
           };
         };

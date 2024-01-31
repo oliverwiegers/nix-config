@@ -1,9 +1,19 @@
 #!/usr/bin/env sh
 
-launchctl unload -F /System/Library/LaunchAgents/com.apple.WindowManager.plist > /dev/null 2>&1 &
+#launchctl unload -F /System/Library/LaunchAgents/com.apple.WindowManager.plist > /dev/null 2>&1 &
 
 sudo yabai --load-sa
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
+# Focus window under mouse after window close.
+yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+
+# Doesn't work yet will check later.
+# yabai -m signal --add event=space_created action="yabai -m space --focus 4 && yabai -m space --display 2 && yabai -m space --focus prev"
+# yabai -m signal --add event=space_created action="yabai -m space --focus 5 && yabai -m space --display 2 && yabai -m space --focus prev"
+# yabai -m signal --add event=space_created action="yabai -m space --focus 6 && yabai -m space --display 2 && yabai -m space --focus prev"
+# yabai -m signal --add event=space_created action="yabai -m space --focus 7 && yabai -m space --display 2 && yabai -m space --focus prev"
 
 # Layout.
 yabai -m config layout bsp
@@ -33,18 +43,20 @@ yabai -m rule --add title="Preferences$"       manage=off
 yabai -m rule --add title="Settings$"          manage=off
 
 # Workspace management.
-yabai -m space 1  --label shelk
+yabai -m space 1  --label shell
 yabai -m space 2  --label browser
 yabai -m space 3  --label notes
 yabai -m space 4  --label misc
 yabai -m space 5  --label chat
 yabai -m space 6  --label mail
+yabai -m space 7  --label video
 
 # Assign apps to spaces.
 yabai -m rule --add app="Firefox" space=browser
 yabai -m rule --add app="Alacritty" space=shell
 yabai -m rule --add app="Slack" space=chat
-yabai -m rule --add app="Outlook" space=mail
+yabai -m rule --add app="Microsoft Outlook" space=mail
+yabai -m rule --add app="Microsoft Teams (work or school)" space=video
 
 # Foxus rules.
 yabai -m config focus_follows_mouse autoraise

@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }:
@@ -12,6 +13,7 @@ in {
         enable = true;
         extraConfig = builtins.readFile ./yabairc;
         enableScriptingAddition = true;
+        package = pkgs.unstable.yabai;
       };
 
       skhd = {

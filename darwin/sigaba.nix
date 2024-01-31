@@ -55,6 +55,7 @@
       dock = {
         autohide = true;
         orientation = "right";
+        mru-spaces = false;
       };
     };
 
@@ -106,5 +107,5 @@
     ];
   };
 
-  wm.yabai.enable = false;
+  wm.yabai.enable = true;
 }
