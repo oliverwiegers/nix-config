@@ -17,6 +17,7 @@ in {
       imv
       signal-desktop
       brightnessctl
+      burpsuite
     ];
   };
 }

@@ -41,6 +41,9 @@ export TERM="xterm-256color"
 export EDITOR="vim"
 export BROWSER="firefox"
 
+# Fix java GUI issues with wayland
+_JAVA_AWT_WM_NONEREPARENTING=1
+
 #                  __
 #  _      ______ _/ /
 # | | /| / / __ `/ /
