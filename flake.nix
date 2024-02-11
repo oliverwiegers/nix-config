@@ -26,11 +26,13 @@
     # My own Neovim flake.
     flim = {
       url = "github:oliverwiegers/flim";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # My own Tmux flake.
     tmuxist = {
       url = "github:oliverwiegers/tmuxist";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     nixos-hardware = {
@@ -42,13 +44,22 @@
     #
 
     # Nix Darwin.
-    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Firefox overlay. Because nixpkgs package is broken on darwin.
-    nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
+    nixpkgs-firefox-darwin = {
+      url = "github:bandithedoge/nixpkgs-firefox-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Homebrew
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    nix-homebrew = {
+      url = "github:zhaofengli-wip/nix-homebrew";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Declarative tap management for homebrew
     homebrew-core = {

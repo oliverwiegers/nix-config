@@ -33,6 +33,8 @@ in {
             i-dont-care-about-cookies
             privacy-badger
             ublock-origin
+            foxyproxy-standard
+            hacktools
           ];
 
           search = {
