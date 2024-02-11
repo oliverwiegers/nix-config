@@ -134,4 +134,6 @@
   wm = {
     hyprland.enable = true;
   };
+
+  hackstation.enable = true;
 }

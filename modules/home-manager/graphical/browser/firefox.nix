@@ -7,6 +7,19 @@
 with lib; let
   cfg = config.graphical.browser.firefox;
   nixIcon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+
+  defaultPlugins = with pkgs.inputs.firefox-addons; [
+    vimium
+    browserpass
+    i-dont-care-about-cookies
+    privacy-badger
+    ublock-origin
+  ];
+
+  hackstationPlugins = with pkgs.inputs.firefox-addons; [
+    foxyproxy-standard
+    hacktools
+  ];
 in {
   config = mkIf cfg.enable {
     programs.firefox = {
@@ -28,15 +41,10 @@ in {
             "ui.key.menuAccessKey" = 17;
           };
 
-          extensions = with pkgs.inputs.firefox-addons; [
-            vimium
-            browserpass
-            i-dont-care-about-cookies
-            privacy-badger
-            ublock-origin
-            foxyproxy-standard
-            hacktools
-          ];
+          extensions =
+            if config.hackstation.enable
+            then defaultPlugins ++ hackstationPlugins
+            else defaultPlugins;
 
           search = {
             default = "Searx";
