@@ -77,7 +77,12 @@ with lib; {
         };
 
         terraform = {
-          enable = mkEnableOption "Enable tmux.";
+          enable = mkEnableOption "Enable Terraform.";
+          default = false;
+        };
+
+        github = {
+          enable = mkEnableOption "Enable GitHub CLI.";
           default = false;
         };
       };

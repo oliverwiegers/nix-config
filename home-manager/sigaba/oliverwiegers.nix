@@ -72,6 +72,7 @@
       nix.enable = true;
       terraform.enable = true;
       tmux.enable = true;
+      github.enable = true;
 
       ssh = {
         enable = true;

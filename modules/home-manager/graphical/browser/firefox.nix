@@ -25,6 +25,7 @@ in {
             "privacy.firstparty.isolate" = true;
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             "ui.key.menuAccessKeyFocuses" = false;
+            "ui.key.menuAccessKey" = 17;
           };
 
           extensions = with pkgs.inputs.firefox-addons; [

@@ -43,13 +43,13 @@ yabai -m rule --add title="Preferences$"       manage=off
 yabai -m rule --add title="Settings$"          manage=off
 
 # Workspace management.
-yabai -m space 1  --label shell
-yabai -m space 2  --label browser
-yabai -m space 3  --label notes
-yabai -m space 4  --label misc
-yabai -m space 5  --label chat
-yabai -m space 6  --label mail
-yabai -m space 7  --label video
+yabai -m space 1 --label shell
+yabai -m space 2 --label browser
+yabai -m space 3 --label notes
+yabai -m space 4 --label misc
+yabai -m space 5 --label chat
+yabai -m space 6 --label mail
+yabai -m space 7 --label video
 
 # Assign apps to spaces.
 yabai -m rule --add app="Firefox" space=browser
