@@ -58,8 +58,8 @@ yabai -m rule --add app="Slack" space=chat
 yabai -m rule --add app="Microsoft Outlook" space=mail
 yabai -m rule --add app="Microsoft Teams (work or school)" space=video
 
-# Foxus rules.
-yabai -m config focus_follows_mouse autoraise
+# Focus rules.
+yabai -m config focus_follows_mouse off
 yabai -m config mouse_follows_focus on
 
 echo "yabai configuration loaded"
