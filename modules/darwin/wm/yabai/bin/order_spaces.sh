@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-if [ $(yabai -m query --displays | jq -r '.[].spaces.id' | wc -l) -gt 1 ]; then
+if [ $(yabai -m query --displays | jq -r '.[].spaces' | wc -l) -gt 1 ]; then
     current_space="$(yabai -m query --spaces --space | jq -r '.label')"
 
     # Move primary spaces to external/big screen.

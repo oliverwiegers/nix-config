@@ -1,43 +1,41 @@
 # cmd + a / u / o / s are blocked due to umlaute
 
-yabai="/run/current-system/sw/bin/yabai"
-
 # Open alacritty.
 cmd - return : open -na "${HOME}/Applications/Home Manager Apps/Alacritty.app/Contents/MacOS/alacritty"
 
 # Toggle fullscreen mode of current window.
-cmd - f : "${yabai}" -m window --focus mouse && \
-        "${yabai}" -m window --toggle zoom-fullscreen
+cmd - f : /run/current-system/sw/bin/yabai -m window --focus mouse && \
+        /run/current-system/sw/bin/yabai -m window --toggle zoom-fullscreen
 
 # Toogle float mode of current window.
-shift + cmd - f : "${yabai}" -m window --toggle float &&  \
-        "${yabai}" -m window --grid 4:4:1:1:2:2
+shift + cmd - f : /run/current-system/sw/bin/yabai -m window --toggle float &&  \
+        /run/current-system/sw/bin/yabai -m window --grid 4:4:1:1:2:2
 
 # focus window
-cmd - h : "${yabai}" -m window --focus west
-cmd - j : "${yabai}" -m window --focus south
-cmd - k : "${yabai}" -m window --focus north
-cmd - l : "${yabai}" -m window --focus east
+cmd - h : /run/current-system/sw/bin/yabai -m window --focus west
+cmd - j : /run/current-system/sw/bin/yabai -m window --focus south
+cmd - k : /run/current-system/sw/bin/yabai -m window --focus north
+cmd - l : /run/current-system/sw/bin/yabai -m window --focus east
 
 # swap managed window
-shift + cmd - h : "${yabai}" -m window --swap west
-shift + cmd - j : "${yabai}" -m window --swap south
-shift + cmd - k : "${yabai}" -m window --swap north
-shift + cmd - l : "${yabai}" -m window --swap east
+shift + cmd - h : /run/current-system/sw/bin/yabai -m window --swap west
+shift + cmd - j : /run/current-system/sw/bin/yabai -m window --swap south
+shift + cmd - k : /run/current-system/sw/bin/yabai -m window --swap north
+shift + cmd - l : /run/current-system/sw/bin/yabai -m window --swap east
 
 # Focus workspaces
-cmd - 1 : "${yabai}" -m space --focus shell
-cmd - 2 : "${yabai}" -m space --focus browser
-cmd - 3 : "${yabai}" -m space --focus notes
-cmd - 4 : "${yabai}" -m space --focus misc
-cmd - 5 : "${yabai}" -m space --focus chat
-cmd - 6 : "${yabai}" -m space --focus mail
-cmd - 7 : "${yabai}" -m space --focus video
+cmd - 1 : /run/current-system/sw/bin/yabai -m space --focus shell
+cmd - 2 : /run/current-system/sw/bin/yabai -m space --focus browser
+cmd - 3 : /run/current-system/sw/bin/yabai -m space --focus notes
+cmd - 4 : /run/current-system/sw/bin/yabai -m space --focus misc
+cmd - 5 : /run/current-system/sw/bin/yabai -m space --focus chat
+cmd - 6 : /run/current-system/sw/bin/yabai -m space --focus mail
+cmd - 7 : /run/current-system/sw/bin/yabai -m space --focus video
 
-shift + cmd - 1 : "${yabai}" -m window --space shell
-shift + cmd - 2 : "${yabai}" -m window --space browser
-shift + cmd - 3 : "${yabai}" -m window --space notes
-shift + cmd - 4 : "${yabai}" -m window --space misc
-shift + cmd - 5 : "${yabai}" -m window --space chat
-shift + cmd - 6 : "${yabai}" -m window --space mail
-shift + cmd - 7 : "${yabai}" -m window --space video
+shift + cmd - 1 : /run/current-system/sw/bin/yabai -m window --space shell
+shift + cmd - 2 : /run/current-system/sw/bin/yabai -m window --space browser
+shift + cmd - 3 : /run/current-system/sw/bin/yabai -m window --space notes
+shift + cmd - 4 : /run/current-system/sw/bin/yabai -m window --space misc
+shift + cmd - 5 : /run/current-system/sw/bin/yabai -m window --space chat
+shift + cmd - 6 : /run/current-system/sw/bin/yabai -m window --space mail
+shift + cmd - 7 : /run/current-system/sw/bin/yabai -m window --space video

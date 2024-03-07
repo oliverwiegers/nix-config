@@ -21,6 +21,7 @@ with lib; let
     gnumake
     ncdu
     urlscan
+    pre-commit
   ];
 
   neovimPackage = with pkgs.inputs.flim; [
