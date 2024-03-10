@@ -49,6 +49,7 @@
       newsboat.enable = true;
       nix.enable = true;
       tmux.enable = true;
+      terraform.enable = true;
 
       ssh = {
         enable = true;

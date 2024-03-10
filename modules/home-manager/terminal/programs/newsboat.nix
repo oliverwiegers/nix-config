@@ -49,7 +49,7 @@ in {
           notify-program '/bin/notify-send'
 
           # Macros
-          macro f set browser "/bin/firefox %u"; open-in-browser-and-mark-read ; set browser "/bin/w3m %u"
+          macro f set browser "firefox %u"; open-in-browser-and-mark-read ; set browser "w3m %u"
           macro w set browser "~/.local/bin/wallabag add %u"; open-in-browser-and-mark-read ; set browser "/bin/w3m %u"
         '';
 
@@ -71,6 +71,10 @@ in {
 
           # Blogs
           {url = ''"query:Blogs:tags # \"blog\""'';}
+          {
+            url = "https://hackerstations.substack.com/feed/";
+            tags = ["blog"];
+          }
           {
             url = "https://blog.orhun.dev/rss.xml";
             tags = ["blog" "~Orhun's Blog (Programming)" "programming"];
@@ -189,10 +193,6 @@ in {
           }
           {
             url = "https://thiscute.world/en/index.xml";
-            tags = ["blog" "nix"];
-          }
-          {
-            url = "https://xeiaso.net/blog.rss";
             tags = ["blog" "nix"];
           }
           {

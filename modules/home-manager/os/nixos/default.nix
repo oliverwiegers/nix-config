@@ -17,6 +17,8 @@ in {
       imv
       signal-desktop
       brightnessctl
+      android-tools
+      android-udev-rules
     ];
   };
 }
