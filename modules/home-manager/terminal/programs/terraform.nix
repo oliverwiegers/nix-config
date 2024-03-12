@@ -12,6 +12,7 @@ in {
       terraform
       tflint
       terraform-docs
+      terragrunt
     ];
   };
 }
