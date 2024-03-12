@@ -8,6 +8,13 @@
 ###############################################################################
 
 enable-fzf-tab
+# Enable terragrunt autocompletion
+if command -v terragrunt > /dev/null 2>&1; then
+    complete -o nospace -C "$(which terragrunt)" terragrunt
+
+    alias tg="terragrunt"
+fi
+
 
 #                    _       __    __
 #  _   ______ ______(_)___ _/ /_  / /__  _____
