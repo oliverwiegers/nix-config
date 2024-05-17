@@ -22,6 +22,8 @@ with lib; let
     ncdu
     urlscan
     pre-commit
+    gnused
+    erdtree
   ];
 
   neovimPackage = with pkgs.inputs.flim; [
