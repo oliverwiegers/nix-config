@@ -8,8 +8,8 @@
 
     # Home manager.
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Nix User Repository.
@@ -46,7 +46,7 @@
     # Nix Darwin.
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Firefox overlay. Because nixpkgs package is broken on darwin.
@@ -84,6 +84,7 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-unstable,
     home-manager,
     nixos-hardware,
     nix-homebrew,
@@ -103,7 +104,7 @@
 
     forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
     pkgsFor = lib.genAttrs systems (system:
-      import nixpkgs {
+      import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
       });

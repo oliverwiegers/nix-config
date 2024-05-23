@@ -1,19 +1,75 @@
 #!/usr/bin/env sh
 
-#launchctl unload -F /System/Library/LaunchAgents/com.apple.WindowManager.plist > /dev/null 2>&1 &
+##
+## Function definitions.
+##
 
+# Create and label space.
+function setup_space {
+  local idx="$1"
+  local name="$2"
+  local space=""
+
+  space=$(yabai -m query --spaces --space "$idx")
+  if [ -z "$space" ]; then
+    yabai -m space --create
+  fi
+
+  yabai -m space "$idx" --label "$name"
+}
+
+# Move space to correct monitors.
+function move_spaces {
+    # Make sure there is a temp window on every monitor so space rearangement
+    # does not fail.
+    setup_space 10 temp_internal
+    setup_space 11 temp_external
+    yabai -m space --focus temp_internal
+    yabai -m space --display 1
+    yabai -m space --focus temp_external
+    yabai -m space --display 2
+
+    # Move primary spaces to external/big screen.
+    yabai -m space --focus shell
+    yabai -m space --display 2
+    yabai -m space --focus browser
+    yabai -m space --display 2
+    yabai -m space --focus notes
+    yabai -m space --display 2
+
+    # Move secondary spaces to internal/small screen.
+    yabai -m space --focus misc
+    yabai -m space --display 1
+    yabai -m space --focus chat
+    yabai -m space --display 1
+    yabai -m space --focus mail
+    yabai -m space --display 1
+
+    # Focus previously focused space.
+    yabai -m space --focus shell
+
+    # Delete temp spaces.
+    yabai -m space --destroy temp_internal
+    yabai -m space --destroy temp_external
+}
+
+# Add a new rule and apply at the same time.
+function yabai_rule {
+  yabai -m rule --add "$@"
+  yabai -m rule --apply "$@"
+}
+
+##
+## Yabai settings.
+##
+
+# Load scripting additions.
 sudo yabai --load-sa
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
 # Focus window under mouse after window close.
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
-
-# Doesn't work yet will check later.
-# yabai -m signal --add event=space_created action="yabai -m space --focus 4 && yabai -m space --display 2 && yabai -m space --focus prev"
-# yabai -m signal --add event=space_created action="yabai -m space --focus 5 && yabai -m space --display 2 && yabai -m space --focus prev"
-# yabai -m signal --add event=space_created action="yabai -m space --focus 6 && yabai -m space --display 2 && yabai -m space --focus prev"
-# yabai -m signal --add event=space_created action="yabai -m space --focus 7 && yabai -m space --display 2 && yabai -m space --focus prev"
 
 # Layout.
 yabai -m config layout bsp
@@ -22,10 +78,11 @@ yabai -m config auto_balance off
 # Windows.
 yabai -m config window_topmost off
 
+# Set modifier to alt.
 yabai -m config mouse_modifier alt
-# set modifier + right-click drag to resize window (default: resize)
+# Set modifier + right-click drag to resize window (default: resize).
 yabai -m config mouse_action2 resize
-# set modifier + left-click drag to resize window (default: move)
+# Set modifier + left-click drag to resize window (default: move).
 yabai -m config mouse_action1 move
 
 # Gaps.
@@ -35,34 +92,43 @@ yabai -m config left_padding   10
 yabai -m config right_padding  10
 yabai -m config window_gap     7
 
-# Rules.
-yabai -m rule --add app="^System Settings$"    manage=off
-yabai -m rule --add app="^System Information$" manage=off
-yabai -m rule --add app="^System Preferences$" manage=off
-yabai -m rule --add title="Preferences$"       manage=off
-yabai -m rule --add title="Settings$"          manage=off
-
-# Workspace management.
-yabai -m space 1 --label shell
-yabai -m space 2 --label browser
-yabai -m space 3 --label notes
-yabai -m space 4 --label misc
-yabai -m space 5 --label chat
-yabai -m space 6 --label mail
-yabai -m space 7 --label video
-
-# Assign apps to spaces.
-yabai -m rule --add app="Firefox" space=browser
-yabai -m rule --add app="Alacritty" space=shell
-yabai -m rule --add app="Slack" space=chat
-yabai -m rule --add app="Microsoft Outlook" space=mail
-yabai -m rule --add app="Microsoft Teams (work or school)" space=video
-
-# Focus rules.
+# Focus.
 yabai -m config focus_follows_mouse off
 yabai -m config mouse_follows_focus on
 
-echo "yabai configuration loaded"
-
+# Border colors and width.
 borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=10.0 2>/dev/null 1>&2 &
-echo "borders started or updated"
+
+##
+## Funtion calls
+##
+
+# Create wanted spaces.
+setup_space 1 shell
+setup_space 2 browser
+setup_space 3 notes
+setup_space 4 misc
+setup_space 5 chat
+setup_space 6 mail
+
+# Move spaces to correct monitors.
+move_spaces
+
+# Apply rules.
+yabai_rule app="^System Settings$"    manage=off
+yabai_rule app="^System Information$" manage=off
+yabai_rule app="^System Preferences$" manage=off
+yabai_rule title="Preferences$"       manage=off
+yabai_rule title="Settings$"          manage=off
+
+# Assign apps to spaces at start.
+yabai_rule app="Firefox" space=browser
+yabai_rule app="Alacritty" space=shell
+yabai_rule app="Slack" space=chat
+yabai_rule app="Microsoft Outlook" space=mail
+yabai_rule app="Microsoft Teams" space=chat
+
+# Cleanup unwanted spaces.
+for _ in $(yabai -m query --spaces | jq '.[].index | select(. > 6)'); do
+  yabai -m space --destroy 7 # The index changes after every delete. So it stays at 7.
+done

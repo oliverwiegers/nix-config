@@ -37,7 +37,7 @@ in {
         # Enable flakes and new 'nix' command
         experimental-features = "nix-command flakes";
         # Deduplicate and optimize nix store
-        auto-optimise-store = true;
+        auto-optimise-store = false; #TODO: Deactivate for now
         warn-dirty = false;
       };
 

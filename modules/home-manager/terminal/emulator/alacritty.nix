@@ -22,7 +22,9 @@ in {
             history = 10000;
             multiplier = 3;
           };
-          draw_bold_text_with_bright_colors = true;
+          colors = {
+            draw_bold_text_with_bright_colors = true;
+          };
           font = {
             normal = {
               family = "SauceCodePro Nerd Font";
@@ -37,7 +39,6 @@ in {
               style = "Italic";
             };
             size = cfg.font.size;
-            scale_with_dpi = true;
           };
         };
       };

@@ -30,7 +30,6 @@ cmd - 3 : /run/current-system/sw/bin/yabai -m space --focus notes
 cmd - 4 : /run/current-system/sw/bin/yabai -m space --focus misc
 cmd - 5 : /run/current-system/sw/bin/yabai -m space --focus chat
 cmd - 6 : /run/current-system/sw/bin/yabai -m space --focus mail
-cmd - 7 : /run/current-system/sw/bin/yabai -m space --focus video
 
 shift + cmd - 1 : /run/current-system/sw/bin/yabai -m window --space shell
 shift + cmd - 2 : /run/current-system/sw/bin/yabai -m window --space browser
@@ -38,4 +37,3 @@ shift + cmd - 3 : /run/current-system/sw/bin/yabai -m window --space notes
 shift + cmd - 4 : /run/current-system/sw/bin/yabai -m window --space misc
 shift + cmd - 5 : /run/current-system/sw/bin/yabai -m window --space chat
 shift + cmd - 6 : /run/current-system/sw/bin/yabai -m window --space mail
-shift + cmd - 7 : /run/current-system/sw/bin/yabai -m window --space video

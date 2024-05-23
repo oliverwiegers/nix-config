@@ -60,7 +60,7 @@ in {
     programs = {
       zsh = {
         enable = true;
-        enableAutosuggestions = true;
+        autosuggestion.enable = true;
         enableCompletion = true;
 
         # Keep "code" in zsh files to lint it.
