@@ -37,3 +37,6 @@ shift + cmd - 3 : /run/current-system/sw/bin/yabai -m window --space notes
 shift + cmd - 4 : /run/current-system/sw/bin/yabai -m window --space misc
 shift + cmd - 5 : /run/current-system/sw/bin/yabai -m window --space chat
 shift + cmd - 6 : /run/current-system/sw/bin/yabai -m window --space mail
+
+# Reload config
+shift + cmd - r : launchctl kickstart -k gui/501/org.nixos.yabai && launchctl kickstart -k gui/501/org.nixos.skhd

@@ -10,8 +10,7 @@ function setup_space {
   local name="$2"
   local space=""
 
-  space=$(yabai -m query --spaces --space "$idx")
-  if [ -z "$space" ]; then
+  if ! yabai -m query --spaces --space "$idx" > /dev/null 2>&1; then
     yabai -m space --create
   fi
 
@@ -51,6 +50,28 @@ function move_spaces {
     # Delete temp spaces.
     yabai -m space --destroy temp_internal
     yabai -m space --destroy temp_external
+}
+
+# Remove undisired spaces.
+function remove_undisired_spaces {
+    regex_pattern_spaces="(shell)|(browser)|(notes)|(misc)|(chat)|(mail)"
+    undisired_spaces="$(yabai -m query --spaces | jq -e --arg pattern "${regex_pattern_spaces}" '.[] | select(.label | test($pattern) | not) | .index')"
+
+    # Label spaces because index will change with deletion of spaces.
+    for space in ${undisired_spaces[@]}; do
+        yabai -m space "${space}" --label "tbd${space}"
+    done
+
+    # Move remaining windows and delete space.
+    for space in ${undisired_spaces[@]}; do
+        windows="$(yabai -m query --spaces | jq -r -e --arg space "tbd${space}" '.[] | select(.label == $space) | .windows | @sh' | tr ' ' '\n')"
+
+        for window in ${windows}; do
+            yabai -m window "${window}" --space shell
+        done
+
+        yabai -m space --destroy "tbd${space}"
+    done
 }
 
 # Add a new rule and apply at the same time.
@@ -113,9 +134,6 @@ setup_space 4 misc
 setup_space 5 chat
 setup_space 6 mail
 
-# Move spaces to correct monitors.
-move_spaces
-
 # Apply rules.
 yabai_rule app="^System Settings$"    manage=off
 yabai_rule app="^System Information$" manage=off
@@ -130,7 +148,11 @@ yabai_rule app="Slack" space=chat
 yabai_rule app="Microsoft Outlook" space=mail
 yabai_rule app="Microsoft Teams" space=chat
 
+# Move spaces to correct monitors and delete unwanted ones.
+move_spaces
+#remove_undisired_spaces
+
 # Cleanup unwanted spaces.
-for _ in $(yabai -m query --spaces | jq '.[].index | select(. > 6)'); do
-  yabai -m space --destroy 7 # The index changes after every delete. So it stays at 7.
+for index in $(yabai -m query --spaces | jq '.[] | select(.label == "") | .index' | sort -nr); do
+  yabai -m space --destroy "${index}"
 done
