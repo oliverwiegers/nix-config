@@ -85,6 +85,11 @@ with lib; {
           enable = mkEnableOption "Enable GitHub CLI.";
           default = false;
         };
+
+        rust = {
+          enable = mkEnableOption "Enable Rust lang toolchains..";
+          default = false;
+        };
       };
     };
   };

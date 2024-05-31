@@ -73,6 +73,7 @@
       terraform.enable = true;
       tmux.enable = true;
       github.enable = true;
+      rust.enable = true;
 
       ssh = {
         enable = true;

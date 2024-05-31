@@ -39,6 +39,12 @@
       url = "github:NixOS/nixos-hardware/master";
     };
 
+    # Rust toolchains.
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     #
     # MacOS related inputs.
     #
