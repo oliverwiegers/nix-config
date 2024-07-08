@@ -74,6 +74,7 @@
       tmux.enable = true;
       github.enable = true;
       rust.enable = true;
+      k8s-cli.enable = true;
 
       ssh = {
         enable = true;

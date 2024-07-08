@@ -87,7 +87,12 @@ with lib; {
         };
 
         rust = {
-          enable = mkEnableOption "Enable Rust lang toolchains..";
+          enable = mkEnableOption "Enable Rust lang toolchains.";
+          default = false;
+        };
+
+        k8s-cli = {
+          enable = mkEnableOption "Enable k8s cli tools.";
           default = false;
         };
       };

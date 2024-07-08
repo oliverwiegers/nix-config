@@ -45,6 +45,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Krew
+    krewfile = {
+      url = "github:brumhard/krewfile";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     #
     # MacOS related inputs.
     #

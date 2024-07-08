@@ -90,9 +90,6 @@ in {
           vtree = "tree -I .venv";
           vact = ". .venv/bin/activate";
           venv = "python3 -m virtualenv .venv";
-          kcon = "kubectl ctx";
-          kns = "kubectl ns";
-          kk = "kubectl krew";
           vim = "TERM=screen-256color vim";
           nvim = "TERM=screen-256color nvim";
         };
@@ -110,7 +107,6 @@ in {
             "sudo"
             "helm"
             "direnv"
-            "kubectl"
             "jsontools"
             "terraform"
             "taskwarrior"

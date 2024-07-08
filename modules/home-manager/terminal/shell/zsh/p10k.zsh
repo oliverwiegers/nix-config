@@ -375,7 +375,6 @@
   typeset -g POWERLEVEL9K_HASKELL_STACK_FOREGROUND=3
   typeset -g POWERLEVEL9K_HASKELL_STACK_SOURCES=(shell local)
   typeset -g POWERLEVEL9K_HASKELL_STACK_ALWAYS_SHOW=true
-  typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile|flux|fluxctl|stern|kubeseal|skaffold|kubent|kubecolor|cmctl|sparkctl'
   typeset -g POWERLEVEL9K_KUBECONTEXT_CLASSES=(
       '*'       DEFAULT)
   typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_FOREGROUND=5

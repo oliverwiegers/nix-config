@@ -11,6 +11,10 @@ in {
     home.packages = with pkgs.unstable; [
       gnupg
       ruby
+      sshuttle
+      gnutar
+      wget
+      ipcalc
     ];
   };
 }

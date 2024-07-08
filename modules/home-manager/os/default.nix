@@ -24,6 +24,7 @@ with lib; let
     pre-commit
     gnused
     erdtree
+    testssl
   ];
 
   neovimPackage = with pkgs.inputs.flim; [

@@ -100,7 +100,6 @@
       "caffeine"
       "docker"
       "appcleaner"
-      "amethyst"
       #"microsoft-office"
       #"microsoft-teams"
       #"microsoft-outlook"
