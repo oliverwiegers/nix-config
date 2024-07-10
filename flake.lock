@@ -336,11 +336,11 @@
         "rustaceanvim": "rustaceanvim"
       },
       "locked": {
-        "lastModified": 1718970618,
-        "narHash": "sha256-oa9+av1LQdPyn6VG5j0oP0mY8iH8CWdvXg4CU3Qn6N0=",
+        "lastModified": 1720442207,
+        "narHash": "sha256-4p/4e30G5UtvUo9YIGmXh0wyFofAlCP+5IunuHS+xio=",
         "owner": "oliverwiegers",
         "repo": "flim",
-        "rev": "7e3785a0c447b0e7035a22d112e6f0d411329c97",
+        "rev": "3b04e1876d49ecbdbf000e481cd9c500fd2931d3",
         "type": "github"
       },
       "original": {

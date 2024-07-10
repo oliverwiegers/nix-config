@@ -11,6 +11,12 @@ in {
       git = {
         enable = true;
         extraConfig = cfg.extraConfig;
+
+        diff-so-fancy = {
+          enable = true;
+          changeHunkIndicators = true;
+          stripLeadingSymbols = false;
+        };
       };
     };
   };
