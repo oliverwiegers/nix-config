@@ -27,6 +27,7 @@ with lib; let
     testssl
     urlscan
     watch
+    tree
   ];
 
   neovimPackage = with pkgs.inputs.flim; [
