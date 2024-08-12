@@ -50,6 +50,7 @@ in {
         "neat"
         "ns"
         "tree"
+        "stern"
         "view-allocations"
         "view-cert"
         "view-secret"

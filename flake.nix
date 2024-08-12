@@ -64,7 +64,7 @@
     # Firefox overlay. Because nixpkgs package is broken on darwin.
     nixpkgs-firefox-darwin = {
       url = "github:bandithedoge/nixpkgs-firefox-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Homebrew

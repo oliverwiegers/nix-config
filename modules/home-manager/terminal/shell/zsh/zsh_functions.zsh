@@ -38,25 +38,28 @@ glc() {
     git log --format='%H' | sed 1q
 }
 
+# Cleanup local branches
+gbda() {
+    ignored_branch="${1:-main}"
+    remote="${2:-origin}"
+
+    git fetch --all
+
+    for branch in $(\
+        git branch --merged "${ignored_branch}" \
+        | grep -v "${ignored_branch}"); do
+
+        git branch -d "${branch}"
+    done
+
+    # Cleanup remote tracking branches that are not locally tracked anymore.
+    git remote prune "${remote}"
+}
+
 # Get revision hash for external resource in home manager.
 hgh() {
-    home-manager switch --flake .#oliverwiegers@enigma \
+    home-manager switch --flake ".#${whoami}@$(hostname)" \
         | grep 'got:' \
         | cut -d ' ' -f 2 \
         | cut -d '-' -f 2
-}
-
-_zsh_greeting() {
-    if [ "$(uname)" = "Linux" ]; then
-        if ! [ -f "$HOME/.local/no_greeting" ]; then
-
-            shello.sh || true
-            printf '\nTo disable the message above execute: "%s".\n' \
-                'mkdir -p $HOME/.local && touch $HOME/.local/no_greeting'
-        fi
-    elif [ "$(uname)" = "Darwin" ]; then
-        printf "And again. The Os of agony: macOS\n"
-    else
-        printf "Okay cool. Something different: \033[1;36m%s\n\033[0m" "$(uname)"
-    fi
 }

@@ -85,13 +85,16 @@ in {
           dev = "ls /dev/";
           weather = "curl -H \"Accept-Language: de\" wttr.in/Berlin";
           getcommittext = "curl -sL http://whatthecommit.com/index.txt";
-          reload = ''source $HOME/.zshrc && printf "Successfully reloaded zsh_config_files\n"'';
+          reload = ''rm -f ~/.zcompdump* && source $HOME/.zshrc && printf "Successfully reloaded zsh_config_files\n"'';
           conf = "dotedit";
           vtree = "tree -I .venv";
           vact = ". .venv/bin/activate";
           venv = "python3 -m virtualenv .venv";
           vim = "TERM=screen-256color vim";
           nvim = "TERM=screen-256color nvim";
+
+          # git
+          gct = "git fetch --all; git checkout --track";
         };
 
         oh-my-zsh = {
@@ -100,20 +103,22 @@ in {
           custom = "$HOME/.zsh/oh-my-zsh/custom/";
 
           plugins = [
-            "fzf"
-            "git"
-            "rust"
-            "pass"
-            "sudo"
-            "helm"
-            "direnv"
-            "jsontools"
-            "terraform"
-            "taskwarrior"
-            "systemadmin"
             "copybuffer"
+            "direnv"
+            "docker"
             "fancy-ctrl-z"
+            "fzf"
             "fzf-tab"
+            "git"
+            "golang"
+            "helm"
+            "jsontools"
+            "pass"
+            "rust"
+            "sudo"
+            "systemadmin"
+            "taskwarrior"
+            "terraform"
             "zsh-syntax-highlighting"
           ];
         };

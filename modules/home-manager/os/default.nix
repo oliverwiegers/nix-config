@@ -9,22 +9,24 @@ with lib; let
   cfg = config.os;
 
   unstablePackages = with pkgs.unstable; [
-    findutils
-    neofetch
-    ranger
-    jq
-    pass
-    ripgrep
-    eza
-    pywal
-    nerdfonts
-    gnumake
-    ncdu
-    urlscan
-    pre-commit
-    gnused
     erdtree
+    eza
+    findutils
+    gnumake
+    gnused
+    go
+    jq
+    ncdu
+    neofetch
+    nerdfonts
+    pass
+    pre-commit
+    pywal
+    ranger
+    ripgrep
     testssl
+    urlscan
+    watch
   ];
 
   neovimPackage = with pkgs.inputs.flim; [

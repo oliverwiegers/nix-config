@@ -39,6 +39,7 @@ appendpath () {
 appendpath "$HOME/.local/bin"
 appendpath "$HOME/.krew/bin"
 appendpath "$HOME/.local/bin/scripts"
+appendpath "$HOME/go/bin"
 
 unset appendpath
 # END Set PATH
