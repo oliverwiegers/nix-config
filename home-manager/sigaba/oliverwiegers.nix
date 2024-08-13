@@ -113,6 +113,12 @@
           "protocol \"git\"" = {
             allow = "never";
           };
+          difftool = {
+            trustExitCode = true;
+          };
+          diff = {
+            tool = "vimdiff";
+          };
         };
       };
     };

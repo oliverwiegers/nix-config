@@ -13,6 +13,7 @@ in {
       tflint
       terraform-docs
       terragrunt
+      s3cmd
     ];
   };
 }

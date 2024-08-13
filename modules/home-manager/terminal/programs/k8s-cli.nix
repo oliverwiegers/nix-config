@@ -29,6 +29,7 @@ in {
       kubecolor
       k9s
       kdash
+      s3cmd
 
       # OS specific tools
       talosctl
