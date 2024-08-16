@@ -97,6 +97,25 @@ in {
                 ];
               };
 
+              "Github Netlogix Devops" = {
+                definedAliases = ["@ghn"];
+                icon = "${nixIcon}";
+                iconUpdateURL = "https://github.com/favicon.ico";
+                updateInterval = 24 * 60 * 60 * 1000; # every day
+
+                urls = [
+                  {
+                    template = "https://github.com/search?q=org:netlogix-devops+{searchTerms}";
+                    params = [
+                      {
+                        name = "type";
+                        value = "repositories";
+                      }
+                    ];
+                  }
+                ];
+              };
+
               "Nix Packages" = {
                 definedAliases = ["@np"];
                 icon = "${nixIcon}";
