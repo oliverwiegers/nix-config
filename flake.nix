@@ -51,6 +51,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    dagger = {
+      url = "github:dagger/nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     #
     # MacOS related inputs.
     #

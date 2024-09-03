@@ -30,8 +30,9 @@ with lib; let
     tree
   ];
 
-  neovimPackage = with pkgs.inputs.flim; [
-    flim
+  inputsOverlayPackages = with pkgs.inputs; [
+    flim.flim
+    dagger.dagger
   ];
 in {
   imports = myLib.getConfigFilePaths ./. ++ myLib.getDirectoryPaths ./.;
@@ -51,6 +52,6 @@ in {
   };
 
   config = mkIf cfg.default {
-    home.packages = unstablePackages ++ neovimPackage;
+    home.packages = unstablePackages ++ inputsOverlayPackages;
   };
 }

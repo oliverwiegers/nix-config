@@ -17,6 +17,26 @@
         "type": "github"
       }
     },
+    "dagger": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1723735073,
+        "narHash": "sha256-EgjiX1ywmZckKEax2gpcmsX/cuxiwKRhy35wIT32DO4=",
+        "owner": "dagger",
+        "repo": "nix",
+        "rev": "5053689af7d18e67254ba0b2d60fa916b7370104",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dagger",
+        "repo": "nix",
+        "type": "github"
+      }
+    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -1218,6 +1238,7 @@
     },
     "root": {
       "inputs": {
+        "dagger": "dagger",
         "fenix": "fenix",
         "firefox-addons": "firefox-addons",
         "flim": "flim",
