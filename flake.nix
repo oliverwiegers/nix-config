@@ -152,6 +152,10 @@
           ./darwin/sigaba.nix
 
           nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix.registry.nixpkgs.flake = nixpkgs-unstable;
+            system.stateVersion = 5;
+          }
         ];
       };
     };
