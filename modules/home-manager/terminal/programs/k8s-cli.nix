@@ -26,6 +26,8 @@ in {
       })
 
       # Misc tools
+      # Checkout home-manager module: https://github.com/nix-community/home-manager/pull/5929
+      # Completions might not work yet.
       kubecolor
       k9s
       kdash
