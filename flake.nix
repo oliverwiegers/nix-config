@@ -12,9 +12,10 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # Nix User Repository.
-    nur = {
-      url = "github:nix-community/NUR";
+    # Disko disk partitioning
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Firefox addons.
@@ -103,6 +104,7 @@
     nixpkgs,
     nixpkgs-unstable,
     home-manager,
+    disko,
     nixos-hardware,
     nix-homebrew,
     homebrew-core,
@@ -116,8 +118,7 @@
 
     systems = [
       "x86_64-linux"
-      "aarch64-darwin"
-    ];
+      "aarch64-darwin" ];
 
     forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
     pkgsFor = lib.genAttrs systems (system:
@@ -136,10 +137,19 @@
       enigma = lib.nixosSystem {
         specialArgs = {inherit inputs outputs myLib;};
         modules = [
-          ./nixos/enigma.nix
+          ./hosts/nixos/enigma
 
           nixos-hardware.nixosModules.common-cpu-amd
           nixos-hardware.nixosModules.common-gpu-amd
+        ];
+      };
+
+      dudek = lib.nixosSystem {
+        specialArgs = {inherit inputs outputs myLib;};
+        modules = [
+          ./hosts/nixos/dudek
+
+          disko.nixosModules.disko
         ];
       };
     };
@@ -149,7 +159,7 @@
         system = "aarch64-darwin";
         specialArgs = {inherit inputs outputs myLib;};
         modules = [
-          ./darwin/sigaba.nix
+          ./hosts/darwin/sigaba
 
           nix-homebrew.darwinModules.nix-homebrew
           {
@@ -164,13 +174,13 @@
       "oliverwiegers@enigma" = home-manager.lib.homeManagerConfiguration {
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs myLib;};
-        modules = [./home-manager/enigma/oliverwiegers.nix];
+        modules = [./hosts/nixos/enigma/home-manager/oliverwiegers.nix];
       };
 
       "oliver.wiegers@sigaba" = home-manager.lib.homeManagerConfiguration {
         pkgs = pkgsFor.aarch64-darwin;
         extraSpecialArgs = {inherit inputs outputs myLib;};
-        modules = [./home-manager/sigaba/oliverwiegers.nix];
+        modules = [./hosts/darwin/sigaba/home-manager/oliverwiegers.nix];
       };
     };
   };

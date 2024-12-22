@@ -18,7 +18,7 @@ with lib; let
     jq
     ncdu
     neofetch
-    nerdfonts
+    nerd-fonts.sauce-code-pro
     pass
     pre-commit
     pywal

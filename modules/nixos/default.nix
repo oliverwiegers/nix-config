@@ -1,5 +1,3 @@
-{...}: {
-  imports = [
-    ./workstation
-  ];
+{myLib, ...}: {
+  imports = myLib.getConfigFilePaths ./. ++ myLib.getDirectoryPaths ./.;
 }

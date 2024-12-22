@@ -7,7 +7,7 @@
   ...
 }: {
   imports = [
-    ../../modules/home-manager
+    ../../../../modules/home-manager
   ];
 
   home = {
@@ -86,6 +86,11 @@
               RequestTTY = "yes";
               RemoteCommand = "tmux -L tmux new-session -As hacktheplanet";
             };
+          };
+
+          mail = {
+            user = "root";
+            hostname = "152.53.49.50";
           };
         };
       };
