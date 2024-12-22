@@ -20,7 +20,7 @@ in {
       overlays = builtins.attrValues outputs.overlays;
 
       config = {
-        allowUnfree = cfg.allowUnfree;
+        inherit (cfg) allowUnfree;
       };
     };
 

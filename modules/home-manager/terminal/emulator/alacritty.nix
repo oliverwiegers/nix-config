@@ -102,7 +102,8 @@ in {
               family = "SauceCodePro Nerd Font";
               style = "Italic";
             };
-            size = cfg.font.size;
+
+            inherit (cfg.font) size;
           };
         };
       };

@@ -10,7 +10,7 @@ in {
     programs = {
       git = {
         enable = true;
-        extraConfig = cfg.extraConfig;
+        inherit (cfg) extraConfig;
 
         diff-so-fancy = {
           enable = true;

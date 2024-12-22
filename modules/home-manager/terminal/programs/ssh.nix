@@ -19,7 +19,7 @@ in {
           AddKeysToAgent yes
         '';
 
-        matchBlocks = cfg.matchBlocks;
+        inherit (cfg) matchBlocks;
       };
     };
   };
