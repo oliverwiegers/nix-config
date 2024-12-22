@@ -4,7 +4,6 @@
     ./disk-config.nix
 
     ../../../modules/nixos
-    ../../../modules/nix_settings.nix
   ];
 
   #
@@ -23,6 +22,6 @@
   # NixOS Settings
   #
   networking = {
-    hostname = "dudek";
+    hostName = "dudek";
   };
 }

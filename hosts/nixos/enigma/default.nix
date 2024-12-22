@@ -3,7 +3,6 @@
     ./hardware.nix
 
     ../../../modules/nixos
-    ../../../modules/nix_settings.nix
   ];
 
   #
@@ -29,7 +28,7 @@
   # NixOS Settings
   #
   networking = {
-    hostname = "enigma";
+    hostName = "enigma";
 
     wireless = {
       enable = true;
