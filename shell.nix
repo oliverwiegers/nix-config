@@ -18,6 +18,9 @@
       git
       pre-commit
       ruby
+      deadnix
+      statix
+      flake-checker
     ];
   };
 }

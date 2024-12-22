@@ -1,7 +1,4 @@
-{
-  outputs,
-  inputs,
-}: {
+{inputs}: {
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
   unstable-packages = final: _prev: {

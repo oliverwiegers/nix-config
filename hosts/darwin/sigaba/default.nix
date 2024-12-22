@@ -5,9 +5,16 @@
 }: {
   imports = [
     ../../../modules/darwin
-    ../../../modules/nix_settings.nix
   ];
 
+  #
+  # Custom modules
+  #
+  wm.yabai.enable = true;
+
+  #
+  # nix-darwin Settings
+  #
   nixpkgs = {
     overlays = builtins.attrValues outputs.overlays;
     hostPlatform = "aarch64-darwin";
@@ -90,6 +97,4 @@
       #"microsoft-outlook"
     ];
   };
-
-  wm.yabai.enable = true;
 }

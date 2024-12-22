@@ -3,7 +3,7 @@
 
   inputs = {
     # Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Home manager.
@@ -15,13 +15,13 @@
     # Disko disk partitioning
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Firefox addons.
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # My own Neovim flake.
@@ -76,7 +76,7 @@
     # Homebrew
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Declarative tap management for homebrew
@@ -107,8 +107,6 @@
     disko,
     nixos-hardware,
     nix-homebrew,
-    homebrew-core,
-    homebrew-cask,
     nix-darwin,
     ...
   } @ inputs: let
@@ -118,7 +116,8 @@
 
     systems = [
       "x86_64-linux"
-      "aarch64-darwin" ];
+      "aarch64-darwin"
+    ];
 
     forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
     pkgsFor = lib.genAttrs systems (system:
@@ -131,7 +130,7 @@
     devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
     formatter = forEachSystem (pkgs: pkgs.alejandra);
 
-    overlays = import ./overlays {inherit inputs outputs;};
+    overlays = import ./overlays {inherit inputs;};
 
     nixosConfigurations = {
       enigma = lib.nixosSystem {

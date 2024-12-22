@@ -7,7 +7,7 @@ cmd - return : open -na "${HOME}/Applications/Home Manager Apps/Alacritty.app/Co
 cmd - f : /run/current-system/sw/bin/yabai -m window --focus mouse && \
         /run/current-system/sw/bin/yabai -m window --toggle zoom-fullscreen
 
-# Toogle float mode of current window.
+# Toggle float mode of current window.
 shift + cmd - f : /run/current-system/sw/bin/yabai -m window --toggle float &&  \
         /run/current-system/sw/bin/yabai -m window --grid 4:4:1:1:2:2
 

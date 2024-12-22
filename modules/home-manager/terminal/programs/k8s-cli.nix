@@ -35,49 +35,49 @@ in {
 
       # OS specific tools
       talosctl
-   ];
+    ];
 
-   programs = {
-     krewfile = {
-      enable = true;
-      krewPackage = pkgs.krew;
-      plugins = [
-        "allctx"
-        "cost"
-        "ctr"
-        "ctx"
-        "df-pv"
-        "explore"
-        "krew"
-        "ktop"
-        "neat"
-        "ns"
-        "tree"
-        "stern"
-        "view-allocations"
-        "view-cert"
-        "view-secret"
-        "view-utilization"
-      ];
-     };
+    programs = {
+      krewfile = {
+        enable = true;
+        krewPackage = pkgs.krew;
+        plugins = [
+          "allctx"
+          "cost"
+          "ctr"
+          "ctx"
+          "df-pv"
+          "explore"
+          "krew"
+          "ktop"
+          "neat"
+          "ns"
+          "tree"
+          "stern"
+          "view-allocations"
+          "view-cert"
+          "view-secret"
+          "view-utilization"
+        ];
+      };
 
-     zsh = mkIf config.terminal.shell.zsh.enable {
-       # Making kubectl completions work even if kubecolor is used.
-       initExtra = "source <(kubectl completion zsh | sed 's/kubectl/kubecolor/g')";
+      zsh = mkIf config.terminal.shell.zsh.enable {
+        # Making kubectl completions work even if kubecolor is used.
+        initExtra = "source <(kubectl completion zsh | sed 's/kubectl/kubecolor/g')";
 
-       shellAliases = {
-         kubectl = "kubecolor";
-         kk = "kubectl krew";
-         kns = "kubectl ns";
-         kcon = "kubectl ctx";
-       };
+        shellAliases = {
+          kubectl = "kubecolor";
+          kk = "kubectl krew";
+          kns = "kubectl ns";
+          kcon = "kubectl ctx";
+        };
 
-       oh-my-zsh = {
-         plugins = [
-           "kubectl"
-         ];
-       };
-     };
+        oh-my-zsh = {
+          plugins = [
+            "kubectl"
+          ];
+        };
+      };
     };
   };
 }

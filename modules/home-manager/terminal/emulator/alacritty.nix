@@ -33,13 +33,13 @@ in {
             };
 
             cursor = {
-              text   = "#1d2021";
+              text = "#1d2021";
               cursor = "#d5c4a1";
             };
 
             vi_mode_cursor = {
-              text    = "#1d2021";
-              cursor  = "#d5c4a1";
+              text = "#1d2021";
+              cursor = "#d5c4a1";
             };
 
             search.matches = {
@@ -63,30 +63,30 @@ in {
             };
 
             selection = {
-              text       = "CellBackground";
+              text = "CellBackground";
               background = "CellForeground";
             };
 
             normal = {
-              black   = "#1d2021";
-              red     = "#fb4934";
-              green   = "#b8bb26";
-              yellow  = "#fabd2f";
-              blue    = "#83a598";
+              black = "#1d2021";
+              red = "#fb4934";
+              green = "#b8bb26";
+              yellow = "#fabd2f";
+              blue = "#83a598";
               magenta = "#d3869b";
-              cyan    = "#8ec07c";
-              white   = "#d5c4a1";
+              cyan = "#8ec07c";
+              white = "#d5c4a1";
             };
 
             bright = {
-              black   = "#665c54";
-              red     = "#fb4934";
-              green   = "#b8bb26";
-              yellow  = "#fabd2f";
-              blue    = "#83a598";
+              black = "#665c54";
+              red = "#fb4934";
+              green = "#b8bb26";
+              yellow = "#fabd2f";
+              blue = "#83a598";
               magenta = "#d3869b";
-              cyan    = "#8ec07c";
-              white   = "#fbf1c7";
+              cyan = "#8ec07c";
+              white = "#fbf1c7";
             };
           };
           font = {

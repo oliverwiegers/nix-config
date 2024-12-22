@@ -11,7 +11,7 @@
   getDirectoryPaths = dir:
     map (path: dir + "/${path}") (
       builtins.attrNames (
-        lib.attrsets.filterAttrs (file: type: type == "directory") (
+        lib.attrsets.filterAttrs (_: type: type == "directory") (
           builtins.readDir (builtins.toString dir)
         )
       )
