@@ -13,7 +13,7 @@ in {
         enable = true;
         extraConfig = builtins.readFile ./yabairc;
         enableScriptingAddition = true;
-        package = pkgs.unstable.yabai;
+        package = pkgs.yabai;
       };
 
       skhd = {

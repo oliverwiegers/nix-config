@@ -1,11 +1,10 @@
 {
-  lib,
   pkgs,
-  myLib,
+  lib,
   ...
 }:
 with lib; {
-  imports = myLib.getConfigFilePaths ./. ++ myLib.getDirectoryPaths ./.;
+  imports = lib.getConfigFilePaths ./. ++ lib.getDirectoryPaths ./.;
 
   options = {
     graphical = {

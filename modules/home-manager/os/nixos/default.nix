@@ -8,7 +8,7 @@ with lib; let
   cfg = config.os.nixos;
 in {
   config = mkIf cfg.enable {
-    home.packages = with pkgs.unstable; [
+    home.packages = with pkgs; [
       qt5.qtwayland
       qt6.qtwayland
       libnotify

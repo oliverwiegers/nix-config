@@ -7,7 +7,6 @@
 ###########################################
 {
   self,
-  nixpkgs,
   nixpkgs-unstable,
   home-manager,
   disko,
@@ -17,8 +16,7 @@
   ...
 } @ inputs: let
   inherit (self) outputs;
-  lib = nixpkgs.lib // home-manager.lib;
-  myLib = import ./lib {inherit lib;};
+  lib = home-manager // import ./lib {inherit nixpkgs-unstable;};
 
   systems = [
     "x86_64-linux"
@@ -40,7 +38,7 @@ in {
 
   nixosConfigurations = {
     enigma = lib.nixosSystem {
-      specialArgs = {inherit inputs outputs myLib;};
+      specialArgs = {inherit inputs outputs;};
       modules = [
         ./hosts/nixos/enigma
 
@@ -50,7 +48,7 @@ in {
     };
 
     dudek = lib.nixosSystem {
-      specialArgs = {inherit inputs outputs myLib;};
+      specialArgs = {inherit inputs outputs;};
       modules = [
         ./hosts/nixos/dudek
 
@@ -62,7 +60,7 @@ in {
   darwinConfigurations = {
     sigaba = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
-      specialArgs = {inherit inputs outputs myLib;};
+      specialArgs = {inherit inputs outputs;};
       modules = [
         ./hosts/darwin/sigaba
 
@@ -78,13 +76,13 @@ in {
   homeConfigurations = {
     "oliverwiegers@enigma" = home-manager.lib.homeManagerConfiguration {
       pkgs = pkgsFor.x86_64-linux;
-      extraSpecialArgs = {inherit inputs outputs myLib;};
+      extraSpecialArgs = {inherit inputs outputs;};
       modules = [./hosts/nixos/enigma/home-manager/oliverwiegers.nix];
     };
 
     "oliver.wiegers@sigaba" = home-manager.lib.homeManagerConfiguration {
       pkgs = pkgsFor.aarch64-darwin;
-      extraSpecialArgs = {inherit inputs outputs myLib;};
+      extraSpecialArgs = {inherit inputs outputs;};
       modules = [./hosts/darwin/sigaba/home-manager/oliverwiegers.nix];
     };
   };

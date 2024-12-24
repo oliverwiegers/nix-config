@@ -1,14 +1,13 @@
 {
   pkgs,
-  lib,
   config,
-  myLib,
+  lib,
   ...
 }:
 with lib; let
   cfg = config.os;
 
-  unstablePackages = with pkgs.unstable; [
+  unstablePackages = with pkgs; [
     erdtree
     eza
     findutils
@@ -35,7 +34,7 @@ with lib; let
     dagger.dagger
   ];
 in {
-  imports = myLib.getConfigFilePaths ./. ++ myLib.getDirectoryPaths ./.;
+  imports = lib.getConfigFilePaths ./. ++ lib.getDirectoryPaths ./.;
 
   options = {
     os = {

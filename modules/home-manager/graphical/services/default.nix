@@ -1,3 +1,3 @@
-{myLib, ...}: {
-  imports = myLib.getConfigFilePaths ./. ++ myLib.getDirectoryPaths ./.;
+{lib, ...}: {
+  imports = lib.getConfigFilePaths ./. ++ lib.getDirectoryPaths ./.;
 }

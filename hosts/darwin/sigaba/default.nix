@@ -1,28 +1,32 @@
 {
+  lib,
   inputs,
-  outputs,
   ...
-}: {
+}:
+with lib; {
   imports = [
     ../../../modules/darwin
+    ../../../modules/nix_settings.nix
   ];
 
-  #
-  # Custom modules
-  #
-  wm.yabai.enable = true;
+  #    ______           __                     __  ___          __      __
+  #   / ____/_  _______/ /_____  ____ ___     /  |/  /___  ____/ /_  __/ /__  _____
+  #  / /   / / / / ___/ __/ __ \/ __ `__ \   / /|_/ / __ \/ __  / / / / / _ \/ ___/
+  # / /___/ /_/ (__  ) /_/ /_/ / / / / / /  / /  / / /_/ / /_/ / /_/ / /  __(__  )
+  # \____/\__,_/____/\__/\____/_/ /_/ /_/  /_/  /_/\____/\__,_/\__,_/_/\___/____/
 
-  #
-  # nix-darwin Settings
-  #
-  nixpkgs = {
-    overlays = builtins.attrValues outputs.overlays;
-    hostPlatform = "aarch64-darwin";
+  wm.yabai = enabled;
 
-    config = {
-      allowUnfree = true;
-    };
+  nixFeatures = {
+    enable = true;
+    allowUnfree = true;
   };
+
+  #           _                __                    _
+  #    ____  (_)  __      ____/ /___ _______      __(_)___
+  #   / __ \/ / |/_/_____/ __  / __ `/ ___/ | /| / / / __ \
+  #  / / / / />  </_____/ /_/ / /_/ / /   | |/ |/ / / / / /
+  # /_/ /_/_/_/|_|      \__,_/\__,_/_/    |__/|__/_/_/ /_/
 
   services.nix-daemon.enable = true;
 

@@ -1,14 +1,13 @@
 {
   pkgs,
-  lib,
   config,
-  myLib,
+  lib,
   ...
 }:
 with lib; let
   cfg = config.server;
 in {
-  imports = myLib.getConfigFilePaths ./. ++ myLib.getDirectoryPaths ./.;
+  imports = lib.getConfigFilePaths ./. ++ lib.getDirectoryPaths ./.;
 
   options = {
     server = {
@@ -19,7 +18,7 @@ in {
   config = mkIf cfg.enable {
     # Boot settings.
     boot = {
-      kernelPackages = pkgs.unstable.linuxPackages_latest;
+      kernelPackages = pkgs.linuxPackages_latest;
 
       #loader = {
       #  efi.canTouchEfiVariables = true;
