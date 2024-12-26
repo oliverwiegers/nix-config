@@ -1,4 +1,9 @@
-{outputs, ...}: {
+{
+  outputs,
+  helpers,
+  ...
+}:
+with helpers; {
   imports = [
     ../../modules/home-manager
   ];
@@ -21,16 +26,13 @@
   # Reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
-  fonts.fontconfig.enable = true;
+  fonts.fontconfig = enabled;
 
-  os = {
-    default = true;
-    nixos.enable = true;
-  };
+  os.nixos = enabled;
 
   terminal = {
     shell = {
-      zsh.enable = true;
+      zsh = enabled;
     };
 
     emulator = {
@@ -41,15 +43,15 @@
     };
 
     programs = {
-      bat.enable = true;
-      btop.enable = true;
-      direnv.enable = true;
-      fzf.enable = true;
-      home-manager.enable = true;
-      newsboat.enable = true;
-      nix.enable = true;
-      tmux.enable = true;
-      terraform.enable = true;
+      bat = enabled;
+      btop = enabled;
+      direnv = enabled;
+      fzf = enabled;
+      home-manager = enabled;
+      newsboat = enabled;
+      nix = enabled;
+      tmux = enabled;
+      terraform = enabled;
 
       ssh = {
         enable = true;
@@ -118,23 +120,23 @@
 
   graphical = {
     browser = {
-      firefox.enable = true;
+      firefox = enabled;
     };
 
     programs = {
-      gtk.enable = true;
-      rofi.enable = true;
-      zathura.enable = true;
+      gtk = enabled;
+      rofi = enabled;
+      zathura = enabled;
     };
 
     services = {
-      mako.enable = true;
+      mako = enabled;
     };
   };
 
   wm = {
-    hyprland.enable = true;
+    hyprland = enabled;
   };
 
-  hackstation.enable = true;
+  hackstation = enabled;
 }

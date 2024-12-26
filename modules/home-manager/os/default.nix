@@ -1,12 +1,10 @@
 {
   pkgs,
-  config,
   lib,
+  helpers,
   ...
 }:
 with lib; let
-  cfg = config.os;
-
   unstablePackages = with pkgs; [
     erdtree
     eza
@@ -34,12 +32,10 @@ with lib; let
     dagger.dagger
   ];
 in {
-  imports = lib.getConfigFilePaths ./. ++ lib.getDirectoryPaths ./.;
+  imports = helpers.getConfigFilePaths ./. ++ helpers.getDirectoryPaths ./.;
 
   options = {
     os = {
-      default = mkEnableOption "Enable default settings for home-manager user.";
-
       nixos = {
         enable = mkEnableOption "Enable nixos default settings for home-manager user.";
       };
@@ -50,7 +46,7 @@ in {
     };
   };
 
-  config = mkIf cfg.default {
+  config = {
     home.packages = unstablePackages ++ inputsOverlayPackages;
   };
 }

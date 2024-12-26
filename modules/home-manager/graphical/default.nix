@@ -1,10 +1,11 @@
 {
   pkgs,
   lib,
+  helpers,
   ...
 }:
 with lib; {
-  imports = lib.getConfigFilePaths ./. ++ lib.getDirectoryPaths ./.;
+  imports = helpers.getConfigFilePaths ./. ++ helpers.getDirectoryPaths ./.;
 
   options = {
     graphical = {
@@ -12,7 +13,7 @@ with lib; {
         firefox = {
           enable = mkEnableOption "Enable Firefox browser.";
           package = mkOption {
-            type = lib.types.package;
+            type = types.package;
             default = pkgs.firefox;
           };
         };

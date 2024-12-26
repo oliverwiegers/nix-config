@@ -1,6 +1,10 @@
-{lib, ...}:
+{
+  lib,
+  helpers,
+  ...
+}:
 with lib; {
-  imports = lib.getConfigFilePaths ./. ++ lib.getDirectoryPaths ./.;
+  imports = helpers.getConfigFilePaths ./. ++ helpers.getDirectoryPaths ./.;
 
   options = {
     terminal = {

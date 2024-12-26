@@ -1,9 +1,10 @@
 {
   lib,
   inputs,
+  helpers,
   ...
 }:
-with lib; {
+with lib // helpers; {
   imports = [
     ../../../modules/darwin
     ../../../modules/nix_settings.nix
@@ -30,7 +31,15 @@ with lib; {
 
   services.nix-daemon.enable = true;
 
+  # TODO: Checkout https://nixcademy.com/posts/macos-linux-builder/
+  # Put this stuff into a module
+  nix = {
+    linux-builder.enable = true;
+    settings.trusted-users = ["@admin"];
+  };
+
   system = {
+    #stateVersion = 5;
     defaults = {
       NSGlobalDomain = {
         KeyRepeat = 2;
@@ -61,11 +70,6 @@ with lib; {
       enableKeyMapping = true;
       remapCapsLockToControl = true;
     };
-  };
-
-  networking = {
-    hostName = "sigaba";
-    localHostName = "sigaba";
   };
 
   programs.zsh.enable = true;

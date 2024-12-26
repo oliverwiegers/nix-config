@@ -83,6 +83,11 @@
       url = "github:NixOS/nixos-hardware/master";
     };
 
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     #                          ____  _____
     #    ____ ___  ____ ______/ __ \/ ___/
     #   / __ `__ \/ __ `/ ___/ / / /\__ \

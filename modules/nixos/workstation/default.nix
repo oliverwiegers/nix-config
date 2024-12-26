@@ -2,12 +2,13 @@
   pkgs,
   config,
   lib,
+  helpers,
   ...
 }:
 with lib; let
   cfg = config.workstation;
 in {
-  imports = lib.getConfigFilePaths ./. ++ lib.getDirectoryPaths ./.;
+  imports = helpers.getConfigFilePaths ./. ++ helpers.getDirectoryPaths ./.;
 
   options = {
     workstation = {

@@ -1,5 +1,5 @@
-{lib, ...}:
-with lib; {
+{helpers, ...}:
+with helpers; {
   imports = [
     ./hardware.nix
 
@@ -36,8 +36,6 @@ with lib; {
   # /_/ |_/_/_/|_|\____//____/
 
   networking = {
-    hostName = "enigma";
-
     wireless = {
       enable = true;
       interfaces = ["wlp3s0"];

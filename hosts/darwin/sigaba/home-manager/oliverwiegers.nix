@@ -4,8 +4,10 @@
   pkgs,
   inputs,
   outputs,
+  helpers,
   ...
-}: {
+}:
+with helpers; {
   imports = [
     ../../../../modules/home-manager
   ];
@@ -47,13 +49,10 @@
     };
   };
 
-  os = {
-    default = true;
-    darwin.enable = true;
-  };
+  os.darwin = enabled;
 
   terminal = {
-    shell.zsh.enable = true;
+    shell.zsh = enabled;
 
     emulator = {
       alacritty = {
@@ -63,18 +62,18 @@
     };
 
     programs = {
-      bat.enable = true;
-      btop.enable = true;
-      direnv.enable = true;
-      fzf.enable = true;
-      home-manager.enable = true;
-      newsboat.enable = true;
-      nix.enable = true;
-      terraform.enable = true;
-      tmux.enable = true;
-      github.enable = true;
-      rust.enable = true;
-      k8s-cli.enable = true;
+      bat = enabled;
+      btop = enabled;
+      direnv = enabled;
+      fzf = enabled;
+      home-manager = enabled;
+      newsboat = enabled;
+      nix = enabled;
+      terraform = enabled;
+      tmux = enabled;
+      github = enabled;
+      rust = enabled;
+      k8s-cli = enabled;
 
       ssh = {
         enable = true;

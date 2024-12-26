@@ -1,5 +1,5 @@
-{lib, ...}:
-with lib; {
+{helpers, ...}:
+with helpers; {
   imports = [
     ./hardware.nix
     ./disk-config.nix
@@ -26,8 +26,4 @@ with lib; {
   #   /  |/ / / |/_/ / / /\__ \
   #  / /|  / />  </ /_/ /___/ /
   # /_/ |_/_/_/|_|\____//____/
-
-  networking = {
-    hostName = "dudek";
-  };
 }

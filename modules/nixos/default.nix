@@ -1,3 +1,3 @@
-{lib, ...}: {
-  imports = lib.getConfigFilePaths ./. ++ lib.getDirectoryPaths ./.;
+{helpers, ...}: {
+  imports = helpers.getConfigFilePaths ./. ++ helpers.getDirectoryPaths ./.;
 }

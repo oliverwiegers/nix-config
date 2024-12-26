@@ -9,80 +9,56 @@
   self,
   nixpkgs-unstable,
   home-manager,
-  disko,
-  nixos-hardware,
-  nix-homebrew,
   nix-darwin,
   ...
 } @ inputs: let
   inherit (self) outputs;
-  lib = home-manager // import ./lib {inherit nixpkgs-unstable;};
+
+  pkgs = nixpkgs-unstable;
+  lib = nix-darwin.lib // home-manager.lib // pkgs.lib;
+  helpers = import ./lib {inherit lib;};
 
   systems = [
     "x86_64-linux"
     "aarch64-darwin"
   ];
 
+  pkgsFor = lib.genAttrs systems (
+    system:
+      import pkgs {
+        inherit system;
+        config.allowUnfree = true;
+      }
+  );
+
   forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
-  pkgsFor = lib.genAttrs systems (system:
-    import nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true;
-    });
 in {
-  inherit lib;
   devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
   formatter = forEachSystem (pkgs: pkgs.alejandra);
 
   overlays = import ./overlays {inherit inputs;};
 
-  nixosConfigurations = {
-    enigma = lib.nixosSystem {
-      specialArgs = {inherit inputs outputs;};
-      modules = [
-        ./hosts/nixos/enigma
-
-        nixos-hardware.nixosModules.common-cpu-amd
-        nixos-hardware.nixosModules.common-gpu-amd
-      ];
-    };
-
-    dudek = lib.nixosSystem {
-      specialArgs = {inherit inputs outputs;};
-      modules = [
-        ./hosts/nixos/dudek
-
-        disko.nixosModules.disko
-      ];
-    };
+  nixosConfigurations = helpers.mkHostConfigs {
+    hostsDir = ./hosts/nixos;
+    inherit inputs outputs helpers;
   };
 
-  darwinConfigurations = {
-    sigaba = nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      specialArgs = {inherit inputs outputs;};
-      modules = [
-        ./hosts/darwin/sigaba
-
-        nix-homebrew.darwinModules.nix-homebrew
-        {
-          nix.registry.nixpkgs.flake = nixpkgs-unstable;
-          system.stateVersion = 5;
-        }
-      ];
-    };
+  darwinConfigurations = helpers.mkHostConfigs {
+    hostsDir = ./hosts/darwin;
+    isLinux = false;
+    inherit inputs outputs helpers;
   };
 
   homeConfigurations = {
-    "oliverwiegers@enigma" = home-manager.lib.homeManagerConfiguration {
+    "oliverwiegers@enigma" = lib.homeManagerConfiguration {
       pkgs = pkgsFor.x86_64-linux;
-      extraSpecialArgs = {inherit inputs outputs;};
+      extraSpecialArgs = {inherit inputs outputs helpers;};
       modules = [./hosts/nixos/enigma/home-manager/oliverwiegers.nix];
     };
 
-    "oliver.wiegers@sigaba" = home-manager.lib.homeManagerConfiguration {
+    "oliver.wiegers@sigaba" = lib.homeManagerConfiguration {
       pkgs = pkgsFor.aarch64-darwin;
-      extraSpecialArgs = {inherit inputs outputs;};
+      extraSpecialArgs = {inherit inputs outputs helpers;};
       modules = [./hosts/darwin/sigaba/home-manager/oliverwiegers.nix];
     };
   };
