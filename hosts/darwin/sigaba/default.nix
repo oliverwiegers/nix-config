@@ -18,10 +18,7 @@ with lib // helpers; {
 
   wm.yabai = enabled;
 
-  nixFeatures = {
-    enable = true;
-    allowUnfree = true;
-  };
+  nixSettings = enabled;
 
   #           _                __                    _
   #    ____  (_)  __      ____/ /___ _______      __(_)___
@@ -33,10 +30,16 @@ with lib // helpers; {
 
   # TODO: Checkout https://nixcademy.com/posts/macos-linux-builder/
   # Put this stuff into a module
-  nix = {
-    linux-builder.enable = true;
-    settings.trusted-users = ["@admin"];
-  };
+  # nix = {
+  #   linux-builder = {
+  #     systems = [ "x86_64-linux" "aarch64-darwin"];
+  #   };
+  #   settings = {
+  #     trusted-users = ["@admin"];
+  #     extra-platforms = [ "x86_64-linux" "aarch64-darwin"];
+  #   };
+
+  # };
 
   system = {
     #stateVersion = 5;

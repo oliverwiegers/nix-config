@@ -1,4 +1,8 @@
-{helpers, ...}:
+{
+  pkgs,
+  helpers,
+  ...
+}:
 with helpers; {
   imports = [
     ./hardware.nix
@@ -14,11 +18,20 @@ with helpers; {
   # / /___/ /_/ (__  ) /_/ /_/ / / / / / /  / /  / / /_/ / /_/ / /_/ / /  __(__  )
   # \____/\__,_/____/\__/\____/_/ /_/ /_/  /_/  /_/\____/\__,_/\__,_/_/\___/____/
 
-  server = enabled;
+  base.timeZone = "Europe/Vienna";
+  nixSettings = enabled;
+  serverBase = enabled;
 
-  nixFeatures = {
+  mailServer = {
     enable = true;
-    allowUnfree = true;
+    domains = ["oliverwiegers.com"];
+    subDomain = "mail";
+    secretsFile = ./secrets.yaml;
+
+    #backup = {
+    #  enable = true;
+    #  target = "/var/backups/restic/";
+    #};
   };
 
   #     _   ___      ____  _____
@@ -26,4 +39,17 @@ with helpers; {
   #   /  |/ / / |/_/ / / /\__ \
   #  / /|  / />  </ /_/ /___/ /
   # /_/ |_/_/_/|_|\____//____/
+  environment = {
+    systemPackages = with pkgs; [
+      postgresql
+      restic
+    ];
+  };
+
+  #   ________    _          __   ____             __
+  #  /_  __/ /_  (_)________/ /  / __ \____ ______/ /___  __
+  #   / / / __ \/ / ___/ __  /  / /_/ / __ `/ ___/ __/ / / /
+  #  / / / / / / / /  / /_/ /  / ____/ /_/ / /  / /_/ /_/ /
+  # /_/ /_/ /_/_/_/   \__,_/  /_/    \__,_/_/   \__/\__, /
+  #                                                /____/
 }

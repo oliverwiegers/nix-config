@@ -65,6 +65,25 @@
       )
     );
 
+  mkBackup = name: settings:
+    {
+      initialize = true;
+      runCheck = true;
+      repository = "/var/backups/restic/${name}";
+      passwordFile = "/run/secrets/restic/${name}";
+
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 5"
+        "--keep-monthly 3"
+      ];
+
+      extraBackupArgs = [
+        "--tag daily"
+      ];
+    }
+    // settings;
+
   #    _____       _                  __
   #   / ___/____  (_)___  ____  ___  / /______
   #   \__ \/ __ \/ / __ \/ __ \/ _ \/ __/ ___/

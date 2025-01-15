@@ -6,12 +6,19 @@
   ...
 }:
 with lib; let
-  cfg = config.nixFeatures;
+  cfg = config.nixSettings;
 in {
   options = {
-    nixFeatures = {
+    nixSettings = {
       enable = mkEnableOption "Enable custom Nix / nixpkgs settings.";
-      allowUnfree = mkEnableOption "Allow packages with unfree license.";
+
+      allowUnfree = mkOption {
+        type = types.bool;
+        default = true;
+        defaultText = "true";
+        example = "nixSettings.allowUnfree = true;";
+        description = "Allow unfree packages.";
+      };
     };
   };
 

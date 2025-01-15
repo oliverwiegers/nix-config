@@ -62,8 +62,8 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    dagger = {
-      url = "github:dagger/nix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -85,6 +85,11 @@
 
     deploy-rs = {
       url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    simple-nixos-mailserver = {
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 

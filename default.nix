@@ -10,6 +10,7 @@
   nixpkgs-unstable,
   home-manager,
   nix-darwin,
+  deploy-rs,
   ...
 } @ inputs: let
   inherit (self) outputs;
@@ -35,7 +36,6 @@
 in {
   devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
   formatter = forEachSystem (pkgs: pkgs.alejandra);
-
   overlays = import ./overlays {inherit inputs;};
 
   nixosConfigurations = helpers.mkHostConfigs {
@@ -47,6 +47,20 @@ in {
     hostsDir = ./hosts/darwin;
     isLinux = false;
     inherit inputs outputs helpers;
+  };
+
+  deploy = {
+    nodes = {
+      dudek = {
+        hostname = "mail.oliverwiegers.com";
+        profiles.system = {
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.dudek;
+        };
+      };
+    };
+
+    sshUser = "root";
+    remoteBuild = true;
   };
 
   homeConfigurations = {

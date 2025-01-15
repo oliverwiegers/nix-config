@@ -21,6 +21,8 @@
       deadnix
       statix
       flake-checker
+      deploy-rs
+      sops
     ];
   };
 }

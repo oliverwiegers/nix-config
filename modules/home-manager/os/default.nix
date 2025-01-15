@@ -29,7 +29,6 @@ with lib; let
 
   inputsOverlayPackages = with pkgs.inputs; [
     flim.flim
-    dagger.dagger
   ];
 in {
   imports = helpers.getConfigFilePaths ./. ++ helpers.getDirectoryPaths ./.;

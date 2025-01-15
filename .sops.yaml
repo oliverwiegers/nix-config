@@ -1,0 +1,12 @@
+keys:
+  - &admin_olli_work 7DE42A84CF1FCCEC4EB9CAE8AFF11CB49BACA5D6
+  - &admin_olli_personal 244D3FF3276A942F8666536FDE9FDB17F778EFDA
+  - &host_dudek age1v0hpr4xgts3rqvq332w6lfknk8avwvrz8p24umqlqnugvqx8cavsx0pn97
+creation_rules:
+  - path_regex: ^.*/secrets.yaml$
+    key_groups:
+      - pgp:
+          - *admin_olli_work
+          - *admin_olli_personal
+        age:
+          - *host_dudek

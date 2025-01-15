@@ -190,6 +190,17 @@ in {
                   }
                 ];
               };
+
+              "Noogle" = {
+                definedAliases = ["@ng"];
+                icon = "${nixIcon}";
+
+                urls = [
+                  {
+                    template = "https://noogle.dev/q?term={searchTerms}";
+                  }
+                ];
+              };
             };
           };
         };

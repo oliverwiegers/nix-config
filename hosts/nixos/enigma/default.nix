@@ -24,10 +24,9 @@ with helpers; {
     wm = enabled;
   };
 
-  nixFeatures = {
-    enable = true;
-    allowUnfree = true;
-  };
+  nixSettings = enabled;
+
+  base.stateVersion = "23.11";
 
   #     _   ___      ____  _____
   #    / | / (_)  __/ __ \/ ___/
