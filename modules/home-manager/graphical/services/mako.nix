@@ -19,11 +19,10 @@ in {
         defaultTimeout = 30000;
         font = "SauceCodPro Nerd Font";
         format = ''<b>%s</b>\n\n%b'';
-        # Gruvbox colors.
-        backgroundColor = "#282828e0";
-        textColor = "#ebdbb2";
-        borderColor = "#ebdbb2";
-        progressColor = "source #cc241d";
+        backgroundColor = "${config.os.theme.colors.background}";
+        textColor = "${config.os.theme.colors.foreground}";
+        borderColor = "${config.os.theme.colors.black}";
+        progressColor = "${config.os.theme.colors.green}";
       };
     };
   };

@@ -19,7 +19,25 @@ in {
           AddKeysToAgent yes
         '';
 
-        inherit (cfg) matchBlocks;
+        matchBlocks =
+          {
+            "*" = {
+              user = "root";
+            };
+
+            dudek = {
+              hostname = "dudek.oliverwiegers.com";
+            };
+
+            kryha = {
+              hostname = "kryha.oliverwiegers.com";
+            };
+
+            rockex = {
+              hostname = "rockex.oliverwiegers.com";
+            };
+          }
+          // cfg.extraMatchBlocks;
       };
     };
   };

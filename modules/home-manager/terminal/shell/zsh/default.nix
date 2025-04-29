@@ -64,7 +64,7 @@ in {
         enableCompletion = true;
 
         # Keep "code" in zsh files to lint it.
-        initExtra = lib.strings.concatStrings [
+        initContent = lib.strings.concatStrings [
           (builtins.readFile ./zsh_functions.zsh)
           (builtins.readFile ./zsh_settings.zsh)
           (
@@ -90,8 +90,6 @@ in {
           vtree = "tree -I .venv";
           vact = ". .venv/bin/activate";
           venv = "python3 -m virtualenv .venv";
-          vim = "TERM=screen-256color vim";
-          nvim = "TERM=screen-256color nvim";
 
           # git
           gct = "git fetch --all; git checkout --track";
@@ -119,6 +117,7 @@ in {
             "systemadmin"
             "taskwarrior"
             "terraform"
+            "opentofu"
             "zsh-syntax-highlighting"
           ];
         };

@@ -1,10 +1,14 @@
-{helpers, ...}:
+{
+  inputs,
+  helpers,
+  ...
+}:
 with helpers; {
   imports = [
     ./hardware.nix
 
-    ../../../modules/nixos
-    ../../../modules/nix_settings.nix
+    inputs.nixos-hardware.nixosModules.common-cpu-amd
+    inputs.nixos-hardware.nixosModules.common-gpu-amd
   ];
 
   #    ______           __                     __  ___          __      __

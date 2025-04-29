@@ -12,8 +12,34 @@ with lib; let
 in {
   imports = [
     inputs.simple-nixos-mailserver.nixosModule
-    inputs.sops-nix.nixosModules.sops
   ];
+
+  options.mailServer = {
+    enable = mkEnableOption "mailserver based on simple-nixos-mailserver.";
+
+    domains = mkOption {
+      type = types.listOf types.str;
+      example = ["example.com"];
+      default = [];
+      description = "The domains that this mail server serves.";
+    };
+
+    subDomain = mkOption {
+      type = types.str;
+      default = "mail";
+      defaultText = "mail";
+      example = "subDomain = \"mail\"";
+      description = "Sub domain of first item in ({option}`mailServer.domains`).";
+    };
+
+    secretsFile = mkOption {
+      type = types.path;
+      default = null;
+      defaultText = "null";
+      example = "./secrets.yaml";
+      description = "Path to secrets.yaml for nix-sops.";
+    };
+  };
 
   config = mkIf cfg.enable rec {
     # TODO:
@@ -178,20 +204,5 @@ in {
     };
 
     networking.firewall.allowedTCPPorts = [80 443];
-
-    sops = {
-      defaultSopsFile = cfg.secretsFile;
-
-      age = {
-        sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-        keyFile = "/var/lib/sops-nix/key.txt";
-        generateKey = true;
-      };
-
-      secrets."restic/mail" = {};
-      secrets."restic/dkim" = {};
-      secrets."restic/radicale" = {};
-      secrets."restic/postgresql" = {};
-    };
   };
 }

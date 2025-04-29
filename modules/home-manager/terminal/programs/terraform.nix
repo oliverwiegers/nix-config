@@ -14,6 +14,7 @@ in {
       terraform-docs
       terragrunt
       s3cmd
+      opentofu
     ];
   };
 }

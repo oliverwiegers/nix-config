@@ -24,6 +24,10 @@ in {
           enable = true;
         };
       };
+
+      pulseaudio = {
+        enable = false;
+      };
     };
 
     environment = {
@@ -44,12 +48,6 @@ in {
       # Enable realtime processing for hq audio.
       rtkit = {
         enable = true;
-      };
-    };
-
-    hardware = {
-      pulseaudio = {
-        enable = false;
       };
     };
   };

@@ -57,20 +57,20 @@ _JAVA_AWT_WM_NONEREPARENTING=1
 # | |/ |/ / /_/ / /
 # |__/|__/\__,_/_/
 
-if [ "$(uname)" = "Linux" ] && [ "$(command -v wal)" ]; then
-    # Set wal theme if not done yet.
-    if ! [ -d "$HOME/.cache/wal" ]; then
-        wal --theme base16-gruvbox-hard
-    fi
-
-    # &   # Run the process in the background.
-    # ( ) # Hide shell job control messages.
-    (cat ~/.cache/wal/sequences &)
-
-    # To add support for TTYs this line can be optionally added.
-    # shellcheck source=/home/oliverwiegers/.cache/wal/colors-tty.sh
-    . "${HOME}/.cache/wal/colors-tty.sh"
-fi
+#if [ "$(uname)" = "Linux" ] && [ "$(command -v wal)" ]; then
+#    # Set wal theme if not done yet.
+#    if ! [ -d "$HOME/.cache/wal" ]; then
+#        wal --theme base16-gruvbox-hard
+#    fi
+#
+#    # &   # Run the process in the background.
+#    # ( ) # Hide shell job control messages.
+#    (cat ~/.cache/wal/sequences &)
+#
+#    # To add support for TTYs this line can be optionally added.
+#    # shellcheck source=/home/oliverwiegers/.cache/wal/colors-tty.sh
+#    . "${HOME}/.cache/wal/colors-tty.sh"
+#fi
 
 #         _                  __
 #  _   __(_)______  ______ _/ /____

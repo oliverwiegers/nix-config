@@ -23,6 +23,7 @@
       flake-checker
       deploy-rs
       sops
+      wget
     ];
   };
 }

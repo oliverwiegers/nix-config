@@ -66,7 +66,7 @@ with lib; {
 
         ssh = {
           enable = mkEnableOption "Enable ssh.";
-          matchBlocks = mkOption {
+          extraMatchBlocks = mkOption {
             type = lib.types.attrs;
             default = {};
           };

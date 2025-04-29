@@ -19,13 +19,13 @@
     # My own Neovim flake.
     flim = {
       url = "github:oliverwiegers/flim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # My own Tmux flake.
     tmuxist = {
       url = "github:oliverwiegers/tmuxist";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     #    ______                           __
@@ -35,36 +35,60 @@
     # \____/\___/_/ /_/\___/_/   \__,_/_/
 
     # Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # home-manager.
     home-manager = {
       url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Firefox addons.
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Rust toolchains.
     fenix = {
       url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Krew
     krewfile = {
       url = "github:brumhard/krewfile";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
+
+    systems = {
+      url = "github:nix-systems/nix-systems";
+      flake = false;
+    };
+
+    #   ________
+    #  /_  __/ /_  ___  ____ ___  ___  _____
+    #   / / / __ \/ _ \/ __ `__ \/ _ \/ ___/
+    #  / / / / / /  __/ / / / / /  __(__  )
+    # /_/ /_/ /_/\___/_/ /_/ /_/\___/____/
+
+    alacritty-theme = {
+      url = "github:alacritty/alacritty-theme";
+      flake = false;
+    };
+
+    kanagawa-nvim = {
+      url = "github:rebelot/kanagawa.nvim";
+      flake = false;
     };
 
     #     _   ___      ____  _____
@@ -76,7 +100,7 @@
     # Disko disk partitioning
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixos-hardware = {
@@ -85,12 +109,12 @@
 
     deploy-rs = {
       url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     #                          ____  _____
@@ -101,20 +125,21 @@
 
     # nix-darwin.
     nix-darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      #url = "github:LnL7/nix-darwin";
+      url = "github:oliverwiegers/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Firefox overlay. Because nixpkgs package is broken on darwin.
     nixpkgs-firefox-darwin = {
       url = "github:bandithedoge/nixpkgs-firefox-darwin";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Homebrew.
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Declarative tap management for homebrew.
@@ -134,6 +159,11 @@
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
       flake = false;
+    };
+
+    nix-rosetta-builder = {
+      url = "github:oliverwiegers/nix-rosetta-builder";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

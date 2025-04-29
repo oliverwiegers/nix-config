@@ -41,53 +41,26 @@ in {
             "ui.key.menuAccessKey" = 17;
           };
 
-          extensions =
+          extensions.packages =
             if config.hackstation.enable
             then defaultPlugins ++ hackstationPlugins
             else defaultPlugins;
 
           search = {
-            default = "Searx";
+            default = "ddg";
             force = true;
 
-            order = [
-              "Searx"
-              "DuckDuckGo"
-              "Google"
-              "Github"
-            ];
-
             engines = {
-              "Bing".metaData.hidden = true;
+              "bing".metaData.hidden = true;
               "Amazon.de".metaData.hidden = true;
 
-              "Google".metaData.alias = "@g";
-              "DuckDuckGo".metaData.alias = "@d";
-              "Wikipedia (en)".metaData.alias = "@w";
-
-              "Searx" = {
-                definedAliases = ["@s"];
-                icon = "${nixIcon}";
-                iconUpdateURL = "https://search.hbubli.cc/favicon.ico";
-                updateInterval = 24 * 60 * 60 * 1000; # every day
-
-                urls = [
-                  {
-                    template = "https://search.hbubli.cc/search";
-                    params = [
-                      {
-                        name = "q";
-                        value = "{searchTerms}";
-                      }
-                    ];
-                  }
-                ];
-              };
+              "google".metaData.alias = "@g";
+              "ddg".metaData.alias = "@d";
+              "wikipedia".metaData.alias = "@w";
 
               "Github" = {
                 definedAliases = ["@gh"];
-                icon = "${nixIcon}";
-                iconUpdateURL = "https://github.com/favicon.ico";
+                icon = "https://github.com/favicon.ico";
                 updateInterval = 24 * 60 * 60 * 1000; # every day
 
                 urls = [
@@ -99,8 +72,7 @@ in {
 
               "Github Netlogix Devops" = {
                 definedAliases = ["@ghn"];
-                icon = "${nixIcon}";
-                iconUpdateURL = "https://github.com/favicon.ico";
+                icon = "https://github.com/favicon.ico";
                 updateInterval = 24 * 60 * 60 * 1000; # every day
 
                 urls = [
@@ -198,6 +170,18 @@ in {
                 urls = [
                   {
                     template = "https://noogle.dev/q?term={searchTerms}";
+                  }
+                ];
+              };
+
+              "Marginalia" = {
+                definedAliases = ["@m"];
+                icon = "https://marginalia-search.com/favicon.ico";
+                updateInterval = 24 * 60 * 60 * 1000; # every day
+
+                urls = [
+                  {
+                    template = "https://marginalia-search.com/search?query={searchTerms}";
                   }
                 ];
               };

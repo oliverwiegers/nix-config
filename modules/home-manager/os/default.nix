@@ -16,6 +16,7 @@ with lib; let
     ncdu
     neofetch
     nerd-fonts.sauce-code-pro
+    nerd-fonts.iosevka
     pass
     pre-commit
     pywal
@@ -41,6 +42,25 @@ in {
 
       darwin = {
         enable = mkEnableOption "Enable darwin default settings for home-manager user.";
+      };
+
+      theme = {
+        name = mkOption {
+          type = types.str;
+          default = "kanagawa";
+        };
+        variant = mkOption {
+          type = types.str;
+          default = "wave";
+        };
+        fullName = mkOption {
+          type = types.str;
+          default = null;
+        };
+        colors = mkOption {
+          type = types.attrs;
+          default = null;
+        };
       };
     };
   };

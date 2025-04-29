@@ -7,73 +7,118 @@
 ###########################################
 {
   self,
-  nixpkgs-unstable,
+  nixpkgs,
   home-manager,
   nix-darwin,
   deploy-rs,
+  flake-utils,
   ...
-} @ inputs: let
+} @ inputs:
+flake-utils.lib.eachDefaultSystemPassThrough (system: let
   inherit (self) outputs;
 
-  pkgs = nixpkgs-unstable;
-  lib = nix-darwin.lib // home-manager.lib // pkgs.lib;
+  bootstrapPkgs = import nixpkgs {inherit system;};
+  bootstrapHelpers = import ./lib {inherit (bootstrapPkgs) lib;};
+
+  rootDir = ./.; # Use nixpkgs.lib because function nixosSystem is in the flake output.
+  # See here: https://www.reddit.com/r/NixOS/comments/12i18ns/what_am_i_not_understanding_here_attribute/
+  lib = nix-darwin.lib // home-manager.lib // nixpkgs.lib;
   helpers = import ./lib {inherit lib;};
 
-  systems = [
-    "x86_64-linux"
-    "aarch64-darwin"
-  ];
+  nixosSystem =
+    if bootstrapHelpers.patchesPresent
+    then import (nixpkgs-patched + "/nixos/lib/eval-config.nix")
+    else lib.nixosSystem;
 
-  pkgsFor = lib.genAttrs systems (
-    system:
-      import pkgs {
-        inherit system;
-        config.allowUnfree = true;
+  nixpkgs-patched =
+    if bootstrapHelpers.patchesPresent
+    then
+      bootstrapPkgs.applyPatches {
+        name = "nixpkgs-patched";
+        src = nixpkgs;
+        patches = bootstrapHelpers.getFilesBySuffix ./patches ".patch";
       }
-  );
+    else nixpkgs;
 
-  forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
+  pkgs = import nixpkgs-patched {inherit system;};
 in {
-  devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
-  formatter = forEachSystem (pkgs: pkgs.alejandra);
-  overlays = import ./overlays {inherit inputs;};
-
   nixosConfigurations = helpers.mkHostConfigs {
+    inherit inputs outputs helpers rootDir nixosSystem;
     hostsDir = ./hosts/nixos;
-    inherit inputs outputs helpers;
   };
 
   darwinConfigurations = helpers.mkHostConfigs {
+    inherit inputs outputs helpers rootDir nixosSystem;
     hostsDir = ./hosts/darwin;
-    isLinux = false;
-    inherit inputs outputs helpers;
+    isDarwin = true;
   };
+
+  homeConfigurations = {
+    "oliverwiegers@enigma" = inputs.home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      extraSpecialArgs = {inherit inputs outputs helpers;};
+      modules = [./hosts/nixos/enigma/homes/oliverwiegers.nix];
+    };
+
+    "oliver.wiegers@sigaba" = inputs.home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      extraSpecialArgs = {inherit inputs outputs helpers;};
+      modules = [./hosts/darwin/sigaba/homes/oliver.wiegers.nix];
+    };
+  };
+})
+// flake-utils.lib.eachDefaultSystem (system: let
+  bootstrapPkgs = import nixpkgs {inherit system;};
+  bootstrapHelpers = import ./lib {inherit (bootstrapPkgs) lib;};
+
+  nixpkgs-patched =
+    if bootstrapHelpers.patchesPresent
+    then
+      bootstrapPkgs.applyPatches {
+        name = "nixpkgs-patched";
+        src = nixpkgs;
+        patches = bootstrapHelpers.getFilesBySuffix ./patches ".patch";
+      }
+    else nixpkgs;
+
+  pkgs = import nixpkgs-patched {inherit system;};
+in {
+  devShells = import ./shell.nix {inherit pkgs;};
+  formatter = pkgs.alejandra;
+})
+// {
+  overlays = import ./overlays {inherit inputs;};
 
   deploy = {
     nodes = {
       dudek = {
-        hostname = "mail.oliverwiegers.com";
+        hostname = "dudek.oliverwiegers.com";
+
         profiles.system = {
           path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.dudek;
+        };
+      };
+
+      kryha = {
+        hostname = "kryha.oliverwiegers.com";
+
+        profiles.system = {
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.kryha;
+        };
+      };
+
+      rockex = {
+        hostname = "rockex.oliverwiegers.com";
+        remoteBuild = false;
+
+        profiles.system = {
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.rockex;
         };
       };
     };
 
     sshUser = "root";
     remoteBuild = true;
-  };
-
-  homeConfigurations = {
-    "oliverwiegers@enigma" = lib.homeManagerConfiguration {
-      pkgs = pkgsFor.x86_64-linux;
-      extraSpecialArgs = {inherit inputs outputs helpers;};
-      modules = [./hosts/nixos/enigma/home-manager/oliverwiegers.nix];
-    };
-
-    "oliver.wiegers@sigaba" = lib.homeManagerConfiguration {
-      pkgs = pkgsFor.aarch64-darwin;
-      extraSpecialArgs = {inherit inputs outputs helpers;};
-      modules = [./hosts/darwin/sigaba/home-manager/oliverwiegers.nix];
-    };
+    activationTimeout = 600;
   };
 }

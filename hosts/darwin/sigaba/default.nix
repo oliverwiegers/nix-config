@@ -6,8 +6,8 @@
 }:
 with lib // helpers; {
   imports = [
-    ../../../modules/darwin
-    ../../../modules/nix_settings.nix
+    inputs.nix-homebrew.darwinModules.nix-homebrew
+    inputs.nix-rosetta-builder.darwinModules.default
   ];
 
   #    ______           __                     __  ___          __      __
@@ -26,23 +26,21 @@ with lib // helpers; {
   #  / / / / />  </_____/ /_/ / /_/ / /   | |/ |/ / / / / /
   # /_/ /_/_/_/|_|      \__,_/\__,_/_/    |__/|__/_/_/ /_/
 
-  services.nix-daemon.enable = true;
+  ids.gids.nixbld = 30000;
 
-  # TODO: Checkout https://nixcademy.com/posts/macos-linux-builder/
-  # Put this stuff into a module
-  # nix = {
-  #   linux-builder = {
-  #     systems = [ "x86_64-linux" "aarch64-darwin"];
-  #   };
-  #   settings = {
-  #     trusted-users = ["@admin"];
-  #     extra-platforms = [ "x86_64-linux" "aarch64-darwin"];
-  #   };
+  nix = {
+    registry.nixpkgs.flake = inputs.nixpkgs;
+    settings.trusted-users = ["oliver.wiegers"];
+  };
 
-  # };
+  #nix.linux-builder.enable = true;
+  # NOTE: linux-builder needs to be enabled to build nix-rosetta-builder for the first time.
+  nix-rosetta-builder = {
+    permitNonRootSshAccess = true;
+  };
 
   system = {
-    #stateVersion = 5;
+    stateVersion = 5;
     defaults = {
       NSGlobalDomain = {
         KeyRepeat = 2;

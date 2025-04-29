@@ -7,6 +7,10 @@
 with lib; let
   cfg = config.wm.yabai;
 in {
+  options.wm.yabai = {
+    enable = mkEnableOption "Enable yabai WM.";
+  };
+
   config = mkIf cfg.enable {
     services = {
       yabai = {

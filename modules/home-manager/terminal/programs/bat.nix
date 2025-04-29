@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
   config,
   ...
 }:
@@ -10,8 +11,21 @@ in {
     programs = {
       bat = {
         enable = true;
-        config = {
-          theme = "gruvbox-dark";
+
+        config = let
+          themeName =
+            if config.os.theme.name == "kanagawa"
+            then "kanagawa"
+            else config.os.theme.fullName;
+        in {
+          theme = themeName;
+        };
+
+        themes = {
+          kanagawa = {
+            src = inputs.kanagawa-nvim;
+            file = "extras/tmTheme/kanagawa.tmTheme";
+          };
         };
       };
     };

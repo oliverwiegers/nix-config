@@ -49,7 +49,18 @@ with helpers; {
     };
   };
 
-  os.darwin = enabled;
+  os = {
+    darwin = enabled;
+
+    theme = {
+      fullName =
+        if config.os.theme.variant != null
+        then "${config.os.theme.name}_${config.os.theme.variant}"
+        else "${config.os.theme.name}";
+
+      colors = builtins.fromTOML (builtins.readFile "${inputs.alacritty-theme}/themes/${fullName}.toml");
+    };
+  };
 
   terminal = {
     shell.zsh = enabled;
@@ -57,7 +68,7 @@ with helpers; {
     emulator = {
       alacritty = {
         enable = true;
-        font.size = 15;
+        font.size = 16;
       };
     };
 
@@ -77,7 +88,8 @@ with helpers; {
 
       ssh = {
         enable = true;
-        matchBlocks = {
+
+        extraMatchBlocks = {
           jumphost = {
             user = "wiegers";
             hostname = "aptdater03.infra.netlogix-ws.cust.nlxnet.de";
@@ -85,11 +97,6 @@ with helpers; {
               RequestTTY = "yes";
               RemoteCommand = "tmux -L tmux new-session -As hacktheplanet";
             };
-          };
-
-          mail = {
-            user = "root";
-            hostname = "152.53.49.50";
           };
         };
       };
@@ -102,26 +109,9 @@ with helpers; {
             name = "oliverwiegers";
             signingkey = "7DE42A84CF1FCCEC4EB9CAE8AFF11CB49BACA5D6";
           };
-          commit = {
-            gpgsign = true;
-          };
+
           gpg = {
             program = "gpg2";
-          };
-          init = {
-            defaultBranch = "main";
-          };
-          "protocol \"http\"" = {
-            allow = "never";
-          };
-          "protocol \"git\"" = {
-            allow = "never";
-          };
-          difftool = {
-            trustExitCode = true;
-          };
-          diff = {
-            tool = "vimdiff";
           };
         };
       };

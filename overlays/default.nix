@@ -16,4 +16,6 @@
       )
       inputs;
   };
+
+  # myPkgs = import ../pkgs;
 }

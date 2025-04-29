@@ -1,12 +1,16 @@
 keys:
   - &admin_olli_work 7DE42A84CF1FCCEC4EB9CAE8AFF11CB49BACA5D6
   - &admin_olli_personal 244D3FF3276A942F8666536FDE9FDB17F778EFDA
-  - &host_dudek age1v0hpr4xgts3rqvq332w6lfknk8avwvrz8p24umqlqnugvqx8cavsx0pn97
+  - &host_dudek age1g0ts2pcyy6h2cv0v5n5tkfs7xm893y534yvsckxgu56tecwgmuwqgpv77c
+  - &host_kryha age18yt0up6t8hfq4wxurnzeupty6qdrej4cqy238yr4lu7jdne9a45sjjhv4l
+  - &host_rockex age1vckzdwpszdx3mnaqq8zm0qdrltvrclechew0yfjmwr7ala2s49cqst0p2t
 creation_rules:
-  - path_regex: ^.*/secrets.yaml$
+  - path_regex: ^.*secrets.yaml$
     key_groups:
       - pgp:
           - *admin_olli_work
           - *admin_olli_personal
         age:
           - *host_dudek
+          - *host_kryha
+          - *host_rockex

@@ -63,7 +63,7 @@ in {
 
       zsh = mkIf config.terminal.shell.zsh.enable {
         # Making kubectl completions work even if kubecolor is used.
-        initExtra = "source <(kubectl completion zsh | sed 's/kubectl/kubecolor/g')";
+        initContent = "source <(kubectl completion zsh | sed 's/kubectl/kubecolor/g')";
 
         shellAliases = {
           kubectl = "kubecolor";

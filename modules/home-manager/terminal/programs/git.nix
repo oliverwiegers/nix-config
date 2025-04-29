@@ -10,12 +10,39 @@ in {
     programs = {
       git = {
         enable = true;
-        inherit (cfg) extraConfig;
 
-        diff-so-fancy = {
+        extraConfig =
+          {
+            commit = {
+              gpgsign = true;
+            };
+            init = {
+              defaultBranch = "main";
+            };
+            "protocol \"http\"" = {
+              allow = "never";
+            };
+            "protocol \"git\"" = {
+              allow = "never";
+            };
+            difftool = {
+              trustExitCode = true;
+              prompt = false;
+            };
+          }
+          // cfg.extraConfig;
+
+        difftastic = {
           enable = true;
-          changeHunkIndicators = true;
-          stripLeadingSymbols = false;
+        };
+      };
+
+      zsh = mkIf config.terminal.shell.zsh.enable {
+        # Use difftastic for log and show as well'''.
+        shellAliases = {
+          glgp = "git log --patch --ext-diff";
+          gsh = "git show --ext-diff";
+          gsps = "git show --pretty=short --show-signature --ext-diff";
         };
       };
     };
