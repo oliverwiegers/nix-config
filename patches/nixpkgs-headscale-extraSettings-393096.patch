@@ -1,4 +1,4 @@
-From 9b463668e01e754c52c7d3f396c81ce8dd54cb71 Mon Sep 17 00:00:00 2001
+From af55560e74e8bfb2eaf350d14226b751e8b00a1d Mon Sep 17 00:00:00 2001
 From: oliverwiegers <oliver.wiegers@netlogix.de>
 Date: Tue, 25 Mar 2025 15:24:46 +0100
 Subject: [PATCH] nixos/headscale: Add extraSettings option
@@ -6,12 +6,12 @@ Subject: [PATCH] nixos/headscale: Add extraSettings option
 `extraSettings` adds the possibility to headscale config options that
 don't have a nixos module option exposed.
 ---
- .../modules/services/networking/headscale.nix | 139 +++++++++++++++---
- nixos/tests/headscale.nix                     |  22 +++
- 2 files changed, 142 insertions(+), 19 deletions(-)
+ .../modules/services/networking/headscale.nix | 12 +++++++++-
+ nixos/tests/headscale.nix                     | 22 +++++++++++++++++++
+ 2 files changed, 33 insertions(+), 1 deletion(-)
 
 diff --git a/nixos/modules/services/networking/headscale.nix b/nixos/modules/services/networking/headscale.nix
-index bd17f005f69b03..b40803c2370b07 100644
+index 07924f54e3692..2e46284119495 100644
 --- a/nixos/modules/services/networking/headscale.nix
 +++ b/nixos/modules/services/networking/headscale.nix
 @@ -18,8 +18,9 @@ let
@@ -25,7 +25,7 @@ index bd17f005f69b03..b40803c2370b07 100644
    cliConfigFile = settingsFormat.generate "headscale.yaml" cliConfig;
 
    assertRemovedOption = option: message: {
-@@ -487,74 +488,174 @@ in
+@@ -487,6 +488,15 @@ in
            };
          };
        };
@@ -41,185 +41,8 @@ index bd17f005f69b03..b40803c2370b07 100644
      };
    };
 
-   imports = with lib; [
-     (mkRenamedOptionModule
-       [ "services" "headscale" "derp" "autoUpdate" ]
--      [ "services" "headscale" "settings" "derp" "auto_update_enable" ]
-+      [
-+        "services"
-+        "headscale"
-+        "settings"
-+        "derp"
-+        "auto_update_enable"
-+      ]
-     )
-     (mkRenamedOptionModule
-       [ "services" "headscale" "derp" "paths" ]
--      [ "services" "headscale" "settings" "derp" "paths" ]
-+      [
-+        "services"
-+        "headscale"
-+        "settings"
-+        "derp"
-+        "paths"
-+      ]
-     )
-     (mkRenamedOptionModule
-       [ "services" "headscale" "derp" "updateFrequency" ]
--      [ "services" "headscale" "settings" "derp" "update_frequency" ]
-+      [
-+        "services"
-+        "headscale"
-+        "settings"
-+        "derp"
-+        "update_frequency"
-+      ]
-     )
-     (mkRenamedOptionModule
-       [ "services" "headscale" "derp" "urls" ]
--      [ "services" "headscale" "settings" "derp" "urls" ]
-+      [
-+        "services"
-+        "headscale"
-+        "settings"
-+        "derp"
-+        "urls"
-+      ]
-     )
-     (mkRenamedOptionModule
--      [ "services" "headscale" "ephemeralNodeInactivityTimeout" ]
-+      [
-+        "services"
-+        "headscale"
-+        "ephemeralNodeInactivityTimeout"
-+      ]
-       [ "services" "headscale" "settings" "ephemeral_node_inactivity_timeout" ]
-     )
-     (mkRenamedOptionModule
-       [ "services" "headscale" "logLevel" ]
--      [ "services" "headscale" "settings" "log" "level" ]
-+      [
-+        "services"
-+        "headscale"
-+        "settings"
-+        "log"
-+        "level"
-+      ]
-     )
-     (mkRenamedOptionModule
--      [ "services" "headscale" "openIdConnect" "clientId" ]
-+      [
-+        "services"
-+        "headscale"
-+        "openIdConnect"
-+        "clientId"
-+      ]
-       [ "services" "headscale" "settings" "oidc" "client_id" ]
-     )
-     (mkRenamedOptionModule
--      [ "services" "headscale" "openIdConnect" "clientSecretFile" ]
-+      [
-+        "services"
-+        "headscale"
-+        "openIdConnect"
-+        "clientSecretFile"
-+      ]
-       [ "services" "headscale" "settings" "oidc" "client_secret_path" ]
-     )
-     (mkRenamedOptionModule
-       [ "services" "headscale" "openIdConnect" "issuer" ]
--      [ "services" "headscale" "settings" "oidc" "issuer" ]
-+      [
-+        "services"
-+        "headscale"
-+        "settings"
-+        "oidc"
-+        "issuer"
-+      ]
-     )
-     (mkRenamedOptionModule
-       [ "services" "headscale" "serverUrl" ]
--      [ "services" "headscale" "settings" "server_url" ]
-+      [
-+        "services"
-+        "headscale"
-+        "settings"
-+        "server_url"
-+      ]
-     )
-     (mkRenamedOptionModule
-       [ "services" "headscale" "tls" "certFile" ]
--      [ "services" "headscale" "settings" "tls_cert_path" ]
-+      [
-+        "services"
-+        "headscale"
-+        "settings"
-+        "tls_cert_path"
-+      ]
-     )
-     (mkRenamedOptionModule
-       [ "services" "headscale" "tls" "keyFile" ]
--      [ "services" "headscale" "settings" "tls_key_path" ]
-+      [
-+        "services"
-+        "headscale"
-+        "settings"
-+        "tls_key_path"
-+      ]
-     )
-     (mkRenamedOptionModule
--      [ "services" "headscale" "tls" "letsencrypt" "challengeType" ]
-+      [
-+        "services"
-+        "headscale"
-+        "tls"
-+        "letsencrypt"
-+        "challengeType"
-+      ]
-       [ "services" "headscale" "settings" "tls_letsencrypt_challenge_type" ]
-     )
-     (mkRenamedOptionModule
--      [ "services" "headscale" "tls" "letsencrypt" "hostname" ]
-+      [
-+        "services"
-+        "headscale"
-+        "tls"
-+        "letsencrypt"
-+        "hostname"
-+      ]
-       [ "services" "headscale" "settings" "tls_letsencrypt_hostname" ]
-     )
-     (mkRenamedOptionModule
--      [ "services" "headscale" "tls" "letsencrypt" "httpListen" ]
-+      [
-+        "services"
-+        "headscale"
-+        "tls"
-+        "letsencrypt"
-+        "httpListen"
-+      ]
-       [ "services" "headscale" "settings" "tls_letsencrypt_listen" ]
-     )
-
--    (mkRemovedOptionModule [ "services" "headscale" "openIdConnect" "domainMap" ] ''
--      Headscale no longer uses domain_map. If you're using an old version of headscale you can still set this option via services.headscale.settings.oidc.domain_map.
--    '')
-+    (mkRemovedOptionModule
-+      [
-+        "services"
-+        "headscale"
-+        "openIdConnect"
-+        "domainMap"
-+      ]
-+      ''
-+        Headscale no longer uses domain_map. If you're using an old version of headscale you can still set this option via services.headscale.settings.oidc.domain_map.
-+      ''
-+    )
-   ];
-
-   config = lib.mkIf cfg.enable {
 diff --git a/nixos/tests/headscale.nix b/nixos/tests/headscale.nix
-index 3ba331b7c3d4b4..a4721d29119f38 100644
+index 3ba331b7c3d4b..a4721d29119f3 100644
 --- a/nixos/tests/headscale.nix
 +++ b/nixos/tests/headscale.nix
 @@ -46,6 +46,15 @@ import ./make-test-python.nix (

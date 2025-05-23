@@ -1,15 +1,10 @@
 {
   lib,
   config,
-  inputs,
   ...
 }: let
   cfg = config.sopsDefaults;
 in {
-  imports = [
-    inputs.sops-nix.nixosModules.sops
-  ];
-
   options.sopsDefaults = {
     enable = lib.mkEnableOption "sops-nix settings.";
   };

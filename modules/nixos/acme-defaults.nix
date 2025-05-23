@@ -1,7 +1,7 @@
 {
   lib,
   config,
-  rootDir,
+  self,
   ...
 }: let
   cfg = config.acmeDefaults;
@@ -34,6 +34,6 @@ in {
       };
     };
 
-    sops.secrets.desec = {sopsFile = "${rootDir}/secrets.yaml";};
+    sops.secrets.desec = {sopsFile = "${self}/secrets.yaml";};
   };
 }

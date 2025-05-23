@@ -44,22 +44,23 @@
     inputs,
     outputs,
     helpers,
-    rootDir,
+    self,
     nixosSystem,
     hostsDir,
     hostname,
-    isDarwin ? false,
+    os,
   }:
     (
-      if !isDarwin
+      if os == "nixos"
       then nixosSystem
       else lib.darwinSystem
     ) {
+      specialArgs = {inherit helpers inputs outputs self;};
+
       system =
-        if !isDarwin
+        if os == "nixos"
         then null
         else "aarch64-darwin";
-      specialArgs = {inherit helpers inputs outputs rootDir;};
 
       modules = [
         (hostsDir + "/${hostname}")
@@ -67,29 +68,23 @@
       ];
 
       extraModules = let
-        osType =
-          if !isDarwin
-          then "nixos"
-          else "darwin";
-        moduleListPath = ../modules/${osType}/module-list.nix;
+        moduleList = ../modules/${os}/module-list.nix;
       in
-        if builtins.pathExists moduleListPath
-        then import moduleListPath
-        else [];
+        lib.lists.optionals (builtins.pathExists moduleList) (import moduleList);
     };
 
   mkHostConfigs = {
     inputs,
     outputs,
     helpers,
-    rootDir,
-    nixosSystem,
+    self,
+    nixosSystem ? lib.nixosSystem,
     hostsDir,
-    isDarwin ? false,
+    os ? "nixos",
   }:
     builtins.mapAttrs (host: _:
       mkHost {
-        inherit isDarwin hostsDir rootDir nixosSystem helpers inputs outputs;
+        inherit os hostsDir self nixosSystem helpers inputs outputs;
         hostname = "${host}";
       }) (
       lib.attrsets.filterAttrs (_: type: type == "directory") (
@@ -113,6 +108,14 @@
       extraBackupArgs = [
         "--tag daily"
       ];
+    }
+    // settings;
+
+  mkContainer = settings:
+    {
+      autoStart = true;
+      privateNetwork = true;
+      ephemeral = true;
     }
     // settings;
 

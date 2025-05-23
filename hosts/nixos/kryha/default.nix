@@ -4,7 +4,7 @@
   inputs,
   config,
   helpers,
-  rootDir,
+  self,
   ...
 }:
 with lib // helpers; let
@@ -50,7 +50,7 @@ in {
     type = "server";
     bindAddr = "100.64.0.4";
     uiBindAddr = "100.64.0.4";
-    clientSecretsFile = "${rootDir}/secrets.yaml";
+    clientSecretsFile = "${self}/secrets.yaml";
     serverSecretsFile = ./secrets.yaml;
   };
 

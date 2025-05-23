@@ -83,7 +83,7 @@ with helpers; {
       terraform = enabled;
       tmux = enabled;
       github = enabled;
-      rust = enabled;
+      # rust = enabled;
       k8s-cli = enabled;
 
       ssh = {
@@ -122,7 +122,11 @@ with helpers; {
     browser = {
       firefox = {
         enable = true;
-        package = pkgs.firefox-bin;
+        # package = pkgs.firefox-bin;
+        # Workaround. See here: https://github.com/nix-community/home-manager/issues/6955#issuecomment-2878146879
+        package = pkgs.firefox-bin.overrideAttrs (_: {
+          override = _: pkgs.firefox-bin;
+        });
       };
     };
   };

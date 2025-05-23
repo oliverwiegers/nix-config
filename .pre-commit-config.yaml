@@ -43,10 +43,10 @@ repos:
     rev: v1.2.1
     hooks:
       - id: deadnix
-  - repo: local
-    hooks:
-      - id: alejandra
-        name: Alejandra formatter for Nix files.
-        language: system
-        entry: nix
-        args: ["fmt", "||", "true"]
+# - repo: local
+#   hooks:
+#     - id: alejandra
+#       name: Alejandra formatter for Nix files.
+#       language: system
+#       entry: nix
+#       args: ["fmt", "||", "true"]

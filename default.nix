@@ -20,7 +20,7 @@ flake-utils.lib.eachDefaultSystemPassThrough (system: let
   bootstrapPkgs = import nixpkgs {inherit system;};
   bootstrapHelpers = import ./lib {inherit (bootstrapPkgs) lib;};
 
-  rootDir = ./.; # Use nixpkgs.lib because function nixosSystem is in the flake output.
+  # Use nixpkgs.lib because function nixosSystem is in the flake output.
   # See here: https://www.reddit.com/r/NixOS/comments/12i18ns/what_am_i_not_understanding_here_attribute/
   lib = nix-darwin.lib // home-manager.lib // nixpkgs.lib;
   helpers = import ./lib {inherit lib;};
@@ -43,14 +43,14 @@ flake-utils.lib.eachDefaultSystemPassThrough (system: let
   pkgs = import nixpkgs-patched {inherit system;};
 in {
   nixosConfigurations = helpers.mkHostConfigs {
-    inherit inputs outputs helpers rootDir nixosSystem;
+    inherit inputs outputs helpers self nixosSystem;
     hostsDir = ./hosts/nixos;
   };
 
   darwinConfigurations = helpers.mkHostConfigs {
-    inherit inputs outputs helpers rootDir nixosSystem;
+    inherit inputs outputs helpers self nixosSystem;
     hostsDir = ./hosts/darwin;
-    isDarwin = true;
+    os = "darwin";
   };
 
   homeConfigurations = {

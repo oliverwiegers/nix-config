@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  inputs,
   ...
 }: let
   cfg = config.consul;
@@ -9,7 +10,9 @@
   serverCert = "${cfg.datacenter}-server-${cfg.domain}-0.pem";
   serverKey = "${cfg.datacenter}-server-${cfg.domain}-0-key.pem";
 in {
-  imports = [];
+  imports = [
+    inputs.sops-nix.nixosModules.sops
+  ];
 
   options.consul = {
     enable = lib.mkEnableOption "Consul agent or server.";

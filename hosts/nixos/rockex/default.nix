@@ -2,7 +2,7 @@
   config,
   helpers,
   inputs,
-  rootDir,
+  self,
   ...
 }:
 with helpers; {
@@ -41,7 +41,7 @@ with helpers; {
     type = "server";
     bindAddr = "100.64.0.1";
     uiBindAddr = "100.64.0.1";
-    clientSecretsFile = "${rootDir}/secrets.yaml";
+    clientSecretsFile = "${self}/secrets.yaml";
     serverSecretsFile = ./secrets.yaml;
   };
 
