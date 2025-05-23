@@ -3,20 +3,28 @@
   lib,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
   boot = {
     initrd = {
-      availableKernelModules = ["nvme" "ehci_pci" "xhci_pci" "usb_storage" "sd_mod"];
-      kernelModules = [];
-      luks.devices."luks-7ab31577-5ef4-45da-8fd6-cb49fd9e3d96".device = "/dev/disk/by-uuid/7ab31577-5ef4-45da-8fd6-cb49fd9e3d96";
+      availableKernelModules = [
+        "nvme"
+        "ehci_pci"
+        "xhci_pci"
+        "usb_storage"
+        "sd_mod"
+      ];
+      kernelModules = [ ];
+      luks.devices."luks-7ab31577-5ef4-45da-8fd6-cb49fd9e3d96".device =
+        "/dev/disk/by-uuid/7ab31577-5ef4-45da-8fd6-cb49fd9e3d96";
     };
 
-    kernelModules = ["kvm-amd"];
-    extraModulePackages = [];
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
   };
 
   fileSystems."/" = {
@@ -29,7 +37,7 @@
     fsType = "vfat";
   };
 
-  swapDevices = [];
+  swapDevices = [ ];
 
   networking.useDHCP = lib.mkDefault true;
 

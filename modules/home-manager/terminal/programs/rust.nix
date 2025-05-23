@@ -5,11 +5,13 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.terminal.programs.rust;
-in {
+in
+{
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [inputs.fenix.overlays.default];
+    nixpkgs.overlays = [ inputs.fenix.overlays.default ];
     home.packages = with pkgs; [
       (inputs.fenix.packages.${system}.complete.withComponents [
         "cargo"

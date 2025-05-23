@@ -3,9 +3,11 @@
   config,
   self,
   ...
-}: let
+}:
+let
   cfg = config.acmeDefaults;
-in {
+in
+{
   imports = [
     ./sops-defaults.nix
   ];
@@ -29,11 +31,16 @@ in {
           credentialFiles = {
             DESEC_TOKEN_FILE = config.sops.secrets.desec.path;
           };
-          extraLegoFlags = ["--dns.propagation-wait" "300s"];
+          extraLegoFlags = [
+            "--dns.propagation-wait"
+            "300s"
+          ];
         };
       };
     };
 
-    sops.secrets.desec = {sopsFile = "${self}/secrets.yaml";};
+    sops.secrets.desec = {
+      sopsFile = "${self}/secrets.yaml";
+    };
   };
 }

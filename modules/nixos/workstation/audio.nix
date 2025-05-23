@@ -3,9 +3,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.workstation.audio;
-in {
+in
+{
   config = mkIf cfg.enable {
     services = {
       # Use pipewire for audio.

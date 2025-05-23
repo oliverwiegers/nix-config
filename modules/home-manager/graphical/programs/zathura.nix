@@ -3,9 +3,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.graphical.programs.zathura;
-in {
+in
+{
   config = mkIf cfg.enable {
     programs = {
       zathura = {

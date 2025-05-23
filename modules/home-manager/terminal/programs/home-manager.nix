@@ -3,9 +3,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.terminal.programs.home-manager;
-in {
+in
+{
   config = mkIf cfg.enable {
     programs = {
       home-manager = {

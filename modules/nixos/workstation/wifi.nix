@@ -3,9 +3,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.workstation.wifi;
-in {
+in
+{
   config = mkIf cfg.enable {
     networking = {
       enableIPv6 = false;

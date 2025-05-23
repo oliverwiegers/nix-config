@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.wm.yabai;
-in {
+in
+{
   options.wm.yabai = {
     enable = mkEnableOption "Enable yabai WM.";
   };

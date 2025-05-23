@@ -7,7 +7,8 @@
   helpers,
   ...
 }:
-with helpers; {
+with helpers;
+{
   imports = [
     ../../../../modules/home-manager
   ];
@@ -18,14 +19,15 @@ with helpers; {
     stateVersion = "23.05";
 
     activation = {
-      copyApplications = let
-        apps = pkgs.buildEnv {
-          name = "home-manager-applications";
-          paths = config.home.packages;
-          pathsToLink = "/Applications";
-        };
-      in
-        lib.hm.dag.entryAfter ["writeBoundary"] ''
+      copyApplications =
+        let
+          apps = pkgs.buildEnv {
+            name = "home-manager-applications";
+            paths = config.home.packages;
+            pathsToLink = "/Applications";
+          };
+        in
+        lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           baseDir="$HOME/Applications/Home Manager Apps"
           if [ -d "$baseDir" ]; then
             rm -rf "$baseDir"
@@ -41,7 +43,7 @@ with helpers; {
   };
 
   nixpkgs = {
-    overlays = builtins.attrValues outputs.overlays ++ [inputs.nixpkgs-firefox-darwin.overlay];
+    overlays = builtins.attrValues outputs.overlays ++ [ inputs.nixpkgs-firefox-darwin.overlay ];
     config = {
       allowUnfree = true;
       # Workaround for https://github.com/nix-community/home-manager/issues/2942
@@ -54,9 +56,10 @@ with helpers; {
 
     theme = {
       fullName =
-        if config.os.theme.variant != null
-        then "${config.os.theme.name}_${config.os.theme.variant}"
-        else "${config.os.theme.name}";
+        if config.os.theme.variant != null then
+          "${config.os.theme.name}_${config.os.theme.variant}"
+        else
+          "${config.os.theme.name}";
 
       colors = builtins.fromTOML (builtins.readFile "${inputs.alacritty-theme}/themes/${fullName}.toml");
     };

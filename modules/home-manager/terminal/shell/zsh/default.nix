@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.terminal.shell.zsh;
-in {
+in
+{
   config = mkIf cfg.enable {
     home = {
       file = {
@@ -67,11 +69,7 @@ in {
         initContent = lib.strings.concatStrings [
           (builtins.readFile ./zsh_functions.zsh)
           (builtins.readFile ./zsh_settings.zsh)
-          (
-            if pkgs.stdenv.hostPlatform.isAarch64
-            then ''eval "$(/opt/homebrew/bin/brew shellenv)"''
-            else ""
-          )
+          (if pkgs.stdenv.hostPlatform.isAarch64 then ''eval "$(/opt/homebrew/bin/brew shellenv)"'' else "")
         ];
 
         shellAliases = {

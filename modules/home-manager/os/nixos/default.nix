@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.os.nixos;
-in {
+in
+{
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       qt5.qtwayland

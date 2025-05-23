@@ -4,7 +4,8 @@
   helpers,
   ...
 }:
-with lib; let
+with lib;
+let
   unstablePackages = with pkgs; [
     erdtree
     eza
@@ -31,7 +32,8 @@ with lib; let
   inputsOverlayPackages = with pkgs.inputs; [
     flim.flim
   ];
-in {
+in
+{
   imports = helpers.getConfigFilePaths ./. ++ helpers.getDirectoryPaths ./.;
 
   options = {

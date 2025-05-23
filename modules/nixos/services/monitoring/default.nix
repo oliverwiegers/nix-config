@@ -2,14 +2,16 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.monitoring;
-in {
+in
+{
   options.monitoring = {
     enable = lib.mkEnableOption "Prometheus server.";
   };
 
   config = lib.mkIf cfg.enable {
-    services = {};
+    services = { };
   };
 }

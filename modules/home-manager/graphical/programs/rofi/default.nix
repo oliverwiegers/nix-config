@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.graphical.programs.rofi;
-in {
+in
+{
   config = mkIf cfg.enable {
     programs = {
       rofi = {

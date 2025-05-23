@@ -3,34 +3,34 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.terminal.programs.git;
-in {
+in
+{
   config = mkIf cfg.enable {
     programs = {
       git = {
         enable = true;
 
-        extraConfig =
-          {
-            commit = {
-              gpgsign = true;
-            };
-            init = {
-              defaultBranch = "main";
-            };
-            "protocol \"http\"" = {
-              allow = "never";
-            };
-            "protocol \"git\"" = {
-              allow = "never";
-            };
-            difftool = {
-              trustExitCode = true;
-              prompt = false;
-            };
-          }
-          // cfg.extraConfig;
+        extraConfig = {
+          commit = {
+            gpgsign = true;
+          };
+          init = {
+            defaultBranch = "main";
+          };
+          "protocol \"http\"" = {
+            allow = "never";
+          };
+          "protocol \"git\"" = {
+            allow = "never";
+          };
+          difftool = {
+            trustExitCode = true;
+            prompt = false;
+          };
+        } // cfg.extraConfig;
 
         difftastic = {
           enable = true;

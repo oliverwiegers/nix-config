@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.workstation.wm;
-in {
+in
+{
   config = mkIf cfg.enable {
     programs = {
       hyprland = {
@@ -27,7 +29,10 @@ in {
     xdg = {
       portal = {
         enable = true;
-        extraPortals = [pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk];
+        extraPortals = [
+          pkgs.xdg-desktop-portal-hyprland
+          pkgs.xdg-desktop-portal-gtk
+        ];
       };
     };
   };

@@ -4,7 +4,8 @@
   helpers,
   ...
 }:
-with lib // helpers; {
+with lib // helpers;
+{
   imports = [
     inputs.nix-homebrew.darwinModules.nix-homebrew
     inputs.nix-rosetta-builder.darwinModules.default
@@ -30,7 +31,7 @@ with lib // helpers; {
 
   nix = {
     registry.nixpkgs.flake = inputs.nixpkgs;
-    settings.trusted-users = ["oliver.wiegers"];
+    settings.trusted-users = [ "oliver.wiegers" ];
   };
 
   #nix.linux-builder.enable = true;

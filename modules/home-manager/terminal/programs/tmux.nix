@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.terminal.programs.tmux;
-in {
+in
+{
   config = mkIf cfg.enable {
     programs = {
       tmux = {

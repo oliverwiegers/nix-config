@@ -7,11 +7,11 @@
   ...
 }:
 # let
-  # domain = "oliverwiegers.com";
-  # domainInternal = "oliverwiegers.de";
-  # headscaleFQDN = "vpn.${domain}";
-  # localHeadscaleURI = "${toString config.services.headscale.address}:${toString config.services.headscale.port}";
-  # headscaleURI = "https://${headscaleFQDN}:443";
+# domain = "oliverwiegers.com";
+# domainInternal = "oliverwiegers.de";
+# headscaleFQDN = "vpn.${domain}";
+# localHeadscaleURI = "${toString config.services.headscale.address}:${toString config.services.headscale.port}";
+# headscaleURI = "https://${headscaleFQDN}:443";
 # in {
 {
   imports = [

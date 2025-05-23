@@ -2,13 +2,15 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.tailscale;
   promDir = "/var/lib/prometheus/node-exporter";
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     systemd.timers."tailscale-metrics" = {
-      wantedBy = ["timers.target"];
+      wantedBy = [ "timers.target" ];
 
       timerConfig = {
         OnBootSec = "1m";
@@ -18,8 +20,8 @@ in {
     };
 
     systemd.services."tailscale-metrics" = {
-      after = ["prometheus-node-exporter.service"];
-      wants = ["prometheus-node-exporter.service"];
+      after = [ "prometheus-node-exporter.service" ];
+      wants = [ "prometheus-node-exporter.service" ];
       script = ''
         set -eu
 

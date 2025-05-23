@@ -5,19 +5,27 @@
   lib,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
   boot = {
     initrd = {
-      availableKernelModules = ["ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod"];
-      kernelModules = [];
+      availableKernelModules = [
+        "ahci"
+        "xhci_pci"
+        "virtio_pci"
+        "virtio_scsi"
+        "sd_mod"
+        "sr_mod"
+      ];
+      kernelModules = [ ];
     };
 
-    kernelModules = [];
-    extraModulePackages = [];
+    kernelModules = [ ];
+    extraModulePackages = [ ];
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

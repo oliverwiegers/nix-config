@@ -5,9 +5,11 @@
   inputs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.terminal.programs.k8s-cli;
-in {
+in
+{
   imports = [
     inputs.krewfile.homeManagerModules.krewfile
   ];

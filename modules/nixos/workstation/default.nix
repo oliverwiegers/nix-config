@@ -5,9 +5,11 @@
   helpers,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.workstation;
-in {
+in
+{
   imports = helpers.getConfigFilePaths ./. ++ helpers.getDirectoryPaths ./.;
 
   options = {
@@ -58,7 +60,10 @@ in {
     users.users = {
       oliverwiegers = {
         isNormalUser = true;
-        extraGroups = ["wheel" "docker"];
+        extraGroups = [
+          "wheel"
+          "docker"
+        ];
         description = "Oliver Wiegers";
         shell = pkgs.zsh;
       };
@@ -92,12 +97,12 @@ in {
       "/media/nas" = {
         device = "daedalus.oliverwiegers.com:/mnt/carter/olli";
         fsType = "nfs";
-        options = ["nofail"];
+        options = [ "nofail" ];
       };
       "/media/nas_vanessa" = {
         device = "daedalus.oliverwiegers.com:/mnt/carter/vanessa";
         fsType = "nfs";
-        options = ["nofail"];
+        options = [ "nofail" ];
       };
     };
 
@@ -106,11 +111,14 @@ in {
         enable = true;
         extraRules = [
           {
-            users = ["oliverwiegers"];
+            users = [ "oliverwiegers" ];
             commands = [
               {
                 command = "ALL";
-                options = ["NOPASSWD" "SETENV"];
+                options = [
+                  "NOPASSWD"
+                  "SETENV"
+                ];
               }
             ];
           }

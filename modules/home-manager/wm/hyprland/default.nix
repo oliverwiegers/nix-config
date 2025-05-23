@@ -3,9 +3,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.wm.hyprland;
-in {
+in
+{
   config = mkIf cfg.enable {
     home = {
       file = {

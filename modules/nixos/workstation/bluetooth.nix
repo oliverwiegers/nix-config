@@ -3,9 +3,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.workstation.bluetooth;
-in {
+in
+{
   config = mkIf cfg.enable {
     hardware = {
       bluetooth = {

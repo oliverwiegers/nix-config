@@ -5,7 +5,8 @@
   self,
   ...
 }:
-with helpers; {
+with helpers;
+{
   imports = [
     ./hardware.nix
     ./disk-config.nix
@@ -32,8 +33,7 @@ with helpers; {
   serverBase = {
     enable = true;
 
-    fancyMotd.extraServices = ''
-    '';
+    fancyMotd.extraServices = '''';
   };
 
   consul = {
@@ -62,7 +62,7 @@ with helpers; {
     defaultSopsFile = ./secrets.yaml;
 
     secrets = {
-      "headscale/preauthkey" = {};
+      "headscale/preauthkey" = { };
     };
   };
 }

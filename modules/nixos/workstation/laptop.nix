@@ -3,9 +3,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.workstation.laptop;
-in {
+in
+{
   config = mkIf cfg.enable {
     # Laptop power managent.
     powerManagement.enable = true;

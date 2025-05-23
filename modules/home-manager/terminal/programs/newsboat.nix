@@ -3,9 +3,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.terminal.programs.newsboat;
-in {
+in
+{
   config = mkIf cfg.enable {
     programs = {
       newsboat = {
@@ -55,222 +57,323 @@ in {
 
         urls = [
           # News Aggregators
-          {url = ''"query:News Aggregators:tags # \"news_aggregator\""'';}
+          { url = ''"query:News Aggregators:tags # \"news_aggregator\""''; }
           {
             url = "https://feeds.feedburner.com/TheHackersNews";
-            tags = ["news_aggregator" "cybersecurity"];
+            tags = [
+              "news_aggregator"
+              "cybersecurity"
+            ];
           }
           {
             url = "https://news.ycombinator.com/rss";
-            tags = ["news_aggregator" "~Hacker News (ycombinator)"];
+            tags = [
+              "news_aggregator"
+              "~Hacker News (ycombinator)"
+            ];
           }
           {
             url = "https://lobste.rs/rss";
-            tags = ["news_aggregator"];
+            tags = [ "news_aggregator" ];
           }
 
           # Blogs
-          {url = ''"query:Blogs:tags # \"blog\""'';}
+          { url = ''"query:Blogs:tags # \"blog\""''; }
           {
             url = "https://hackerstations.substack.com/feed/";
-            tags = ["blog"];
+            tags = [ "blog" ];
           }
           {
             url = "https://blog.orhun.dev/rss.xml";
-            tags = ["blog" "~Orhun's Blog (Programming)" "programming"];
+            tags = [
+              "blog"
+              "~Orhun's Blog (Programming)"
+              "programming"
+            ];
           }
           {
             url = "https://ersei.net/en/blog.atom";
-            tags = ["blog"];
+            tags = [ "blog" ];
           }
           {
             url = "https://danielmiessler.com/feed";
-            tags = ["blog" "cybersecurity"];
+            tags = [
+              "blog"
+              "cybersecurity"
+            ];
           }
           {
             url = "https://blog.python.org/feeds/posts/default?alt=rss";
-            tags = ["blog" "programming" "python"];
+            tags = [
+              "blog"
+              "programming"
+              "python"
+            ];
           }
           {
             url = "https://garrit.xyz/rss.xml";
-            tags = ["blog"];
+            tags = [ "blog" ];
           }
           {
             url = "https://fasterthanli.me/index.xml";
-            tags = ["blog"];
+            tags = [ "blog" ];
           }
           {
             url = "https://taylor.town/feed";
-            tags = ["blog"];
+            tags = [ "blog" ];
           }
           {
             url = "https://www.claudiokuenzler.com/rss.xml";
-            tags = ["blog"];
+            tags = [ "blog" ];
           }
           {
             url = "https://www.mevlyshkin.com/blog/atom.xml";
-            tags = ["blog" "maybe"];
+            tags = [
+              "blog"
+              "maybe"
+            ];
           }
           {
             url = "http://feeds.scottlowe.org/slowe/content/feed/";
-            tags = ["blog" "kubernetes"];
+            tags = [
+              "blog"
+              "kubernetes"
+            ];
           }
           {
             url = "https://bitecode.substack.com/feed/";
-            tags = ["blog" "programming" "python"];
+            tags = [
+              "blog"
+              "programming"
+              "python"
+            ];
           }
           {
             url = "https://samwho.dev/rss.xml";
-            tags = ["blog"];
+            tags = [ "blog" ];
           }
           {
             url = "https://kmaasrud.com/atom.xml";
-            tags = ["blog"];
+            tags = [ "blog" ];
           }
           {
             url = "https://opensourcemusings.com/feed/";
-            tags = ["blog"];
+            tags = [ "blog" ];
           }
           {
             url = "https://dqdongg.com/rss.xml";
-            tags = ["blog" "programming" "python"];
+            tags = [
+              "blog"
+              "programming"
+              "python"
+            ];
           }
           {
             url = "https://frankindev.com/feed.xml";
-            tags = ["blog"];
+            tags = [ "blog" ];
           }
           {
             url = "https://ounapuu.ee/index.xml";
-            tags = ["blog" "linux"];
+            tags = [
+              "blog"
+              "linux"
+            ];
           }
           {
             url = "https://ma.ttias.be/blog/index.xml";
-            tags = ["blog" "linux"];
+            tags = [
+              "blog"
+              "linux"
+            ];
           }
           {
             url = "https://privsec.dev/index.xml";
-            tags = ["blog" "security"];
+            tags = [
+              "blog"
+              "security"
+            ];
           }
           {
             url = "https://matduggan.com/rss/";
-            tags = ["blog" "~Mat Duggan"];
+            tags = [
+              "blog"
+              "~Mat Duggan"
+            ];
           }
           {
             url = "https://alexharv074.github.io/feed.xml";
-            tags = ["blog" "programming"];
+            tags = [
+              "blog"
+              "programming"
+            ];
           }
           {
             url = "https://lazybear.io/index.xml";
-            tags = ["blog"];
+            tags = [ "blog" ];
           }
           {
             url = "https://shellsharks.com/feed";
-            tags = ["blog" "security"];
+            tags = [
+              "blog"
+              "security"
+            ];
           }
           {
             url = "https://0xash.io/feed";
-            tags = ["blog" "security"];
+            tags = [
+              "blog"
+              "security"
+            ];
           }
           {
             url = "https://ianthehenry.com/feed.xml";
-            tags = ["blog"];
+            tags = [ "blog" ];
           }
           {
             url = "https://ludic.mataroa.blog/rss/";
-            tags = ["blog"];
+            tags = [ "blog" ];
           }
           {
             url = "https://gvolpe.com/blog/feed.xml";
-            tags = ["blog" "nix"];
+            tags = [
+              "blog"
+              "nix"
+            ];
           }
           {
             url = "https://fasterthanli.me/index.xml";
-            tags = ["blog" "nix"];
+            tags = [
+              "blog"
+              "nix"
+            ];
           }
           {
             url = "https://jdisaacs.com/blog/rss.xml";
-            tags = ["blog" "nix"];
+            tags = [
+              "blog"
+              "nix"
+            ];
           }
           {
             url = "https://thiscute.world/en/index.xml";
-            tags = ["blog" "nix"];
+            tags = [
+              "blog"
+              "nix"
+            ];
           }
           {
             url = "https://xeiaso.net/blog.rss";
-            tags = ["blog" "nix"];
+            tags = [
+              "blog"
+              "nix"
+            ];
           }
           {
             url = "https://lhf.pt/atom.xml";
-            tags = ["blog" "nix"];
+            tags = [
+              "blog"
+              "nix"
+            ];
           }
           {
             url = "https://primamateria.github.io/blog/atom.xml";
-            tags = ["blog" "nix"];
+            tags = [
+              "blog"
+              "nix"
+            ];
           }
           {
             url = "https://stephank.nl/index.rss";
-            tags = ["blog" "nix"];
+            tags = [
+              "blog"
+              "nix"
+            ];
           }
 
           # Corporate Blogs
-          {url = ''"query:Corporate Blogs:tags # \"corporate_blog\""'';}
+          { url = ''"query:Corporate Blogs:tags # \"corporate_blog\""''; }
           {
             url = "https://googleonlinesecurity.blogspot.com/atom.xml";
-            tags = ["corporate_blog" "cybersecurity"];
+            tags = [
+              "corporate_blog"
+              "cybersecurity"
+            ];
           }
           {
             url = "https://www.pulumi.com/blog/rss.xml";
-            tags = ["corporate_blog" "infrastructure"];
+            tags = [
+              "corporate_blog"
+              "infrastructure"
+            ];
           }
           {
             url = "https://blog.python.org/feeds/posts/default?alt=rss";
-            tags = ["corporate_blog" "programming"];
+            tags = [
+              "corporate_blog"
+              "programming"
+            ];
           }
           {
             url = "https://blog.pypi.org/feed_rss_created.xml";
-            tags = ["corporate_blog" "programming"];
+            tags = [
+              "corporate_blog"
+              "programming"
+            ];
           }
           {
             url = "https://serokell.io/blog.rss.xml";
-            tags = ["corporate_blog" "nix"];
+            tags = [
+              "corporate_blog"
+              "nix"
+            ];
           }
           {
             url = "https://determinate.systems/rss.xml";
-            tags = ["corporate_blog" "nix"];
+            tags = [
+              "corporate_blog"
+              "nix"
+            ];
           }
 
           # Misc
-          {url = ''"query:Misc:tags # \"misc\""'';}
+          { url = ''"query:Misc:tags # \"misc\""''; }
           {
             url = "http://www.python.org/dev/peps/peps.rss";
-            tags = ["misc" "programming" "python"];
+            tags = [
+              "misc"
+              "programming"
+              "python"
+            ];
           }
           {
             url = "http://wikileaks.org/feed-all";
-            tags = ["misc"];
+            tags = [ "misc" ];
           }
           {
             url = "https://www.rfc-editor.org/rfcrss.xml";
-            tags = ["misc"];
+            tags = [ "misc" ];
           }
           {
             url = "https://www.w3.org/blog/news/feed";
-            tags = ["misc"];
+            tags = [ "misc" ];
           }
           {
             url = "https://hacks.mozilla.org/feed/";
-            tags = ["misc"];
+            tags = [ "misc" ];
           }
           {
             url = "https://nyxt.atlas.engineer/feed";
-            tags = ["misc" "changelog"];
+            tags = [
+              "misc"
+              "changelog"
+            ];
           }
 
           # Gaming
-          {url = ''"query:Gaming:tags # \"gaming\""'';}
+          { url = ''"query:Gaming:tags # \"gaming\""''; }
           {
             url = "http://feeds.feedburner.com/MajorNelson";
-            tags = ["gaming"];
+            tags = [ "gaming" ];
           }
         ];
       };

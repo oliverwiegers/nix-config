@@ -6,9 +6,11 @@
   helpers,
   ...
 }:
-with lib // helpers; let
+with lib // helpers;
+let
   cfg = config.serverBase;
-in {
+in
+{
   imports = [
     (modulesPath + "/profiles/headless.nix")
   ];
@@ -71,26 +73,31 @@ in {
       };
 
       etc = {
-        fancy-motd = let
-          defaultConfig = ''
-            # Colors
-            CA="\e[34m"  # Accent
-            CO="\e[32m"  # Ok
-            CW="\e[33m"  # Warning
-            CE="\e[31m"  # Error
-            CN="\e[0m"   # None
+        fancy-motd =
+          let
+            defaultConfig = ''
+              # Colors
+              CA="\e[34m"  # Accent
+              CO="\e[32m"  # Ok
+              CW="\e[33m"  # Warning
+              CE="\e[31m"  # Error
+              CN="\e[0m"   # None
 
-            # Max width used for components in second column
-            WIDTH=50
+              # Max width used for components in second column
+              WIDTH=50
 
-            # Services to show
-            declare -A services
-            services["sshd"]="SSH"
-            services["tailscaled"]="Tailscale"
-          '';
-        in {
-          text = lib.concatStrings [defaultConfig cfg.fancyMotd.extraServices];
-        };
+              # Services to show
+              declare -A services
+              services["sshd"]="SSH"
+              services["tailscaled"]="Tailscale"
+            '';
+          in
+          {
+            text = lib.concatStrings [
+              defaultConfig
+              cfg.fancyMotd.extraServices
+            ];
+          };
       };
     };
 

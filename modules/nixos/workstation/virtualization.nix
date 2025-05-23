@@ -3,9 +3,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.workstation.virtualization;
-in {
+in
+{
   config = mkIf cfg.enable {
     virtualisation = {
       podman = {

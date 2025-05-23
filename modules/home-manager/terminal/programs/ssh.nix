@@ -3,9 +3,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.terminal.programs.ssh;
-in {
+in
+{
   config = mkIf cfg.enable {
     programs = {
       ssh = {
@@ -19,25 +21,23 @@ in {
           AddKeysToAgent yes
         '';
 
-        matchBlocks =
-          {
-            "*" = {
-              user = "root";
-            };
+        matchBlocks = {
+          "*" = {
+            user = "root";
+          };
 
-            dudek = {
-              hostname = "dudek.oliverwiegers.com";
-            };
+          dudek = {
+            hostname = "dudek.oliverwiegers.com";
+          };
 
-            kryha = {
-              hostname = "kryha.oliverwiegers.com";
-            };
+          kryha = {
+            hostname = "kryha.oliverwiegers.com";
+          };
 
-            rockex = {
-              hostname = "rockex.oliverwiegers.com";
-            };
-          }
-          // cfg.extraMatchBlocks;
+          rockex = {
+            hostname = "rockex.oliverwiegers.com";
+          };
+        } // cfg.extraMatchBlocks;
       };
     };
   };

@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.terminal.emulator.alacritty;
-in {
+in
+{
   config = mkIf cfg.enable {
     programs = {
       alacritty = {

@@ -6,10 +6,12 @@
   helpers,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.mailServer;
   domain = builtins.elemAt config.mailServer.domains 0;
-in {
+in
+{
   imports = [
     inputs.simple-nixos-mailserver.nixosModule
   ];
@@ -19,8 +21,8 @@ in {
 
     domains = mkOption {
       type = types.listOf types.str;
-      example = ["example.com"];
-      default = [];
+      example = [ "example.com" ];
+      default = [ ];
       description = "The domains that this mail server serves.";
     };
 
@@ -94,107 +96,118 @@ in {
       };
     };
 
-    services = let
-      mailAccounts = mailserver.loginAccounts;
-      htpasswd = pkgs.writeText "radicale.users" (
-        concatStrings
-        (flip mapAttrsToList mailAccounts (
-          mail: user:
-            mail + ":" + user.hashedPassword + "\n"
-        ))
-      );
-    in rec {
-      roundcube = {
-        enable = true;
-        hostName = "mail.${domain}";
-
-        extraConfig = ''
-          $config['smtp_host'] = "tls://${mailserver.fqdn}";
-          $config['smtp_user'] = "%u";
-          $config['smtp_pass'] = "%p";
-          $config['username_domain'] = "%t";
-        '';
-
-        plugins = [
-          "carddav"
-          "contextmenu"
-          "persistent_login"
-
-          # FIXME: Below aren't working yet.
-          "html5_notifier"
-          "banner-ics"
-          "gravatar"
-          "tls_icon"
-          "vacation"
-          "roundcube_caldav"
-          "automatic_addressbook"
-          "dark_html"
-          "attachment_preview"
-        ];
-
-        package = pkgs.roundcube.withPlugins (
-          plugins: [plugins.contextmenu plugins.carddav plugins.persistent_login] ++ roundcube.plugins
+    services =
+      let
+        mailAccounts = mailserver.loginAccounts;
+        htpasswd = pkgs.writeText "radicale.users" (
+          concatStrings (
+            flip mapAttrsToList mailAccounts (mail: user: mail + ":" + user.hashedPassword + "\n")
+          )
         );
+      in
+      rec {
+        roundcube = {
+          enable = true;
+          hostName = "mail.${domain}";
 
-        # FIXME: Is not working yet.
-        dicts = with pkgs.aspellDicts; [en de];
-      };
+          extraConfig = ''
+            $config['smtp_host'] = "tls://${mailserver.fqdn}";
+            $config['smtp_user'] = "%u";
+            $config['smtp_pass'] = "%p";
+            $config['username_domain'] = "%t";
+          '';
 
-      radicale = {
-        enable = true;
-        settings = {
-          auth = {
-            type = "htpasswd";
-            htpasswd_filename = "${htpasswd}";
-            htpasswd_encryption = "bcrypt";
-          };
+          plugins = [
+            "carddav"
+            "contextmenu"
+            "persistent_login"
+
+            # FIXME: Below aren't working yet.
+            "html5_notifier"
+            "banner-ics"
+            "gravatar"
+            "tls_icon"
+            "vacation"
+            "roundcube_caldav"
+            "automatic_addressbook"
+            "dark_html"
+            "attachment_preview"
+          ];
+
+          package = pkgs.roundcube.withPlugins (
+            plugins:
+            [
+              plugins.contextmenu
+              plugins.carddav
+              plugins.persistent_login
+            ]
+            ++ roundcube.plugins
+          );
+
+          # FIXME: Is not working yet.
+          dicts = with pkgs.aspellDicts; [
+            en
+            de
+          ];
         };
-      };
 
-      nginx = {
-        enable = true;
-        virtualHosts = {
-          "cal.${domain}" = {
-            forceSSL = true;
-            enableACME = true;
-            locations."/" = {
-              proxyPass = "http://localhost:5232/";
-              extraConfig = ''
-                proxy_set_header  X-Script-Name /;
-                proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_pass_header Authorization;
-              '';
+        radicale = {
+          enable = true;
+          settings = {
+            auth = {
+              type = "htpasswd";
+              htpasswd_filename = "${htpasswd}";
+              htpasswd_encryption = "bcrypt";
             };
           };
         };
-      };
 
-      postgresqlBackup = {
-        enable = true;
-        databases = [
-          "roundcube"
-        ];
-      };
-
-      restic = let
-        services = {
-          mail = {
-            paths = ["/var/vmail"];
-          };
-          dkim = {
-            paths = ["/var/dkim"];
-          };
-          postgresql = {
-            paths = ["/var/backup/postgresql/roundcube*"];
-          };
-          readicale = {
-            paths = ["/var/lib/radicale"];
+        nginx = {
+          enable = true;
+          virtualHosts = {
+            "cal.${domain}" = {
+              forceSSL = true;
+              enableACME = true;
+              locations."/" = {
+                proxyPass = "http://localhost:5232/";
+                extraConfig = ''
+                  proxy_set_header  X-Script-Name /;
+                  proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_pass_header Authorization;
+                '';
+              };
+            };
           };
         };
-      in {
-        backups = builtins.mapAttrs (name: settings: helpers.mkBackup name settings) services;
+
+        postgresqlBackup = {
+          enable = true;
+          databases = [
+            "roundcube"
+          ];
+        };
+
+        restic =
+          let
+            services = {
+              mail = {
+                paths = [ "/var/vmail" ];
+              };
+              dkim = {
+                paths = [ "/var/dkim" ];
+              };
+              postgresql = {
+                paths = [ "/var/backup/postgresql/roundcube*" ];
+              };
+              readicale = {
+                paths = [ "/var/lib/radicale" ];
+              };
+            };
+          in
+          {
+            backups = builtins.mapAttrs (name: settings: helpers.mkBackup name settings) services;
+          };
       };
-    };
 
     security = {
       acme = {
@@ -203,6 +216,9 @@ in {
       };
     };
 
-    networking.firewall.allowedTCPPorts = [80 443];
+    networking.firewall.allowedTCPPorts = [
+      80
+      443
+    ];
   };
 }

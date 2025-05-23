@@ -4,7 +4,8 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.graphical.browser.firefox;
   nixIcon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
 
@@ -20,7 +21,8 @@ with lib; let
     foxyproxy-standard
     hacktools
   ];
-in {
+in
+{
   config = mkIf cfg.enable {
     programs.firefox = {
       enable = true;
@@ -42,9 +44,7 @@ in {
           };
 
           extensions.packages =
-            if config.hackstation.enable
-            then defaultPlugins ++ hackstationPlugins
-            else defaultPlugins;
+            if config.hackstation.enable then defaultPlugins ++ hackstationPlugins else defaultPlugins;
 
           search = {
             default = "ddg";
@@ -59,7 +59,7 @@ in {
               "wikipedia".metaData.alias = "@w";
 
               "Github" = {
-                definedAliases = ["@gh"];
+                definedAliases = [ "@gh" ];
                 icon = "https://github.com/favicon.ico";
                 updateInterval = 24 * 60 * 60 * 1000; # every day
 
@@ -71,7 +71,7 @@ in {
               };
 
               "Github Netlogix Devops" = {
-                definedAliases = ["@ghn"];
+                definedAliases = [ "@ghn" ];
                 icon = "https://github.com/favicon.ico";
                 updateInterval = 24 * 60 * 60 * 1000; # every day
 
@@ -89,7 +89,7 @@ in {
               };
 
               "Nix Packages" = {
-                definedAliases = ["@np"];
+                definedAliases = [ "@np" ];
                 icon = "${nixIcon}";
 
                 urls = [
@@ -110,7 +110,7 @@ in {
               };
 
               "Nix Manual" = {
-                definedAliases = ["@nw"];
+                definedAliases = [ "@nw" ];
                 icon = "${nixIcon}";
 
                 urls = [
@@ -122,7 +122,7 @@ in {
 
               "NixOS Options" = {
                 icon = "${nixIcon}";
-                definedAliases = ["@no"];
+                definedAliases = [ "@no" ];
 
                 urls = [
                   {
@@ -142,7 +142,7 @@ in {
               };
 
               "NixOS Wiki" = {
-                definedAliases = ["@nw"];
+                definedAliases = [ "@nw" ];
                 icon = "${nixIcon}";
 
                 urls = [
@@ -153,7 +153,7 @@ in {
               };
 
               "Home Manager Options" = {
-                definedAliases = ["@ho"];
+                definedAliases = [ "@ho" ];
                 icon = "${nixIcon}";
 
                 urls = [
@@ -164,7 +164,7 @@ in {
               };
 
               "Noogle" = {
-                definedAliases = ["@ng"];
+                definedAliases = [ "@ng" ];
                 icon = "${nixIcon}";
 
                 urls = [
@@ -175,7 +175,7 @@ in {
               };
 
               "Marginalia" = {
-                definedAliases = ["@m"];
+                definedAliases = [ "@m" ];
                 icon = "https://marginalia-search.com/favicon.ico";
                 updateInterval = 24 * 60 * 60 * 1000; # every day
 
@@ -197,7 +197,7 @@ in {
 
     programs.browserpass = {
       inherit (config.programs.firefox) enable;
-      browsers = ["firefox"];
+      browsers = [ "firefox" ];
     };
   };
 }

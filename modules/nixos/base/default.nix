@@ -3,9 +3,11 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.base;
-in {
+in
+{
   options.base = {
     timeZone = lib.mkOption {
       type = lib.types.nullOr lib.types.str;

@@ -4,7 +4,8 @@
   helpers,
   ...
 }:
-with lib; {
+with lib;
+{
   imports = helpers.getConfigFilePaths ./. ++ helpers.getDirectoryPaths ./.;
 
   options = {

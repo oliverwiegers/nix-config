@@ -3,7 +3,8 @@
   helpers,
   ...
 }:
-with helpers; {
+with helpers;
+{
   imports = [
     ../../modules/home-manager
   ];

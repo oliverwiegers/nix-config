@@ -3,7 +3,8 @@
   helpers,
   ...
 }:
-with lib; {
+with lib;
+{
   imports = helpers.getConfigFilePaths ./. ++ helpers.getDirectoryPaths ./.;
 
   options = {
@@ -48,7 +49,7 @@ with lib; {
           enable = mkEnableOption "Enable git.";
           extraConfig = mkOption {
             type = lib.types.attrs;
-            default = {};
+            default = { };
           };
         };
 
@@ -68,7 +69,7 @@ with lib; {
           enable = mkEnableOption "Enable ssh.";
           extraMatchBlocks = mkOption {
             type = lib.types.attrs;
-            default = {};
+            default = { };
           };
         };
 

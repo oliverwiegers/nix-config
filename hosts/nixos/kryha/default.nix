@@ -7,10 +7,12 @@
   self,
   ...
 }:
-with lib // helpers; let
+with lib // helpers;
+let
   authFQDN = "auth.oliverwiegers.com";
   authURI = "https://${authFQDN}";
-in {
+in
+{
   imports = [
     ./hardware.nix
     ./disk-config.nix
@@ -60,46 +62,48 @@ in {
   #  / /|  / />  </ /_/ /___/ /
   # /_/ |_/_/_/|_|\____//____/
 
-  systemd.services.kanidm.wants = ["acme-${authFQDN}.service"];
+  systemd.services.kanidm.wants = [ "acme-${authFQDN}.service" ];
 
   services = {
-    kanidm = let
-      certDir = config.security.acme.certs.${authFQDN}.directory;
-    in {
-      enableServer = true;
-      enableClient = true;
-      clientSettings.uri = "${authURI}:8443";
-      package = pkgs.kanidmWithSecretProvisioning;
+    kanidm =
+      let
+        certDir = config.security.acme.certs.${authFQDN}.directory;
+      in
+      {
+        enableServer = true;
+        enableClient = true;
+        clientSettings.uri = "${authURI}:8443";
+        package = pkgs.kanidmWithSecretProvisioning;
 
-      serverSettings = {
-        tls_key = certDir + "/key.pem";
-        tls_chain = certDir + "/fullchain.pem";
-        origin = authURI;
-        ldapbindaddress = "127.0.0.1:636";
-        domain = authFQDN;
+        serverSettings = {
+          tls_key = certDir + "/key.pem";
+          tls_chain = certDir + "/fullchain.pem";
+          origin = authURI;
+          ldapbindaddress = "127.0.0.1:636";
+          domain = authFQDN;
 
-        online_backup = {
-          versions = 1;
-          path = "/var/backup/kanidm";
+          online_backup = {
+            versions = 1;
+            path = "/var/backup/kanidm";
+          };
+        };
+
+        provision = {
+          enable = true;
+          idmAdminPasswordFile = config.sops.secrets."kanidm/idm_admin".path;
+          adminPasswordFile = config.sops.secrets."kanidm/admin".path;
         };
       };
-
-      provision = {
-        enable = true;
-        idmAdminPasswordFile = config.sops.secrets."kanidm/idm_admin".path;
-        adminPasswordFile = config.sops.secrets."kanidm/admin".path;
-      };
-    };
   };
 
   # While not externally exposed we'll use this.
   networking.hosts = {
-    "127.0.0.1" = ["auth.oliverwiegers.com"];
+    "127.0.0.1" = [ "auth.oliverwiegers.com" ];
   };
 
-  security.acme.certs."${authFQDN}" = {};
+  security.acme.certs."${authFQDN}" = { };
 
-  users.groups.certs.members = ["kanidm"];
+  users.groups.certs.members = [ "kanidm" ];
 
   #   ________    _          __   ____             __
   #  /_  __/ /_  (_)________/ /  / __ \____ ______/ /___  __
@@ -112,7 +116,7 @@ in {
     defaultSopsFile = ./secrets.yaml;
 
     secrets = {
-      "headscale/preauthkey" = {};
+      "headscale/preauthkey" = { };
       "kanidm/admin".owner = "kanidm";
       "kanidm/idm_admin".owner = "kanidm";
     };

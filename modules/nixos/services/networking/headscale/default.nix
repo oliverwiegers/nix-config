@@ -4,9 +4,11 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   cfg = config.headscale;
-in {
+in
+{
   options.headscale = {
     enable = lib.mkEnableOption "Headscale server.";
 
@@ -20,11 +22,11 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    assertions = [];
+    assertions = [ ];
 
     networking.nat = {
       enable = true;
-      internalInterfaces = ["ve-+"];
+      internalInterfaces = [ "ve-+" ];
       externalInterface = "enp1s0";
     };
 
@@ -39,21 +41,26 @@ in {
         localAddress = "10.0.0.3";
         ephemeral = true;
 
-        config = {
-          pkgs,
-          lib,
-          ...
-        }: {
-          environment.systemPackages = [pkgs.postgresql pkgs.curl];
+        config =
+          {
+            pkgs,
+            lib,
+            ...
+          }:
+          {
+            environment.systemPackages = [
+              pkgs.postgresql
+              pkgs.curl
+            ];
 
-          services.resolved.enable = true;
+            services.resolved.enable = true;
 
-          networking = {
-            # Use systemd-resolved inside the container
-            # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
-            useHostResolvConf = lib.mkForce false;
+            networking = {
+              # Use systemd-resolved inside the container
+              # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
+              useHostResolvConf = lib.mkForce false;
+            };
           };
-        };
       };
 
       headscale-db = {
@@ -63,84 +70,88 @@ in {
         localAddress = "10.0.0.2";
         ephemeral = true;
 
-        config = {pkgs, ...}: {
-          imports = [
-            "${self}/modules/nixos/acme-defaults.nix"
-            "${self}/modules/nixos/sops-defaults.nix"
-            inputs.sops-nix.nixosModules.sops
-          ];
+        config =
+          { pkgs, ... }:
+          {
+            imports = [
+              "${self}/modules/nixos/acme-defaults.nix"
+              "${self}/modules/nixos/sops-defaults.nix"
+              inputs.sops-nix.nixosModules.sops
+            ];
 
-          acmeDefaults.enable = true;
-          sopsDefaults.enable = true;
+            acmeDefaults.enable = true;
+            sopsDefaults.enable = true;
 
-          sops = {
-            secrets = {
-              "headscale/dbuser" = {
-                sopsFile = cfg.secretsFile;
-                owner = "postgres";
+            sops = {
+              secrets = {
+                "headscale/dbuser" = {
+                  sopsFile = cfg.secretsFile;
+                  owner = "postgres";
+                };
               };
             };
-          };
 
-          systemd.services = {
-            postgresql.postStart = let
-              passwordFile = config.sops.secrets."headscale/dbuser".path;
-            in ''
-              $PSQL -tA <<'EOF'
-                DO $$
-                DECLARE password TEXT;
-                BEGIN
-                  password := trim(both from replace(pg_read_file('${passwordFile}'), E'\n', '''));
-                  EXECUTE format('ALTER ROLE headscale WITH PASSWORD '''%s''';', password);
-                END $$;
-              EOF
-            '';
-          };
-
-          services = {
-            postgresql = {
-              enable = true;
-              enableTCPIP = true;
-
-              ensureUsers = [
-                {
-                  name = "headscale";
-                  ensureClauses.login = true;
-                  ensureDBOwnership = true;
-                }
-              ];
-
-              ensureDatabases = [
-                "headscale"
-              ];
-
-              authentication = pkgs.lib.mkOverride 10 ''
-                #type database DBuser origin-address auth-method
-                host  headscale      headscale     10.0.0.2/32   password
-              '';
+            systemd.services = {
+              postgresql.postStart =
+                let
+                  passwordFile = config.sops.secrets."headscale/dbuser".path;
+                in
+                ''
+                  $PSQL -tA <<'EOF'
+                    DO $$
+                    DECLARE password TEXT;
+                    BEGIN
+                      password := trim(both from replace(pg_read_file('${passwordFile}'), E'\n', '''));
+                      EXECUTE format('ALTER ROLE headscale WITH PASSWORD '''%s''';', password);
+                    END $$;
+                  EOF
+                '';
             };
 
-            postgresqlBackup = {
+            services = {
+              postgresql = {
+                enable = true;
+                enableTCPIP = true;
+
+                ensureUsers = [
+                  {
+                    name = "headscale";
+                    ensureClauses.login = true;
+                    ensureDBOwnership = true;
+                  }
+                ];
+
+                ensureDatabases = [
+                  "headscale"
+                ];
+
+                authentication = pkgs.lib.mkOverride 10 ''
+                  #type database DBuser origin-address auth-method
+                  host  headscale      headscale     10.0.0.2/32   password
+                '';
+              };
+
+              postgresqlBackup = {
+                enable = true;
+                databases = [
+                  "headscale"
+                ];
+              };
+            };
+
+            services.resolved.enable = true;
+
+            networking = {
+              # Use systemd-resolved inside the container
+              # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
+              useHostResolvConf = lib.mkForce false;
+            };
+
+            networking.firewall = {
               enable = true;
-              databases = [
-                "headscale"
-              ];
+              allowedTCPPorts = [ 5432 ];
             };
           };
-
-          services.resolved.enable = true;
-
-          networking = {
-            # Use systemd-resolved inside the container
-            # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
-            useHostResolvConf = lib.mkForce false;
-          };
-
-          networking.firewall = {
-            enable = true;
-            allowedTCPPorts = [5432];
-          };
-        };
       };
     };
   };

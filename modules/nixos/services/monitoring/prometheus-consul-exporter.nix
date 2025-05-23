@@ -3,10 +3,12 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.services.prometheus.exporters.consul;
   inherit (lib) mkOption types concatStringsSep;
-in {
+in
+{
   port = 9119;
   extraOpts = {
     consulServer = mkOption {

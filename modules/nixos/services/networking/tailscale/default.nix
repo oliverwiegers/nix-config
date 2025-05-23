@@ -2,9 +2,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.tailscale;
-in {
+in
+{
   imports = [
     ./monitoring.nix
   ];
@@ -58,8 +60,8 @@ in {
 
     networking.firewall = {
       enable = true;
-      trustedInterfaces = [config.services.tailscale.interfaceName];
-      allowedUDPPorts = [config.services.tailscale.port];
+      trustedInterfaces = [ config.services.tailscale.interfaceName ];
+      allowedUDPPorts = [ config.services.tailscale.port ];
     };
   };
 }

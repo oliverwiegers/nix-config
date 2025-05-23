@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.hackstation;
-in {
+in
+{
   options = {
     hackstation = {
       enable = mkEnableOption "Install pentest tools.";

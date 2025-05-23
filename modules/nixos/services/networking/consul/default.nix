@@ -3,13 +3,15 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   cfg = config.consul;
   caCert = "${cfg.domain}-agent-ca.pem";
   caKey = "${cfg.domain}-agent-ca-key.pem";
   serverCert = "${cfg.datacenter}-server-${cfg.domain}-0.pem";
   serverKey = "${cfg.datacenter}-server-${cfg.domain}-0-key.pem";
-in {
+in
+{
   imports = [
     inputs.sops-nix.nixosModules.sops
   ];
@@ -19,7 +21,10 @@ in {
 
     type = lib.mkOption {
       description = "Type of consul instance. Must be one of [ \"client\" \"server\" ].";
-      type = lib.types.enum ["client" "server"];
+      type = lib.types.enum [
+        "client"
+        "server"
+      ];
       default = "client";
       defaultText = "consul.type = \"client\";";
       example = "consul.type = \"server\";";
@@ -68,7 +73,7 @@ in {
     serverClusterMembers = lib.mkOption {
       description = "List or IPs of server nodes additional to the present one. Only take effect on server nodes.";
       type = lib.types.listOf lib.types.str;
-      default = [];
+      default = [ ];
       defaultText = "consul.serverClusterMembers = []";
       example = "consul.serverClusterMembers = [ \"172.25.25.245\" ]";
     };
@@ -102,16 +107,16 @@ in {
         shell = "/run/current-system/sw/bin/bash";
       };
 
-      groups.consul = {};
+      groups.consul = { };
     };
 
     systemd.services = {
       consul-setup = lib.mkIf (cfg.type == "server") {
-        wants = ["network-online.target"];
-        after = ["network-online.target"];
-        wantedBy = ["multi-user.target"];
+        wants = [ "network-online.target" ];
+        after = [ "network-online.target" ];
+        wantedBy = [ "multi-user.target" ];
 
-        path = [config.services.consul.package];
+        path = [ config.services.consul.package ];
 
         script = ''
           if ! [ -d /etc/consul.d/certs ]; then
@@ -145,8 +150,14 @@ in {
       };
 
       consul = lib.mkIf (cfg.type == "server") {
-        wants = ["consul-setup.service" "tailscaled.service"];
-        after = ["consul-setup.service" "tailscaled.service"];
+        wants = [
+          "consul-setup.service"
+          "tailscaled.service"
+        ];
+        after = [
+          "consul-setup.service"
+          "tailscaled.service"
+        ];
       };
     };
 
@@ -182,7 +193,7 @@ in {
       consul = {
         enable = true;
         webUi = lib.mkIf (cfg.type == "server") true;
-        extraConfigFiles = [config.sops.templates."gossip.json".path];
+        extraConfigFiles = [ config.sops.templates."gossip.json".path ];
 
         interface = {
           bind = "tailscale0";
@@ -194,7 +205,7 @@ in {
 
           server = lib.mkIf (cfg.type == "server") true;
           bootstrap_expect = lib.mkIf (cfg.type == "server") cfg.serverNodeCount;
-          retry_join = ["100.64.0.3"];
+          retry_join = [ "100.64.0.3" ];
           # bind_addr = lib.mkIf (cfg.type == "server") cfg.bindAddr;
 
           tls = {
@@ -224,43 +235,37 @@ in {
       };
     };
 
-    sops = let
-      consulOpts = {
-        owner = "consul";
-        mode = "0440";
-        restartUnits = ["consul-setup.service"];
-        reloadUnits = ["consul.service"];
-      };
-    in {
-      secrets = lib.mkMerge [
-        {
-          "consul/${caCert}" =
-            {
+    sops =
+      let
+        consulOpts = {
+          owner = "consul";
+          mode = "0440";
+          restartUnits = [ "consul-setup.service" ];
+          reloadUnits = [ "consul.service" ];
+        };
+      in
+      {
+        secrets = lib.mkMerge [
+          {
+            "consul/${caCert}" = {
               sopsFile = cfg.clientSecretsFile;
-            }
-            // consulOpts;
+            } // consulOpts;
 
-          "consul/gossip" =
-            {
+            "consul/gossip" = {
               sopsFile = cfg.clientSecretsFile;
-            }
-            // consulOpts;
-        }
+            } // consulOpts;
+          }
 
-        (lib.mkIf (cfg.type == "server") {
-          "consul/${caKey}" =
-            {
+          (lib.mkIf (cfg.type == "server") {
+            "consul/${caKey}" = {
               sopsFile = cfg.serverSecretsFile;
-            }
-            // consulOpts;
-        })
-      ];
+            } // consulOpts;
+          })
+        ];
 
-      templates."gossip.json" =
-        {
+        templates."gossip.json" = {
           content = ''{ "encrypt": "${config.sops.placeholder."consul/gossip"}" }'';
-        }
-        // consulOpts;
-    };
+        } // consulOpts;
+      };
   };
 }
