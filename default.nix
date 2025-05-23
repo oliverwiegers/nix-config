@@ -12,6 +12,7 @@
   nix-darwin,
   deploy-rs,
   flake-utils,
+  treefmt-nix,
   ...
 } @ inputs:
 flake-utils.lib.eachDefaultSystemPassThrough (system: let
@@ -82,9 +83,30 @@ in {
     else nixpkgs;
 
   pkgs = import nixpkgs-patched {inherit system;};
+
+  treefmtEval = treefmt-nix.lib.evalModule pkgs {
+    # Be a bit more verbose by default, so we can see progress happening
+    settings.verbose = 1;
+    programs.keep-sorted.enable = true;
+    # This uses nixfmt-rfc-style underneath,
+    # the default formatter for Nix code.
+    # See https://github.com/NixOS/nixfmt
+    programs.nixfmt.enable = true;
+
+    settings.formatter.editorconfig-checker = {
+      command = "${pkgs.lib.getExe pkgs.editorconfig-checker}";
+      options = [ "-disable-indent-size" ];
+      includes = [ "*" ];
+      priority = 1;
+    };
+  };
 in {
   devShells = import ./shell.nix {inherit pkgs;};
-  formatter = pkgs.alejandra;
+  formatter = treefmtEval.config.build.wrapper;
+
+  checks = {
+    formatting = treefmtEval.config.build.check self;
+  };
 })
 // {
   overlays = import ./overlays {inherit inputs;};

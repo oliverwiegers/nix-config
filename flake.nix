@@ -75,6 +75,12 @@
       flake = false;
     };
 
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+
     #   ________
     #  /_  __/ /_  ___  ____ ___  ___  _____
     #   / / / __ \/ _ \/ __ `__ \/ _ \/ ___/
