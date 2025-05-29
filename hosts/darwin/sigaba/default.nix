@@ -2,11 +2,14 @@
   lib,
   inputs,
   helpers,
+  self,
   ...
 }:
 with lib // helpers;
 {
   imports = [
+    "${self}/modules/darwin/profiles/nix-settings.nix"
+
     inputs.nix-homebrew.darwinModules.nix-homebrew
     inputs.nix-rosetta-builder.darwinModules.default
   ];
@@ -18,8 +21,6 @@ with lib // helpers;
   # \____/\__,_/____/\__/\____/_/ /_/ /_/  /_/  /_/\____/\__,_/\__,_/_/\___/____/
 
   wm.yabai = enabled;
-
-  nixSettings = enabled;
 
   #           _                __                    _
   #    ____  (_)  __      ____/ /___ _______      __(_)___

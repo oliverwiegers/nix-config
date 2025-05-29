@@ -49,7 +49,6 @@ rec {
       helpers,
       self,
       nixosSystem,
-      hostsDir,
       hostname,
       os,
     }:
@@ -66,7 +65,7 @@ rec {
       system = if os == "nixos" then null else "aarch64-darwin";
 
       modules = [
-        (hostsDir + "/${hostname}")
+        (../hosts + "/${os}" + "/${hostname}")
         { networking.hostName = lib.mkDefault "${hostname}"; }
       ];
 
@@ -84,7 +83,6 @@ rec {
       helpers,
       self,
       nixosSystem ? lib.nixosSystem,
-      hostsDir,
       os ? "nixos",
     }:
     builtins.mapAttrs
@@ -93,7 +91,6 @@ rec {
         mkHost {
           inherit
             os
-            hostsDir
             self
             nixosSystem
             helpers
@@ -105,7 +102,7 @@ rec {
       )
       (
         lib.attrsets.filterAttrs (_: type: type == "directory") (
-          builtins.readDir (builtins.toString hostsDir)
+          builtins.readDir (builtins.toString (../hosts + "/${os}"))
         )
       );
 
@@ -135,6 +132,19 @@ rec {
       autoStart = true;
       privateNetwork = true;
       ephemeral = true;
+
+      config = {
+        containerConfigDefaults = {
+          services.resolved.enable = true;
+
+          networking = {
+            firewall.enable = true;
+            # Use systemd-resolved inside the container
+            # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
+            useHostResolvConf = lib.mkForce false;
+          };
+        };
+      };
     }
     // settings;
 
@@ -164,4 +174,12 @@ rec {
   disabled = {
     enable = false;
   };
+
+  #     __  ___     __            __      __
+  #    /  |/  /__  / /_____ _____/ /___ _/ /_____ _
+  #   / /|_/ / _ \/ __/ __ `/ __  / __ `/ __/ __ `/
+  #  / /  / /  __/ /_/ /_/ / /_/ / /_/ / /_/ /_/ /
+  # /_/  /_/\___/\__/\__,_/\__,_/\__,_/\__/\__,_/
+
+  _metadata = builtins.fromJSON (builtins.readFile ../.metadata.json);
 }

@@ -1,31 +1,15 @@
 {
-  lib,
   config,
-  self,
   ...
-}:
-let
-  cfg = config.acmeDefaults;
-in
-{
-  imports = [
-    ./sops-defaults.nix
-  ];
-
-  options.acmeDefaults = {
-    enable = lib.mkEnableOption "ACME settings.";
-  };
-
-  config = lib.mkIf cfg.enable {
-    sopsDefaults.enable = true;
-
+}: {
+  config = {
     security = {
       acme = {
         acceptTerms = true;
 
         defaults = {
           email = "security@oliverwiegers.com";
-          group = "certs";
+          group = "acme";
           dnsProvider = "desec";
           dnsResolver = "ns1.desec.io:53";
           credentialFiles = {
@@ -37,10 +21,6 @@ in
           ];
         };
       };
-    };
-
-    sops.secrets.desec = {
-      sopsFile = "${self}/secrets.yaml";
     };
   };
 }

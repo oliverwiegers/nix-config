@@ -1,24 +1,25 @@
 {
   # pkgs,
   # config,
-  # helpers,
+  helpers,
   inputs,
-  # self,
+  self,
   ...
 }:
-# let
-# domain = "oliverwiegers.com";
-# domainInternal = "oliverwiegers.de";
-# headscaleFQDN = "vpn.${domain}";
-# localHeadscaleURI = "${toString config.services.headscale.address}:${toString config.services.headscale.port}";
-# headscaleURI = "https://${headscaleFQDN}:443";
-# in {
-{
+let
+  host = baseNameOf ./.;
+  hostAddress = helpers._metadata.hosts.${host}.primaryIPv4;
+in {
   imports = [
     ./hardware.nix
     ./disk-config.nix
 
+    "${self}/modules/nixos/profiles/nix-settings.nix"
+    "${self}/modules/nixos/profiles/acme-defaults.nix"
+    "${self}/modules/nixos/profiles/sops-defaults.nix"
+
     inputs.disko.nixosModules.disko
+    inputs.sops-nix.nixosModules.sops
   ];
 
   #    ______           __                     __  ___          __      __
@@ -27,21 +28,20 @@
   # / /___/ /_/ (__  ) /_/ /_/ / / / / / /  / /  / / /_/ / /_/ / /_/ / /  __(__  )
   # \____/\__,_/____/\__/\____/_/ /_/ /_/  /_/  /_/\____/\__,_/\__,_/_/\___/____/
 
-  #nixSettings = enabled;
-  #acmeDefaults = enabled;
-  #sopsDefaults = enabled;
-
-  #tailscale = {
-  #  enable = true;
-  #  authKeyFile = config.sops.secrets."headscale/preauthkey".path;
-  #};
+  # tailscale = {
+  #   enable = true;
+  #   authKeyFile = config.sops.secrets."headscale/preauthkey".path;
+  # };
 
   headscale = {
     enable = true;
+    secretsFile = ./secrets.yaml;
+    inherit (helpers._metadata) domain internalDomain;
+    inherit hostAddress;
   };
 
-  #serverBase = {
-  #  enable = true;
+  serverBase = {
+    enable = true;
 
   #  fancyMotd.extraServices = ''
   #    services["nginx"]="Nginx"
@@ -54,29 +54,29 @@
   #    services["postgresql"]="PostgreSQL"
   #    services["headscale"]="Headscale"
   #  '';
-  #};
+  };
 
-  #mailServer = {
-  #  enable = false;
-  #  domains = [domain];
-  #  subDomain = "mail";
-  #  secretsFile = ./secrets.yaml;
-  #};
+  # mailServer = {
+  #   enable = false;
+  #   domains = [domain];
+  #   subDomain = "mail";
+  #   secretsFile = ./secrets.yaml;
+  # };
 
-  #consul = {
-  #  enable = false;
-  #  type = "server";
-  #  #bindAddr = "100.64.0.3";
-  #  #uiBindAddr = "100.64.0.3";
-  #  clientSecretsFile = "${self}/secrets.yaml";
-  #  serverSecretsFile = ./secrets.yaml;
-  #};
+  # consul = {
+  #   enable = false;
+  #   type = "server";
+  #   #bindAddr = "100.64.0.3";
+  #   #uiBindAddr = "100.64.0.3";
+  #   clientSecretsFile = "${self}/secrets.yaml";
+  #   serverSecretsFile = ./secrets.yaml;
+  # };
 
-  ##     _   ___      ____  _____
-  ##    / | / (_)  __/ __ \/ ___/
-  ##   /  |/ / / |/_/ / / /\__ \
-  ##  / /|  / />  </ /_/ /___/ /
-  ## /_/ |_/_/_/|_|\____//____/
+  #     _   ___      ____  _____
+  #    / | / (_)  __/ __ \/ ___/
+  #   /  |/ / / |/_/ / / /\__ \
+  #  / /|  / />  </ /_/ /___/ /
+  # /_/ |_/_/_/|_|\____//____/
 
   #services = {
   #  nginx = {
@@ -117,68 +117,6 @@
   #    };
   #  };
 
-  #  # headscale = let
-  #  #   certDir = config.security.acme.certs.${headscaleFQDN}.directory;
-  #  # in {
-  #  #   enable = true;
-
-  #  #   settings = {
-  #  #     tls_key_path = certDir + "/key.pem";
-  #  #     tls_chain_path = certDir + "/fullchain.pem";
-  #  #     server_url = "http://${localHeadscaleURI}";
-
-  #  #     dns = {
-  #  #       search_domains = [domainInternal];
-  #  #       base_domain = domainInternal;
-  #  #     };
-
-  #  #     database = {
-  #  #       type = "postgres";
-
-  #  #       postgres = {
-  #  #         user = "headscale";
-  #  #         name = "headscale";
-  #  #         host = "127.0.0.1";
-  #  #         port = 5432;
-  #  #         password_file = config.sops.secrets."headscale/dbuser".path;
-  #  #       };
-  #  #     };
-  #  #   };
-
-  #  #   extraSettings = {
-  #  #     dns.extra_records = [
-  #  #       {
-  #  #         name = "consul.${domainInternal}";
-  #  #         type = "A";
-  #  #         value = "100.64.0.3";
-  #  #       }
-  #  #     ];
-  #  #   };
-  #  # };
-
-  #  postgresql = {
-  #    enable = true;
-
-  #    ensureUsers = [
-  #      {
-  #        name = "headscale";
-  #        ensureClauses.login = true;
-  #        ensureDBOwnership = true;
-  #      }
-  #    ];
-
-  #    ensureDatabases = [
-  #      "headscale"
-  #    ];
-  #  };
-
-  #  postgresqlBackup = {
-  #    enable = true;
-  #    databases = [
-  #      "headscale"
-  #    ];
-  #  };
-
   #  restic = let
   #    services = {
   #      postgresql = {
@@ -190,64 +128,38 @@
   #  };
   #};
 
-  #users.groups = {
-  #  keys.members = ["headscale" "postgres"];
-  #  certs.members = ["headscale"];
-  #};
-
-  #systemd.services = {
-  #  #headscale = {
-  #  #  startLimitBurst = 5;
-  #  #  startLimitIntervalSec = 100;
-
-  #  #  wants = [
-  #  #    "acme-${headscaleFQDN}.service"
-  #  #    "postgresql.service"
-  #  #  ];
-  #  #};
-
   #  tailscaled-autoconnect = {
   #    after = ["headscale.service"];
   #    wants = ["headscale.service"];
   #  };
 
-  #  postgresql.postStart = let
-  #    passwordFile = config.sops.secrets."headscale/dbuser".path;
-  #  in ''
-  #    $PSQL -tA <<'EOF'
-  #      DO $$
-  #      DECLARE password TEXT;
-  #      BEGIN
-  #        password := trim(both from replace(pg_read_file('${passwordFile}'), E'\n', '''));
-  #        EXECUTE format('ALTER ROLE headscale WITH PASSWORD '''%s''';', password);
-  #      END $$;
-  #    EOF
-  #  '';
-  #};
+  #   ________    _          __   ____             __
+  #  /_  __/ /_  (_)________/ /  / __ \____ ______/ /___  __
+  #   / / / __ \/ / ___/ __  /  / /_/ / __ `/ ___/ __/ / / /
+  #  / / / / / / / /  / /_/ /  / ____/ /_/ / /  / /_/ /_/ /
+  # /_/ /_/ /_/_/_/   \__,_/  /_/    \__,_/_/   \__/\__, /
+  #                                                /____/
 
-  #networking.firewall.allowedTCPPorts = [80 443];
+  sops = {
+    defaultSopsFile = ./secrets.yaml;
 
-  ##   ________    _          __   ____             __
-  ##  /_  __/ /_  (_)________/ /  / __ \____ ______/ /___  __
-  ##   / / / __ \/ / ___/ __  /  / /_/ / __ `/ ___/ __/ / / /
-  ##  / / / / / / / /  / /_/ /  / ____/ /_/ / /  / /_/ /_/ /
-  ## /_/ /_/ /_/_/_/   \__,_/  /_/    \__,_/_/   \__/\__, /
-  ##                                                /____/
+    secrets = {
+      desec = {
+        sopsFile = "${self}/secrets.yaml";
+        group = "keys";
+        mode = "0440";
+      };
 
-  #sops = {
-  #  defaultSopsFile = ./secrets.yaml;
+      "headscale/dbuser" = {
+        group = "keys";
+        mode = "0440";
+      };
 
-  #  secrets = {
-  #    "headscale/dbuser" = {
-  #      group = "keys";
-  #      mode = "0440";
-  #    };
-
-  #    "headscale/preauthkey" = {};
-  #    "restic/mail" = {};
-  #    "restic/dkim" = {};
-  #    "restic/radicale" = {};
-  #    "restic/postgresql" = {};
-  #  };
-  #};
+      "headscale/preauthkey" = {};
+      "restic/mail" = {};
+      "restic/dkim" = {};
+      "restic/radicale" = {};
+      "restic/postgresql" = {};
+    };
+  };
 }

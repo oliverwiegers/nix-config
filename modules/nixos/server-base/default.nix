@@ -2,24 +2,29 @@
   lib,
   pkgs,
   config,
+  self,
+  inputs,
   modulesPath,
-  helpers,
   ...
 }:
-with lib // helpers;
 let
   cfg = config.serverBase;
 in
 {
   imports = [
     (modulesPath + "/profiles/headless.nix")
+
+    "${self}/modules/nixos/profiles/acme-defaults.nix"
+    "${self}/modules/nixos/profiles/sops-defaults.nix"
+
+    inputs.sops-nix.nixosModules.sops
   ];
 
   options.serverBase = {
-    enable = mkEnableOption "base server configuration.";
+    enable = lib.mkEnableOption "base server configuration.";
 
-    fancyMotd.extraServices = mkOption {
-      type = types.str;
+    fancyMotd.extraServices = lib.mkOption {
+      type = lib.types.str;
       default = "";
       defaultText = "";
       example = ''
@@ -27,9 +32,15 @@ in
       '';
       description = "Additional services to show in motd.";
     };
+
+    containers.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "settings needed for nixos-containers (systemd-nspawn).";
+    };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     users = {
       mutableUsers = true;
 
@@ -109,6 +120,12 @@ in
         "2606:4700:4700::1111"
         "2606:4700:4700::1001"
       ];
+
+      nat = lib.mkIf cfg.containers.enable {
+        enable = true;
+        internalInterfaces = [ "ve-+" ];
+        externalInterface = "enp1s0";
+      };
     };
 
     services = {
@@ -141,7 +158,7 @@ in
         };
       };
 
-      fail2ban = enabled;
+      fail2ban.enable = true;
     };
 
     documentation = {

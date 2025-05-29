@@ -5,31 +5,13 @@
   outputs,
   ...
 }:
-with lib;
-let
-  cfg = config.nixSettings;
-in
-{
-  options = {
-    nixSettings = {
-      enable = mkEnableOption "Enable custom Nix / nixpkgs settings.";
-
-      allowUnfree = mkOption {
-        type = types.bool;
-        default = true;
-        defaultText = "true";
-        example = "nixSettings.allowUnfree = true;";
-        description = "Allow unfree packages.";
-      };
-    };
-  };
-
-  config = mkIf cfg.enable {
+with lib; {
+  config = {
     nixpkgs = {
       overlays = builtins.attrValues outputs.overlays;
 
       config = {
-        inherit (cfg) allowUnfree;
+        allowUnfree = true;
       };
     };
 

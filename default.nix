@@ -55,7 +55,6 @@ flake-utils.lib.eachDefaultSystemPassThrough (
         self
         nixosSystem
         ;
-      hostsDir = ./hosts/nixos;
     };
 
     darwinConfigurations = helpers.mkHostConfigs {
@@ -66,7 +65,6 @@ flake-utils.lib.eachDefaultSystemPassThrough (
         self
         nixosSystem
         ;
-      hostsDir = ./hosts/darwin;
       os = "darwin";
     };
 

@@ -122,6 +122,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     #                          ____  _____
     #    ____ ___  ____ ______/ __ \/ ___/
     #   / __ `__ \/ __ `/ ___/ / / /\__ \

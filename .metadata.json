@@ -1,0 +1,21 @@
+{
+        "domain": "oliverwiegers.com",
+        "internalDomain": "oliverwiegers.de",
+        "hosts": {
+                "dudek": {
+                        "hostName": = "dudek.oliverwiegers.com",
+                        "primaryIPv4": "128.140.58.255",
+                        "colocation": "hetzner"
+                },
+                "rockex": {
+                        "hostName": = "rockex.oliverwiegers.com",
+                        "primaryIPv4": "157.90.252.43"
+                        "colocation": "hetzner"
+                },
+                "kryha": {
+                        "hostName": = "kryha.oliverwiegers.com",
+                        "primaryIPv4": "152.53.49.50"
+                        "colocation": "netcup"
+                }
+        }
+}

@@ -1,0 +1,1 @@
+../../nixos/profiles/nix-settings.nix

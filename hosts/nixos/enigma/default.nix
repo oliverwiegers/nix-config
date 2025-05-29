@@ -1,12 +1,15 @@
 {
   inputs,
   helpers,
+  self,
   ...
 }:
 with helpers;
 {
   imports = [
     ./hardware.nix
+
+    "${self}/modules/nixos/profiles/nix-settings.nix"
 
     inputs.nixos-hardware.nixosModules.common-cpu-amd
     inputs.nixos-hardware.nixosModules.common-gpu-amd
@@ -28,8 +31,6 @@ with helpers;
     wifi = enabled;
     wm = enabled;
   };
-
-  nixSettings = enabled;
 
   base.stateVersion = "23.11";
 
