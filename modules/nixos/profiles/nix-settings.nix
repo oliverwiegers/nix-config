@@ -5,7 +5,8 @@
   outputs,
   ...
 }:
-with lib; {
+with lib;
+{
   config = {
     nixpkgs = {
       overlays = builtins.attrValues outputs.overlays;

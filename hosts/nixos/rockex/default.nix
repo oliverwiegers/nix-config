@@ -1,19 +1,21 @@
 {
-  config,
+# config,
   inputs,
+  helpers,
   self,
   ...
-}: {
+}:
+let
+  host = baseNameOf ./.;
+  hostId = helpers._metadata.hosts.${host}.hostId;
+in
+{
   imports = [
-    ./hardware.nix
-    ./disk-config.nix
-
+    "${self}/modules/nixos/profiles/nix-settings.nix"
     "${self}/modules/nixos/profiles/acme-defaults.nix"
     "${self}/modules/nixos/profiles/sops-defaults.nix"
-    "${self}/modules/nixos/profiles/nix-settings.nix"
 
     inputs.sops-nix.nixosModules.sops
-    inputs.disko.nixosModules.disko
   ];
 
   #    ______           __                     __  ___          __      __
@@ -21,26 +23,28 @@
   #  / /   / / / / ___/ __/ __ \/ __ `__ \   / /|_/ / __ \/ __  / / / / / _ \/ ___/
   # / /___/ /_/ (__  ) /_/ /_/ / / / / / /  / /  / / /_/ / /_/ / /_/ / /  __(__  )
   # \____/\__,_/____/\__/\____/_/ /_/ /_/  /_/  /_/\____/\__,_/\__,_/_/\___/____/
-
-  tailscale = {
+  zfsRoot = {
     enable = true;
-    authKeyFile = config.sops.secrets."headscale/preauthkey".path;
+    inherit hostId;
   };
+
+  # tailscale = {
+  #   enable = true;
+  #   authKeyFile = config.sops.secrets."headscale/preauthkey".path;
+  # };
 
   serverBase = {
     enable = true;
-
-    fancyMotd.extraServices = '''';
   };
 
-  consul = {
-    enable = true;
-    type = "server";
-    bindAddr = "100.64.0.1";
-    uiBindAddr = "100.64.0.1";
-    clientSecretsFile = "${self}/secrets.yaml";
-    serverSecretsFile = ./secrets.yaml;
-  };
+  # consul = {
+  #   enable = true;
+  #   type = "server";
+  #   bindAddr = "100.64.0.1";
+  #   uiBindAddr = "100.64.0.1";
+  #   clientSecretsFile = "${self}/secrets.yaml";
+  #   serverSecretsFile = ./secrets.yaml;
+  # };
 
   #     _   ___      ____  _____
   #    / | / (_)  __/ __ \/ ___/
@@ -55,11 +59,11 @@
   # /_/ /_/ /_/_/_/   \__,_/  /_/    \__,_/_/   \__/\__, /
   #                                                /____/
 
-  sops = {
-    defaultSopsFile = ./secrets.yaml;
+  # sops = {
+  #   defaultSopsFile = ./secrets.yaml;
 
-    secrets = {
-      "headscale/preauthkey" = { };
-    };
-  };
+  #   secrets = {
+  #     "headscale/preauthkey" = { };
+  #   };
+  # };
 }

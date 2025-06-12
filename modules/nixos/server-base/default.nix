@@ -13,6 +13,7 @@ in
 {
   imports = [
     (modulesPath + "/profiles/headless.nix")
+    (modulesPath + "/profiles/qemu-guest.nix")
 
     "${self}/modules/nixos/profiles/acme-defaults.nix"
     "${self}/modules/nixos/profiles/sops-defaults.nix"
@@ -41,12 +42,36 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
+    boot = {
+      initrd = {
+        availableKernelModules = [
+          "ahci"
+          "xhci_pci"
+          "virtio_pci"
+          "virtio_scsi"
+          "sd_mod"
+          "sr_mod"
+        ];
+      };
+    };
+
+    sops = {
+      secrets = {
+        initialRootPassword = {
+          sopsFile = "${self}/secrets.yaml";
+          neededForUsers = true;
+        };
+      };
+    };
+
     users = {
       mutableUsers = true;
 
       users = {
         root = {
-          initialHashedPassword = "$y$j9T$2419qZYpVwTQ7y5a9h03/.$hn9h3o2Oi5WKIvN/Q001EdSFPbWr9vIIfYBvIloadF2";
+          hashedPasswordFile = config.sops.secrets.initialRootPassword.path;
 
           openssh.authorizedKeys.keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKvcXlse6olKBEiRpfPclT4Pn31lpQ4fbZHNv5MBXat"
@@ -113,6 +138,8 @@ in
     };
 
     networking = {
+      useDHCP = lib.mkDefault true;
+
       nameservers = [
         "1.1.1.1"
         "1.0.0.1"
@@ -137,6 +164,13 @@ in
           PasswordAuthentication = false;
           LogLevel = "VERBOSE";
         };
+
+        hostKeys = [
+          {
+            path = "/etc/ssh/ssh_host_ed25519_key";
+            type = "ed25519";
+          }
+        ];
       };
 
       resolved = {

@@ -1,24 +1,22 @@
 {
-  pkgs,
   inputs,
-  config,
   self,
+  helpers,
   ...
-}: let
-  authFQDN = "auth.oliverwiegers.com";
-  authURI = "https://${authFQDN}";
+}:
+let
+  host = baseNameOf ./.;
+  hostId = helpers._metadata.hosts.${host}.hostId;
+  # authFQDN = "auth.oliverwiegers.com";
+  # authURI = "https://${authFQDN}";
 in
 {
   imports = [
-    ./hardware.nix
-    ./disk-config.nix
-
+    "${self}/modules/nixos/profiles/nix-settings.nix"
     "${self}/modules/nixos/profiles/acme-defaults.nix"
     "${self}/modules/nixos/profiles/sops-defaults.nix"
-    "${self}/modules/nixos/profiles/nix-settings.nix"
 
     inputs.sops-nix.nixosModules.sops
-    inputs.disko.nixosModules.disko
   ];
 
   #    ______           __                     __  ___          __      __
@@ -27,14 +25,20 @@ in
   # / /___/ /_/ (__  ) /_/ /_/ / / / / / /  / /  / / /_/ / /_/ / /_/ / /  __(__  )
   # \____/\__,_/____/\__/\____/_/ /_/ /_/  /_/  /_/\____/\__,_/\__,_/_/\___/____/
 
-  tailscale = {
+  zfsRoot = {
     enable = true;
-    authKeyFile = config.sops.secrets."headscale/preauthkey".path;
+    inherit hostId;
+    device = "/dev/vda";
   };
 
-  monitoring = {
-    enable = false;
-  };
+    # tailscale = {
+    #   enable = true;
+    #   authKeyFile = config.sops.secrets."headscale/preauthkey".path;
+    # };
+
+    # monitoring = {
+    #   enable = false;
+    # };
 
   serverBase = {
     enable = true;
@@ -44,14 +48,14 @@ in
     '';
   };
 
-  consul = {
-    enable = true;
-    type = "server";
-    bindAddr = "100.64.0.4";
-    uiBindAddr = "100.64.0.4";
-    clientSecretsFile = "${self}/secrets.yaml";
-    serverSecretsFile = ./secrets.yaml;
-  };
+    # consul = {
+    #   enable = true;
+    #   type = "server";
+    #   bindAddr = "100.64.0.4";
+    #   uiBindAddr = "100.64.0.4";
+    #   clientSecretsFile = "${self}/secrets.yaml";
+    #   serverSecretsFile = ./secrets.yaml;
+    # };
 
   #     _   ___      ____  _____
   #    / | / (_)  __/ __ \/ ___/
@@ -59,48 +63,48 @@ in
   #  / /|  / />  </ /_/ /___/ /
   # /_/ |_/_/_/|_|\____//____/
 
-  systemd.services.kanidm.wants = [ "acme-${authFQDN}.service" ];
+  # systemd.services.kanidm.wants = [ "acme-${authFQDN}.service" ];
 
-  services = {
-    kanidm =
-      let
-        certDir = config.security.acme.certs.${authFQDN}.directory;
-      in
-      {
-        enableServer = true;
-        enableClient = true;
-        clientSettings.uri = "${authURI}:8443";
-        package = pkgs.kanidmWithSecretProvisioning;
+  # services = {
+  #   kanidm =
+  #     let
+  #       certDir = config.security.acme.certs.${authFQDN}.directory;
+  #     in
+  #     {
+  #       enableServer = true;
+  #       enableClient = true;
+  #       clientSettings.uri = "${authURI}:8443";
+  #       package = pkgs.kanidmWithSecretProvisioning;
 
-        serverSettings = {
-          tls_key = certDir + "/key.pem";
-          tls_chain = certDir + "/fullchain.pem";
-          origin = authURI;
-          ldapbindaddress = "127.0.0.1:636";
-          domain = authFQDN;
+  #       serverSettings = {
+  #         tls_key = certDir + "/key.pem";
+  #         tls_chain = certDir + "/fullchain.pem";
+  #         origin = authURI;
+  #         ldapbindaddress = "127.0.0.1:636";
+  #         domain = authFQDN;
 
-          online_backup = {
-            versions = 1;
-            path = "/var/backup/kanidm";
-          };
-        };
+  #         online_backup = {
+  #           versions = 1;
+  #           path = "/var/backup/kanidm";
+  #         };
+  #       };
 
-        provision = {
-          enable = true;
-          idmAdminPasswordFile = config.sops.secrets."kanidm/idm_admin".path;
-          adminPasswordFile = config.sops.secrets."kanidm/admin".path;
-        };
-      };
-  };
+  #       provision = {
+  #         enable = true;
+  #         idmAdminPasswordFile = config.sops.secrets."kanidm/idm_admin".path;
+  #         adminPasswordFile = config.sops.secrets."kanidm/admin".path;
+  #       };
+  #     };
+  # };
 
-  # While not externally exposed we'll use this.
-  networking.hosts = {
-    "127.0.0.1" = [ "auth.oliverwiegers.com" ];
-  };
+  # # While not externally exposed we'll use this.
+  # networking.hosts = {
+  #   "127.0.0.1" = [ "auth.oliverwiegers.com" ];
+  # };
 
-  security.acme.certs."${authFQDN}" = { };
+  # security.acme.certs."${authFQDN}" = { };
 
-  users.groups.certs.members = [ "kanidm" ];
+  # users.groups.certs.members = [ "kanidm" ];
 
   #   ________    _          __   ____             __
   #  /_  __/ /_  (_)________/ /  / __ \____ ______/ /___  __
@@ -109,13 +113,13 @@ in
   # /_/ /_/ /_/_/_/   \__,_/  /_/    \__,_/_/   \__/\__, /
   #                                                /____/
 
-  sops = {
-    defaultSopsFile = ./secrets.yaml;
+  # sops = {
+  #   defaultSopsFile = ./secrets.yaml;
 
-    secrets = {
-      "headscale/preauthkey" = { };
-      "kanidm/admin".owner = "kanidm";
-      "kanidm/idm_admin".owner = "kanidm";
-    };
-  };
+  #   secrets = {
+  #     "headscale/preauthkey" = { };
+  #     "kanidm/admin".owner = "kanidm";
+  #     "kanidm/idm_admin".owner = "kanidm";
+  #   };
+  # };
 }

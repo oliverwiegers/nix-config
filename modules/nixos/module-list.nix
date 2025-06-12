@@ -7,4 +7,5 @@
   ./services/networking/headscale
   ./services/networking/consul
   ./services/monitoring
+  ./system/zfs-root
 ]

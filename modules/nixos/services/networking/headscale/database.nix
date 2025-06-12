@@ -1,4 +1,10 @@
-{ cfg, ... }: { config, lib, helpers, ... }:
+{ cfg, ... }:
+{
+  config,
+  lib,
+  helpers,
+  ...
+}:
 {
   config = lib.mkIf cfg.enable {
     containers = {
@@ -14,10 +20,11 @@
         };
 
         config =
-          { pkgs, ... }: {
+          { pkgs, ... }:
+          {
             # Needed for sops-nix secret access.
             users.groups = {
-              keys.members = ["postgres"];
+              keys.members = [ "postgres" ];
             };
 
             systemd.services = {
@@ -70,8 +77,8 @@
             };
 
             networking.firewall.allowedTCPPorts = [ 5432 ];
-            };
           };
       };
     };
-  }
+  };
+}

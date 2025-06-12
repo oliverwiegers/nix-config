@@ -1,7 +1,8 @@
 {
   config,
   ...
-}: {
+}:
+{
   config = {
     security = {
       acme = {

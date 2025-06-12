@@ -27,6 +27,8 @@
       deploy-rs
       sops
       wget
+      nixos-anywhere
+      ssh-to-age
     ];
   };
 }

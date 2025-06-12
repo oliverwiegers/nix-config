@@ -1,4 +1,5 @@
-{ cfg, ... }: { config, lib, ... }:
+{ cfg, ... }:
+{ config, lib, ... }:
 {
   config = lib.mkIf cfg.enable {
     containers = {
@@ -13,10 +14,11 @@
         };
 
         config =
-          { ... }: {
+          { ... }:
+          {
             # Needed for sops-nix secret access.
             users.groups = {
-              keys.members = ["headscale"];
+              keys.members = [ "headscale" ];
               acme.members = [ "headscale" ];
             };
 
@@ -61,7 +63,7 @@
             #   };
             # };
           };
-        };
       };
     };
-  }
+  };
+}

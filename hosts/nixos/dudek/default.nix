@@ -9,16 +9,14 @@
 let
   host = baseNameOf ./.;
   hostAddress = helpers._metadata.hosts.${host}.primaryIPv4;
-in {
+  hostId = helpers._metadata.hosts.${host}.hostId;
+in
+{
   imports = [
-    ./hardware.nix
-    ./disk-config.nix
-
     "${self}/modules/nixos/profiles/nix-settings.nix"
     "${self}/modules/nixos/profiles/acme-defaults.nix"
     "${self}/modules/nixos/profiles/sops-defaults.nix"
 
-    inputs.disko.nixosModules.disko
     inputs.sops-nix.nixosModules.sops
   ];
 
@@ -33,8 +31,13 @@ in {
   #   authKeyFile = config.sops.secrets."headscale/preauthkey".path;
   # };
 
-  headscale = {
+  zfsRoot = {
     enable = true;
+    inherit hostId;
+  };
+
+  headscale = {
+    enable = false;
     secretsFile = ./secrets.yaml;
     inherit (helpers._metadata) domain internalDomain;
     inherit hostAddress;
@@ -43,17 +46,17 @@ in {
   serverBase = {
     enable = true;
 
-  #  fancyMotd.extraServices = ''
-  #    services["nginx"]="Nginx"
-  #    services["dovecot2"]="Dovecot"
-  #    services["postfix"]="Postfix"
-  #    services["opendkim"]="DKIM"
-  #    services["redis-server"]="Redis"
-  #    services["phpfpm-roundcube"]="Roundcube"
-  #    services["radicale"]="Radicale"
-  #    services["postgresql"]="PostgreSQL"
-  #    services["headscale"]="Headscale"
-  #  '';
+    #  fancyMotd.extraServices = ''
+    #    services["nginx"]="Nginx"
+    #    services["dovecot2"]="Dovecot"
+    #    services["postfix"]="Postfix"
+    #    services["opendkim"]="DKIM"
+    #    services["redis-server"]="Redis"
+    #    services["phpfpm-roundcube"]="Roundcube"
+    #    services["radicale"]="Radicale"
+    #    services["postgresql"]="PostgreSQL"
+    #    services["headscale"]="Headscale"
+    #  '';
   };
 
   # mailServer = {

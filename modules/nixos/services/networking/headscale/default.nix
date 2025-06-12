@@ -38,8 +38,8 @@ in
   };
 
   imports = [
-    (import ./service.nix {inherit cfg;})
-    (import ./database.nix {inherit cfg;})
+    (import ./service.nix { inherit cfg; })
+    (import ./database.nix { inherit cfg; })
   ];
 
   config = lib.mkIf cfg.enable {
