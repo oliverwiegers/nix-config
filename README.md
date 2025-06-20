@@ -1,3 +1,6 @@
+<div align="center">
+</div>
+
 # Nix Configuration
 
 ## Setup
