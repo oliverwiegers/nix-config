@@ -120,7 +120,6 @@ flake-utils.lib.eachDefaultSystemPassThrough (
       # Be a bit more verbose by default, so we can see progress happening
       settings.verbose = 1;
       programs = {
-        keep-sorted.enable = true;
         terraform.enable = true;
         hclfmt.enable = true;
         shellcheck.enable = true;
