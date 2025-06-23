@@ -6,7 +6,7 @@ locals {
     }
   }
 
-  servers    = {
+  servers = {
     for server, properties in var.servers : server => {
       image      = properties.image
       type       = properties.type
@@ -45,5 +45,5 @@ module "servers" {
   ptr        = each.value.ptr
   ssh_keys   = [for key in hcloud_ssh_key.keys : key.id]
 
-  depends_on = [ module.registrar_config ]
+  depends_on = [module.registrar_config]
 }

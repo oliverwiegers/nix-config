@@ -19,7 +19,6 @@ in
 
     stateVersion = lib.mkOption {
       type = lib.types.str;
-      default = "24.11";
       defaultText = "24.11";
       example = "base.stateVersion = \"24.11\";";
       description = "Set the stateVersion for the nixos config.";
@@ -33,7 +32,7 @@ in
 
     # Boot settings.
     boot = {
-      kernelPackages = pkgs.linuxPackages_latest;
+      kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
     };
 
     # Select internationalisation properties.

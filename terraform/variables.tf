@@ -13,12 +13,12 @@ variable "servers" {
   default     = {}
 
   type = map(object({
-    image      = optional(string, "ubuntu-24.04")
-    type       = optional(string, "cx22")
-    datacenter = optional(string, "fsn1-dc14")
-    ptr        = optional(string, null)
-    ssh_keys   = optional(list(string), null)
-    domain     = optional(string, null)
+    image           = optional(string, "ubuntu-24.04")
+    type            = optional(string, "cx22")
+    datacenter      = optional(string, "fsn1-dc14")
+    ptr             = optional(string, null)
+    ssh_keys        = optional(list(string), null)
+    domain          = optional(string, null)
     bootstrap_nixos = optional(bool, true)
   }))
 }

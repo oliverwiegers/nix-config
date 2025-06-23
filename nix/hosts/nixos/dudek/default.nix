@@ -31,6 +31,8 @@ in
   #   authKeyFile = config.sops.secrets."headscale/preauthkey".path;
   # };
 
+  base.stateVersion = "25.11";
+
   zfsRoot = {
     enable = true;
     inherit hostId;

@@ -5,7 +5,7 @@ output "name" {
 
 output "hostname" {
   description = "Hostname of server."
-  value = var.hostname
+  value       = var.hostname
 }
 
 output "primary_ipv4" {

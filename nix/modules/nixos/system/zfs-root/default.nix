@@ -60,6 +60,7 @@ in
     };
 
     boot = {
+      kernelPackages = lib.mkForce pkgs.linuxPackages_6_6;
       supportedFilesystems = [ "zfs" ];
 
       zfs = {

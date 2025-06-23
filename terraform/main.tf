@@ -53,7 +53,7 @@ locals {
 
   nixos_hosts = {
     for server, properties in module.servers : server => {
-      hostname = properties.hostname
+      hostname    = properties.hostname
       instance_id = properties.host_id
     } if var.servers[server].bootstrap_nixos
   }
@@ -67,13 +67,13 @@ module "registrar_config" {
   source = "${path.root}/modules/registrar_config"
 
   domain_admin = {
-    name           = data.sops_file.secrets.data["domain_admin.name"]
-    address = data.sops_file.secrets.data["domain_admin.address"]
-    city           = data.sops_file.secrets.data["domain_admin.city"]
-    postal_code    = data.sops_file.secrets.data["domain_admin.postal_code"]
-    country_code   = data.sops_file.secrets.data["domain_admin.country_code"]
-    phone_number   = data.sops_file.secrets.data["domain_admin.phone_number"]
-    email          = data.sops_file.secrets.data["domain_admin.email"]
+    name         = data.sops_file.secrets.data["domain_admin.name"]
+    address      = data.sops_file.secrets.data["domain_admin.address"]
+    city         = data.sops_file.secrets.data["domain_admin.city"]
+    postal_code  = data.sops_file.secrets.data["domain_admin.postal_code"]
+    country_code = data.sops_file.secrets.data["domain_admin.country_code"]
+    phone_number = data.sops_file.secrets.data["domain_admin.phone_number"]
+    email        = data.sops_file.secrets.data["domain_admin.email"]
   }
 
   domains = {
@@ -103,7 +103,7 @@ module "bootstrap_nixos" {
 
   for_each = local.nixos_hosts
 
-  host = each.key
-  hostname = each.value.hostname
+  host        = each.key
+  hostname    = each.value.hostname
   instance_id = each.value.instance_id
 }

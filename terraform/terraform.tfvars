@@ -75,7 +75,7 @@ ssh_keys = {
 
 servers = {
   "dudek" = {
-    ptr     = "mx.oliverwiegers.com"
+    ptr = "mx.oliverwiegers.com"
   }
 
   "rockex" = {}

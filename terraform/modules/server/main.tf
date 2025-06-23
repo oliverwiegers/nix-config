@@ -43,6 +43,6 @@ resource "null_resource" "wait_for_server" {
 
   triggers = {
     ip_address = hcloud_primary_ip.ipv4.ip_address
-    host_id = random_id.host_id.hex
+    host_id    = random_id.host_id.hex
   }
 }

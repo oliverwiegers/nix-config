@@ -38,6 +38,7 @@ with lib // helpers;
   # nix.linux-builder.enable = true;
   # NOTE: linux-builder needs to be enabled to build nix-rosetta-builder for the first time.
   nix-rosetta-builder = {
+    enable = false; # Default is true
     permitNonRootSshAccess = true;
   };
 
