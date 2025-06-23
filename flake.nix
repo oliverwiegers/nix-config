@@ -174,5 +174,5 @@
     };
   };
 
-  outputs = inputs: import ./. inputs;
+  outputs = inputs: import ./nix inputs;
 }

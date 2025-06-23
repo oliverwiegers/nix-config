@@ -10,9 +10,9 @@ let
 in
 {
   imports = [
-    "${self}/modules/nixos/profiles/nix-settings.nix"
-    "${self}/modules/nixos/profiles/acme-defaults.nix"
-    "${self}/modules/nixos/profiles/sops-defaults.nix"
+    "${self}/nix/modules/nixos/profiles/nix-settings.nix"
+    "${self}/nix/modules/nixos/profiles/acme-defaults.nix"
+    "${self}/nix/modules/nixos/profiles/sops-defaults.nix"
 
     inputs.sops-nix.nixosModules.sops
   ];

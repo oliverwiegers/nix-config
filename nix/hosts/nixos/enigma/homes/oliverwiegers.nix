@@ -1,6 +1,9 @@
 {
+  inputs,
   outputs,
   helpers,
+  config,
+  self,
   ...
 }:
 let
@@ -8,7 +11,7 @@ let
 in
 {
   imports = [
-    ../../modules/home-manager
+    "${self}/nix/modules/home-manager"
   ];
 
   home = {
@@ -31,7 +34,19 @@ in
 
   fonts.fontconfig.enable = true;
 
-  os.nixos.enable = true;
+  os = {
+    nixos.enable = true;
+
+    theme = rec {
+      fullName =
+        if config.os.theme.variant != null then
+          "${config.os.theme.name}_${config.os.theme.variant}"
+        else
+          "${config.os.theme.name}";
+
+      colors = builtins.fromTOML (builtins.readFile "${inputs.alacritty-theme}/themes/${fullName}.toml");
+    };
+  };
 
   terminal = {
     shell = {
@@ -58,7 +73,7 @@ in
 
       ssh = {
         enable = true;
-        matchBlocks = {
+        extraMatchBlocks = {
           kali = {
             user = "root";
             hostname = "10.5.0.5";

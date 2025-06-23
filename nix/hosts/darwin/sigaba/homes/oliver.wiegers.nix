@@ -5,12 +5,13 @@
   inputs,
   outputs,
   helpers,
+  self,
   ...
 }:
 with helpers;
 {
   imports = [
-    ../../../../modules/home-manager
+    "${self}/nix/modules/home-manager"
   ];
 
   home = {
