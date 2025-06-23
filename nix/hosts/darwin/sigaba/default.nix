@@ -35,12 +35,17 @@ with lib // helpers;
     settings.trusted-users = [ "oliver.wiegers" ];
   };
 
-  # nix.linux-builder.enable = true;
+  # Rosetta builder start.
   # NOTE: linux-builder needs to be enabled to build nix-rosetta-builder for the first time.
+  nix.linux-builder = {
+    enable = false;
+    ephemeral = true;
+  };
   nix-rosetta-builder = {
-    enable = false; # Default is true
+    enable = true; # Default is true
     permitNonRootSshAccess = true;
   };
+  # Rosetta builder end.
 
   system = {
     primaryUser = "oliver.wiegers";
