@@ -3,7 +3,8 @@
   pkgs,
   config,
   ...
-}: let
+}:
+let
   cfg = config.graphical.programs.gtk;
 in
 {

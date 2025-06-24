@@ -2,7 +2,8 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.graphical.programs.zathura;
 in
 {

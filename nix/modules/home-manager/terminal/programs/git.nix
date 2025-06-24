@@ -14,7 +14,7 @@ in
       default = { };
     };
   };
-  
+
   config = lib.mkIf cfg.enable {
     programs = {
       git = {

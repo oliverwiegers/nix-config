@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   unstablePackages = with pkgs; [
     erdtree
     eza

@@ -9,16 +9,16 @@ let
 in
 {
   options.terminal.emulator.alacritty = {
-     enable = lib.mkEnableOption "Enable Alacritty terminal emulator.";
-     font = {
-       size = lib.mkOption {
-         type = lib.types.int;
-         default = 11;
-         description = "Terminal font size";
-       };
-     };
+    enable = lib.mkEnableOption "Enable Alacritty terminal emulator.";
+    font = {
+      size = lib.mkOption {
+        type = lib.types.int;
+        default = 11;
+        description = "Terminal font size";
+      };
+    };
   };
-    
+
   config = lib.mkIf cfg.enable {
     programs = {
       alacritty = {
