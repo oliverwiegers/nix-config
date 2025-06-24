@@ -5,15 +5,10 @@
   inputs,
   outputs,
   helpers,
-  self,
   ...
 }:
 with helpers;
 {
-  imports = [
-    "${self}/nix/modules/home-manager"
-  ];
-
   home = {
     username = "oliver.wiegers";
     homeDirectory = "/Users/oliver.wiegers";

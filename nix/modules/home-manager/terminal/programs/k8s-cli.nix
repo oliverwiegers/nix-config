@@ -5,7 +5,6 @@
   inputs,
   ...
 }:
-with lib;
 let
   cfg = config.terminal.programs.k8s-cli;
 in
@@ -14,7 +13,12 @@ in
     inputs.krewfile.homeManagerModules.krewfile
   ];
 
-  config = mkIf cfg.enable {
+  options.terminal.programs.k8s-cli = {
+    enable = lib.mkEnableOption "Enable k8s cli tools.";
+    default = false;
+  };
+
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       # Kubectl. Plugins are managed down below using krewfile.
       kubectl
@@ -63,7 +67,7 @@ in
         ];
       };
 
-      zsh = mkIf config.terminal.shell.zsh.enable {
+      zsh = lib.mkIf config.terminal.shell.zsh.enable {
         # Making kubectl completions work even if kubecolor is used.
         initContent = "source <(kubectl completion zsh | sed 's/kubectl/kubecolor/g')";
 
@@ -77,6 +81,7 @@ in
         oh-my-zsh = {
           plugins = [
             "kubectl"
+            "helm"
           ];
         };
       };

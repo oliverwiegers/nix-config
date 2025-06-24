@@ -3,12 +3,15 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.terminal.programs.home-manager;
 in
 {
-  config = mkIf cfg.enable {
+  options.terminal.programs.home-manager = {
+    enable = lib.mkEnableOption "Enable home-manager.";
+  };
+
+  config = lib.mkIf cfg.enable {
     programs = {
       home-manager = {
         enable = true;

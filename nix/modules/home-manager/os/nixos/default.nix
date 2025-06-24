@@ -9,6 +9,10 @@ let
   cfg = config.os.nixos;
 in
 {
+  options.os.nixos = {
+    enable = mkEnableOption "Enable nixos default settings for home-manager user.";
+  };
+
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       qt5.qtwayland

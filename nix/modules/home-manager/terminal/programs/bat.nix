@@ -4,12 +4,15 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.terminal.programs.bat;
 in
 {
-  config = mkIf cfg.enable {
+  options.terminal.programs.bat = {
+    enable = lib.mkEnableOption "Enable bat.";
+  };
+
+  config = lib.mkIf cfg.enable {
     programs = {
       bat = {
         enable = true;

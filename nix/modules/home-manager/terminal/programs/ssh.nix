@@ -4,7 +4,6 @@
   helpers,
   ...
 }:
-with lib;
 let
   cfg = config.terminal.programs.ssh;
   servers = builtins.mapAttrs (_: properties: {
@@ -13,7 +12,15 @@ let
 
 in
 {
-  config = mkIf cfg.enable {
+  options.terminal.programs.ssh = {
+    enable = lib.mkEnableOption "Enable ssh.";
+    extraMatchBlocks = lib.mkOption {
+      type = lib.types.attrs;
+      default = { };
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
     programs = {
       ssh = {
         enable = true;

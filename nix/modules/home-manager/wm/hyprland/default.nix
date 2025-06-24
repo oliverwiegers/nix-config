@@ -8,6 +8,10 @@ let
   cfg = config.wm.hyprland;
 in
 {
+  options.wm.hyprland = {
+    enable = mkEnableOption "Enable Hyprland.";
+  };
+
   config = mkIf cfg.enable {
     home = {
       file = {

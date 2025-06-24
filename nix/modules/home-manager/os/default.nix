@@ -1,11 +1,8 @@
 {
   pkgs,
   lib,
-  helpers,
   ...
-}:
-with lib;
-let
+}: let
   unstablePackages = with pkgs; [
     erdtree
     eza
@@ -34,33 +31,23 @@ let
   ];
 in
 {
-  imports = helpers.getConfigFilePaths ./. ++ helpers.getDirectoryPaths ./.;
-
   options = {
     os = {
-      nixos = {
-        enable = mkEnableOption "Enable nixos default settings for home-manager user.";
-      };
-
-      darwin = {
-        enable = mkEnableOption "Enable darwin default settings for home-manager user.";
-      };
-
       theme = {
-        name = mkOption {
-          type = types.str;
+        name = lib.mkOption {
+          type = lib.types.str;
           default = "kanagawa";
         };
-        variant = mkOption {
-          type = types.str;
+        variant = lib.mkOption {
+          type = lib.types.str;
           default = "wave";
         };
-        fullName = mkOption {
-          type = types.str;
+        fullName = lib.mkOption {
+          type = lib.types.str;
           default = null;
         };
-        colors = mkOption {
-          type = types.attrs;
+        colors = lib.mkOption {
+          type = lib.types.attrs;
           default = null;
         };
       };

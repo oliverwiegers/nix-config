@@ -4,12 +4,16 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.terminal.programs.github;
 in
 {
-  config = mkIf cfg.enable {
+  options.terminal.programs.github = {
+    enable = lib.mkEnableOption "Enable GitHub CLI.";
+    default = false;
+  };
+
+  config = lib.mkIf cfg.enable {
     programs = {
       gh = {
         enable = true;

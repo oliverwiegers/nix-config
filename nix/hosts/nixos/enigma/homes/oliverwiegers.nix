@@ -3,17 +3,12 @@
   outputs,
   helpers,
   config,
-  self,
   ...
 }:
 let
   inherit (helpers) _metadata;
 in
 {
-  imports = [
-    "${self}/nix/modules/home-manager"
-  ];
-
   home = {
     username = "oliverwiegers";
     homeDirectory = "/home/oliverwiegers";

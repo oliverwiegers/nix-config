@@ -4,12 +4,16 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.terminal.programs.terraform;
 in
 {
-  config = mkIf cfg.enable {
+  options.terminal.programs.terraform = {
+    enable = lib.mkEnableOption "Enable Terraform.";
+    default = false;
+  };
+
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       terraform
       tflint
@@ -18,5 +22,16 @@ in
       s3cmd
       opentofu
     ];
+
+    programs = {
+      zsh = lib.mkIf config.terminal.shell.zsh.enable {
+        oh-my-zsh = {
+          plugins = [
+            "terraform"
+            "opentofu"
+          ];
+        };
+      };
+    };
   };
 }

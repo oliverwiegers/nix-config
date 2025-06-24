@@ -68,11 +68,14 @@ flake-utils.lib.eachDefaultSystemPassThrough (
       os = "darwin";
     };
 
-    homeConfigurations = {
+    homeConfigurations = let
+      moduleList = "${self}/nix/modules/home-manager/module-list.nix";
+    in {
       "oliverwiegers@enigma" = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = { inherit inputs outputs helpers self; };
-        modules = [ ./hosts/nixos/enigma/homes/oliverwiegers.nix ];
+        modules = [ "${self}/nix/hosts/nixos/enigma/homes/oliverwiegers.nix" ]
+          ++ lib.lists.optionals (builtins.pathExists moduleList) (import moduleList);
       };
 
       "oliver.wiegers@sigaba" = inputs.home-manager.lib.homeManagerConfiguration {
@@ -80,7 +83,8 @@ flake-utils.lib.eachDefaultSystemPassThrough (
         # Workaround for buildtime issues on darwin systems.
         pkgs = import nixpkgs-patched { system = "aarch64-darwin"; };
         extraSpecialArgs = { inherit inputs outputs helpers self; };
-        modules = [ ./hosts/darwin/sigaba/homes/oliver.wiegers.nix ];
+        modules = [ "${self}/nix/hosts/darwin/sigaba/homes/oliver.wiegers.nix" ]
+          ++ lib.lists.optionals (builtins.pathExists moduleList) (import moduleList);
       };
     };
 

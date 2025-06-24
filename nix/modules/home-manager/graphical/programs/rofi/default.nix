@@ -9,6 +9,10 @@ let
   cfg = config.graphical.programs.rofi;
 in
 {
+  options.graphical.programs.rofi = {
+    enable = mkEnableOption "Enable Rofi.";
+  };
+
   config = mkIf cfg.enable {
     programs = {
       rofi = {

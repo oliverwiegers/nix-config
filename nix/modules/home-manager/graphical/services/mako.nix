@@ -8,6 +8,10 @@ let
   cfg = config.graphical.services.mako;
 in
 {
+  options.graphical.services.mako = {
+    enable = mkEnableOption "Enable Mako.";
+  };
+
   config = mkIf cfg.enable {
     services = {
       mako = {
