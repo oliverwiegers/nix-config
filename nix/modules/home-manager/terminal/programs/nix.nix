@@ -4,12 +4,15 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.terminal.programs.nix;
 in
 {
-  config = mkIf cfg.enable {
+  options.terminal.programs.nix = {
+    enable = lib.mkEnableOption "Enable nix related tools and settings.";
+  };
+
+  config = lib.mkIf cfg.enable {
     nix = {
       package = lib.mkDefault pkgs.nix;
       settings = {

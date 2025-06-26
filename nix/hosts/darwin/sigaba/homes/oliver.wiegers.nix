@@ -9,10 +9,6 @@
 }:
 with helpers;
 {
-  imports = [
-    ../../../../modules/home-manager
-  ];
-
   home = {
     username = "oliver.wiegers";
     homeDirectory = "/Users/oliver.wiegers";

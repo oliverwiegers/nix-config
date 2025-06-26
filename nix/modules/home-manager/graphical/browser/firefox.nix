@@ -4,7 +4,6 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.graphical.browser.firefox;
   nixIcon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
@@ -23,7 +22,15 @@ let
   ];
 in
 {
-  config = mkIf cfg.enable {
+  options.graphical.browser.firefox = {
+    enable = lib.mkEnableOption "Enable Firefox browser.";
+    package = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.firefox;
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
     programs.firefox = {
       enable = true;
       inherit (cfg) package;

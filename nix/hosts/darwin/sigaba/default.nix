@@ -8,7 +8,7 @@
 with lib // helpers;
 {
   imports = [
-    "${self}/modules/darwin/profiles/nix-settings.nix"
+    "${self}/nix/modules/darwin/profiles/nix-settings.nix"
 
     inputs.nix-homebrew.darwinModules.nix-homebrew
     inputs.nix-rosetta-builder.darwinModules.default

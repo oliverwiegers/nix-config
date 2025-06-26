@@ -3,12 +3,19 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.terminal.programs.git;
 in
 {
-  config = mkIf cfg.enable {
+  options.terminal.programs.git = {
+    enable = lib.mkEnableOption "Enable git.";
+    extraConfig = lib.mkOption {
+      type = lib.types.attrs;
+      default = { };
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
     programs = {
       git = {
         enable = true;
@@ -37,7 +44,7 @@ in
         };
       };
 
-      zsh = mkIf config.terminal.shell.zsh.enable {
+      zsh = lib.mkIf config.terminal.shell.zsh.enable {
         # Use difftastic for log and show as well'''.
         shellAliases = {
           glgp = "git log --patch --ext-diff";

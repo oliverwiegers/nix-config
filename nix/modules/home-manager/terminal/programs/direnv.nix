@@ -3,12 +3,15 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.terminal.programs.direnv;
 in
 {
-  config = mkIf cfg.enable {
+  options.terminal.programs.direnv = {
+    enable = lib.mkEnableOption "Enable direnv.";
+  };
+
+  config = lib.mkIf cfg.enable {
     programs = {
       direnv = {
         enable = true;

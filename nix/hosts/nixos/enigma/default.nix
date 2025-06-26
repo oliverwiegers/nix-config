@@ -9,7 +9,7 @@ with helpers;
   imports = [
     ./hardware.nix
 
-    "${self}/modules/nixos/profiles/nix-settings.nix"
+    "${self}/nix/modules/nixos/profiles/nix-settings.nix"
 
     inputs.nixos-hardware.nixosModules.common-cpu-amd
     inputs.nixos-hardware.nixosModules.common-gpu-amd

@@ -3,12 +3,15 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.terminal.programs.newsboat;
 in
 {
-  config = mkIf cfg.enable {
+  options.terminal.programs.newsboat = {
+    enable = lib.mkEnableOption "Enable newsboat.";
+  };
+
+  config = lib.mkIf cfg.enable {
     programs = {
       newsboat = {
         enable = true;

@@ -3,12 +3,15 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.graphical.programs.zathura;
 in
 {
-  config = mkIf cfg.enable {
+  options.graphical.programs.zathura = {
+    enable = lib.mkEnableOption "Enable Zathura.";
+  };
+
+  config = lib.mkIf cfg.enable {
     programs = {
       zathura = {
         enable = true;

@@ -68,21 +68,43 @@ flake-utils.lib.eachDefaultSystemPassThrough (
       os = "darwin";
     };
 
-    homeConfigurations = {
-      "oliverwiegers@enigma" = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = { inherit inputs outputs helpers; };
-        modules = [ ./hosts/nixos/enigma/homes/oliverwiegers.nix ];
-      };
+    homeConfigurations =
+      let
+        moduleList = "${self}/nix/modules/home-manager/module-list.nix";
+      in
+      {
+        "oliverwiegers@enigma" = lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = {
+            inherit
+              inputs
+              outputs
+              helpers
+              self
+              ;
+          };
+          modules = [
+            "${self}/nix/hosts/nixos/enigma/homes/oliverwiegers.nix"
+          ] ++ lib.lists.optionals (builtins.pathExists moduleList) (import moduleList);
+        };
 
-      "oliver.wiegers@sigaba" = inputs.home-manager.lib.homeManagerConfiguration {
-        # FIXME: I have to get rid of flake utils.
-        # Workaround for buildtime issues on darwin systems.
-        pkgs = import nixpkgs-patched { system = "aarch64-darwin"; };
-        extraSpecialArgs = { inherit inputs outputs helpers; };
-        modules = [ ./hosts/darwin/sigaba/homes/oliver.wiegers.nix ];
+        "oliver.wiegers@sigaba" = lib.homeManagerConfiguration {
+          # FIXME: I have to get rid of flake utils.
+          # Workaround for buildtime issues on darwin systems.
+          pkgs = import nixpkgs-patched { system = "aarch64-darwin"; };
+          extraSpecialArgs = {
+            inherit
+              inputs
+              outputs
+              helpers
+              self
+              ;
+          };
+          modules = [
+            "${self}/nix/hosts/darwin/sigaba/homes/oliver.wiegers.nix"
+          ] ++ lib.lists.optionals (builtins.pathExists moduleList) (import moduleList);
+        };
       };
-    };
 
     deploy = {
       nodes = builtins.mapAttrs (name: properties: {

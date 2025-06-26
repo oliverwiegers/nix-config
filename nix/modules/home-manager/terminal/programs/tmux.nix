@@ -4,12 +4,15 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.terminal.programs.tmux;
 in
 {
-  config = mkIf cfg.enable {
+  options.terminal.programs.tmux = {
+    enable = lib.mkEnableOption "Enable tmux.";
+  };
+
+  config = lib.mkIf cfg.enable {
     programs = {
       tmux = {
         enable = true;

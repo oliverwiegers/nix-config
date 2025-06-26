@@ -15,8 +15,8 @@ in
     (modulesPath + "/profiles/headless.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
 
-    "${self}/modules/nixos/profiles/acme-defaults.nix"
-    "${self}/modules/nixos/profiles/sops-defaults.nix"
+    "${self}/nix/modules/nixos/profiles/acme-defaults.nix"
+    "${self}/nix/modules/nixos/profiles/sops-defaults.nix"
 
     inputs.sops-nix.nixosModules.sops
   ];

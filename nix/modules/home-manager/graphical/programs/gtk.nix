@@ -4,12 +4,15 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.graphical.programs.gtk;
 in
 {
-  config = mkIf cfg.enable {
+  options.graphical.programs.gtk = {
+    enable = lib.mkEnableOption "Enable GTK.";
+  };
+
+  config = lib.mkIf cfg.enable {
     gtk = {
       enable = true;
 

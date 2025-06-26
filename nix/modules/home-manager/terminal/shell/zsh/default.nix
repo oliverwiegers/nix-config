@@ -4,12 +4,15 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.terminal.shell.zsh;
 in
 {
-  config = mkIf cfg.enable {
+  options.terminal.shell.zsh = {
+    enable = lib.mkEnableOption "Enable ZSH.";
+  };
+
+  config = lib.mkIf cfg.enable {
     home = {
       file = {
         # TODO: Yeah software to never update again.
@@ -107,15 +110,12 @@ in
             "fzf-tab"
             "git"
             "golang"
-            "helm"
             "jsontools"
             "pass"
             "rust"
             "sudo"
             "systemadmin"
             "taskwarrior"
-            "terraform"
-            "opentofu"
             "zsh-syntax-highlighting"
           ];
         };

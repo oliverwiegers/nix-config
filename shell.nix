@@ -15,7 +15,7 @@
   ...
 }:
 {
-  default = pkgs.mkShell {
+  default = pkgs.mkShellNoCC {
     NIX_CONFIG = "extra-experimental-features = nix-command flakes";
     nativeBuildInputs = with pkgs; [
       git
@@ -29,6 +29,12 @@
       wget
       nixos-anywhere
       ssh-to-age
+
+      # Terraform
+      opentofu
+      tflint
+      terraform-docs
+      s3cmd
     ];
   };
 }
