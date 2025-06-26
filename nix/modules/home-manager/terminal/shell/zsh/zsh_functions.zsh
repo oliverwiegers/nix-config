@@ -7,6 +7,16 @@
 #                                                                                  #
 ####################################################################################
 
+host() {
+    if [ "$(uname -s)" = "Darwin" ]; then
+        # host cmd ignores local DNS changes on MacOS
+        # See: https://apple.stackexchange.com/questions/158117/os-x-10-10-1-etc-hosts-private-etc-hosts-file-is-being-ignored-and-not-resol
+        dscacheutil -q host -a name "$@"
+    else
+        host "$@"
+    fi
+}
+
 # Curl time lookup
 clookup() {
     lookup_file="$(mktemp)"

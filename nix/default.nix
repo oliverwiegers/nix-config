@@ -73,7 +73,7 @@ flake-utils.lib.eachDefaultSystemPassThrough (
         moduleList = "${self}/nix/modules/home-manager/module-list.nix";
       in
       {
-        "oliverwiegers@enigma" = inputs.home-manager.lib.homeManagerConfiguration {
+        "oliverwiegers@enigma" = lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
             inherit
@@ -88,7 +88,7 @@ flake-utils.lib.eachDefaultSystemPassThrough (
           ] ++ lib.lists.optionals (builtins.pathExists moduleList) (import moduleList);
         };
 
-        "oliver.wiegers@sigaba" = inputs.home-manager.lib.homeManagerConfiguration {
+        "oliver.wiegers@sigaba" = lib.homeManagerConfiguration {
           # FIXME: I have to get rid of flake utils.
           # Workaround for buildtime issues on darwin systems.
           pkgs = import nixpkgs-patched { system = "aarch64-darwin"; };
